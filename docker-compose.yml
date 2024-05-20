@@ -1,0 +1,21 @@
+########################### NETWORKS
+networks:
+  primary-network:
+    ipam:
+      config:
+        - subnet: 172.10.0.0/16
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.91.0/24
+
+include:
+  ########################### APPLICATIONS
+  # SERVICES
+  - docker/socket-proxy.yml
+  - docker/portainer.yml
+  - docker/dozzle.yml
+
+  # APPS
