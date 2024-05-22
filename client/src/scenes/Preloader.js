@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Scene } from 'phaser'
 
 export class Preloader extends Scene
 {
@@ -32,7 +32,6 @@ export class Preloader extends Scene
         //  Load the assets for the game - Replace with your own assets
         this.load.setPath('assets');
 
-        this.load.image('logo', 'logo.png');
     }
 
     create ()

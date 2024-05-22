@@ -11,9 +11,9 @@ export class MainMenu extends Scene
     {
         this.add.image(512, 384, 'background');
 
-        this.add.image(512, 300, 'logo');
+        this.add.image(512, 300, 'logo').setScale(0.7);
 
-        this.add.text(512, 460, 'Main Menu', {
+        this.add.text(512, 460, 'Старт', {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
@@ -21,7 +21,7 @@ export class MainMenu extends Scene
 
         this.input.once('pointerdown', () => {
 
-            this.scene.start('Game');
+            this.scene.start('ChoicePet');
 
         });
     }
