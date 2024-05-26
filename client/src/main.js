@@ -4,7 +4,7 @@ import { GameOver } from './scenes/GameOver'
 import { MainMenu } from './scenes/MainMenu'
 import { Preloader } from './scenes/Preloader'
 
-import { ChoicePet } from './scenes/Choice'
+import { MainMap } from './scenes/MainMap'
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -22,7 +22,7 @@ const config = {
         Boot,
         Preloader,
         MainMenu,
-        ChoicePet,
+        MainMap,
         Game,
         GameOver
     ]

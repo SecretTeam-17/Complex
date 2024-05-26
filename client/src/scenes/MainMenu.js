@@ -11,18 +11,41 @@ export class MainMenu extends Scene
     {
         this.add.image(512, 384, 'background');
 
-        this.add.image(512, 300, 'logo').setScale(0.7);
+        this.add.image(512, 200, 'main-logo').setScale(0.25);
 
-        this.add.text(512, 460, 'Старт', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setOrigin(0.5);
+        const startButton = this.add.image(512,460, 'start-button-up').setScale(1.25);
+        const resumeButton = this.add.image(512,560, 'resume-button-up').setScale(1.25)
 
-        this.input.once('pointerdown', () => {
+        const startButtonDown = this.add.image(512,460, 'start-button-down').setScale(1.25);
+        startButtonDown.setVisible(false)
+        const resumeButtonDown = this.add.image(512,560, 'resume-button-down').setScale(1.25)
+        resumeButtonDown.setVisible(false)
 
-            this.scene.start('ChoicePet');
+        startButton.setInteractive()
+            .on('pointerdown', () => {
+                startButton.setAlpha(0); 
+                startButtonDown.setVisible(true).setAlpha(1); 
+                setTimeout(() => {
+                    this.scene.start('MainMap');
+                }, 500);
+            })
+            .on('pointerout', () => {
+                startButtonDown.setAlpha(0).setVisible(false);
+                startButton.setAlpha(1);
+            });
 
-        });
+        resumeButton.setInteractive()
+            .on('pointerdown', () => {
+                resumeButton.setAlpha(0).setVisible(false)
+                resumeButtonDown.setVisible(true).setAlpha(1);
+                setTimeout(() => {
+                    this.scene.start('MainMap');
+                }, 500);
+            })
+            .on('pointerout', () => {
+                resumeButtonDown.setAlpha(0).setVisible(false);
+                resumeButton.setVisible(true).setAlpha(1);
+            });
+
     }
 }
