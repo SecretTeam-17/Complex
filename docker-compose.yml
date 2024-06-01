@@ -19,4 +19,4 @@ include:
   - docker/dozzle.yml
 
   # APPS
-  - docker/client.yml
+  - docker/game.yml
