@@ -19,4 +19,5 @@ include:
   - docker/dozzle.yml
 
   # APPS
+  - docker/api.yml
   - docker/game.yml

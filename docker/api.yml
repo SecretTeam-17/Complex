@@ -1,17 +1,17 @@
 services:
-  # CLient - Phaser game image
-  client:
+  # API - API Server for game
+  api:
     build:
-      context: $CLIENTDIR
+      context: $APIDIR
       dockerfile: Dockerfile
-    container_name: client
-    hostname: client
+    container_name: api
+    hostname: api
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
     networks:
       - primary-network
     ports:
-      - "8081:8081"
+      - "8083:8083"
     volumes:
-    - ../client:/app
+    - ./api:/go/src/sitterserver
