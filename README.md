@@ -22,7 +22,7 @@ docker compose up --build -d
 
 0.0.0.0:8081 - frontend (https://dev01-client.esoraine.online)
 
-0.0.0.0:8082 - backend (https://dev01-api.esoraine.online)
+0.0.0.0:8083 - backend (https://dev01-api.esoraine.online)
 
 0.0.0.0:8082 - dozzle (Просмотр логов контейнеров)
 ![alt text](image.png)
