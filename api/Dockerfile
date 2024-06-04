@@ -1,5 +1,5 @@
-# FROM golang:1.22.3-alpine as builder
-FROM huecker.io/library/golang:1.22.3-alpine as builder
+FROM golang:1.22.3-alpine as builder
+# FROM huecker.io/library/golang:1.22.3-alpine as builder
 
 ENV CGO_ENABLED=1
 
@@ -23,8 +23,8 @@ RUN go install -ldflags='-s -w -extldflags "-static"' ./cmd/main.go
 
 RUN mv /go/bin/main /go/bin/server
 
-# FROM alpine:latest as runner
-FROM huecker.io/library/alpine:latest as runner
+FROM alpine:latest as runner
+# FROM huecker.io/library/alpine:latest as runner
 
 ENV CGO_ENABLED=1
 
@@ -49,6 +49,6 @@ COPY --from=builder /go/bin/server .
 
 ENTRYPOINT /root/server
 
-LABEL Name=petsittersgameserver Version=1.0.1
+LABEL Name=petsittersgameserver Version=1.4.2
 
 EXPOSE 8083
