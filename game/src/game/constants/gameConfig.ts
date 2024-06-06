@@ -1,5 +1,5 @@
-export default{
-    backgroundColor: '#282c34',
-    screenWidth: 1280,
-    screenHeight: 720,
+export const CONFIG = {
+    BACKGROUNDCOLOR: '#282c34',
+    SCREENWIDTH: 1280,
+    SCREENHIGHT: 720,
 }

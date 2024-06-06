@@ -1,17 +1,20 @@
 export const BACKGROUNDS = {
-    startScreen: 'startscreen-bg'
+    STARTSCREEN: 'startscreen-bg'
 }
 
 export const UI = {
-    mainLogo: 'main-logo',
+    MAINLOGO: 'main-logo',
+    SETTINGS: 'settings-icon',
+    BURGER: 'burger',
+
     voiceOn: 'voiceOn',
     voiceOff: 'voiceOff',
     site: 'siteIcon',
-    burger: 'burger',
-    button:{
-        normal:'button-normal',
-        hover: 'button-hover',
-        disable: 'button-disable'
+    
+    BUTTON:{
+        NORMAL:'button-normal',
+        HOVER: 'button-hover',
+        DISABLE: 'button-disable'
     }
 
 }

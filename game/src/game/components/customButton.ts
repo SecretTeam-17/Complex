@@ -17,22 +17,17 @@ export default class CustomButton extends Phaser.GameObjects.Container
         super(scene, x, y)
 
         // Добавляем изображения и текст в контейнер
-        this.normalImage = scene.add.image(0,0, UI.button.normal)
-        this.hoverImage = scene.add.image(0,0, UI.button.hover)
-        this.disableImage = scene.add.image(0,0, UI.button.disable)
+        this.normalImage = scene.add.image(0,0, UI.BUTTON.NORMAL)
+        this.hoverImage = scene.add.image(0,-10, UI.BUTTON.HOVER)
+        this.disableImage = scene.add.image(0,0, UI.BUTTON.DISABLE)
         this.text = scene.add.text(0,0,text, {
-            fontFamily:'Monrope',
+            fontFamily:'Manrope',
             fontSize: '32px',
             fontStyle: 'Bold',
-            shadow:{
-                offsetX: 1.5,
-                offsetY: 1.5,
-                stroke: true,
-            },
             color:'#FDF8F8',
             
         })
-            .setOrigin(0.5, 0.6)
+            .setOrigin(0.5, 0.9)
 
         // Отрисовываем изображения и текст
         this.add(this.normalImage)
@@ -56,12 +51,6 @@ export default class CustomButton extends Phaser.GameObjects.Container
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.normalImage.setVisible(true)
             this.hoverImage.setVisible(false)
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-
         })
 
     }
