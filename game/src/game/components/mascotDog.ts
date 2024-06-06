@@ -12,10 +12,10 @@ export default class mascotDog extends Phaser.GameObjects.Container
         // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
-        // Добавляем изображения и текст в контейнер
-        this.baseImage = scene.add.image(0,0, MASCOTS.mascotDog.base)
+        // Добавляем изображения в контейнер
+        this.baseImage = scene.add.image(0,0, MASCOTS.MASCOTDOG.BASE).setScale(0.75)
 
-        // Отрисовываем изображения и текст
+        // Отрисовываем изображения
         this.add(this.baseImage)
 
 

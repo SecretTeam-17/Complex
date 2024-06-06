@@ -5,13 +5,14 @@ import { CONFIG } from '../constants/gameConfig'
 
 import CustomButton from '../components/customButton'
 import mainHeader from '../components/mainHeader'
+import mascotDog from '../components/mascotDog'
 
-export class StartScreen extends Scene
+export class MainMenu extends Scene
 {
 
     constructor ()
     {
-        super('StartScreen');
+        super('MainMenu');
     }
 
     create ()
@@ -24,12 +25,17 @@ export class StartScreen extends Scene
         this.add.existing(Header)
 
         // Добавляем кнопку
-        const startButton = new CustomButton(this, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 140, 'СТАРТ')
+        const startButton = new CustomButton(this, 150, CONFIG.SCREENHIGHT - 40, 'Назад').setScale(0.5)
         this.add.existing(startButton)
+
+        // Добавляем маскотов
+        const Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 200, CONFIG.SCREENHIGHT - 170)
+        this.add.existing(Dog)
+
 
         startButton.setInteractive()
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-            this.scene.start('MainMenu');
+            this.scene.start('StartScreen');
         })
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 
@@ -37,6 +43,8 @@ export class StartScreen extends Scene
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
 
         })
+        
+        
 
         EventBus.emit('current-scene-ready', this);
     }

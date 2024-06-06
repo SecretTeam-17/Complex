@@ -26,11 +26,11 @@ export const UI = {
 }
 
 export const MASCOTS = {
-    mascotCat: {
-        base:'mascotCat'
+    MASCOTCAT: {
+        BASE:'mascotCat'
     },
-    mascotDog: {
-        base: 'mascotDog'
+    MASCOTDOG: {
+        BASE: 'mascotDog'
 
     }
 }

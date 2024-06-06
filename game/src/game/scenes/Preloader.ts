@@ -58,8 +58,8 @@ export class Preloader extends Scene
         this.load.image(UI.ICONBUTTON.HOVER, 'ui/iconButtonHover.png')
 
         // Mascots
-        this.load.image(MASCOTS.mascotCat.base, 'ui/mascotCat.png')
-        this.load.image(MASCOTS.mascotDog.base, 'ui/mascotDog.png')
+        this.load.image(MASCOTS.MASCOTCAT.BASE, 'ui/mascotCat.png')
+        this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
 
     }
 

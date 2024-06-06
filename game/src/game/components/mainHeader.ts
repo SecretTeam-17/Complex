@@ -115,7 +115,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.burgerMenu = scene.add.container(width - 170, 50).setScale(0)
         const burgerPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 234).setOrigin(1, 0)
 
-        const linkOne = scene.add.text(-burgerPanel.width + 24, 58, 'О Petsitters', {
+        const linkOne = scene.add.text(-burgerPanel.width + 24, 68, 'О Petsitters', {
             fontFamily:'Manrope',
             fontSize: '14px',
             fontStyle: 'normal',
@@ -123,7 +123,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
             
         }).setOrigin(0, 0)
 
-        const linkTwo = scene.add.text(-burgerPanel.width + 24, 96, 'Условия использования', {
+        const linkTwo = scene.add.text(-burgerPanel.width + 24, 106, 'Условия использования', {
             fontFamily:'Manrope',
             fontSize: '14px',
             fontStyle: 'normal',
@@ -131,7 +131,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
             
         }).setOrigin(0, 0)
 
-        const linkThree = scene.add.text(-burgerPanel.width + 24, 134, 'Конфиденциальность', {
+        const linkThree = scene.add.text(-burgerPanel.width + 24, 144, 'Конфиденциальность', {
             fontFamily:'Manrope',
             fontSize: '14px',
             fontStyle: 'normal',
