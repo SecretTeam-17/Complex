@@ -8,24 +8,27 @@ export default class mainHeader extends Phaser.GameObjects.Container
     // Определяем объекты контейнера
     private logo: Phaser.GameObjects.Image
     private settings: Phaser.GameObjects.Image
-
-    private voiceOn: Phaser.GameObjects.Image
-    private voiceOff: Phaser.GameObjects.Image
-    private siteIcon: Phaser.GameObjects.Image
     private burger: Phaser.GameObjects.Image
+
+    private settingsMenu: Phaser.GameObjects.Container
+    private burgerMenu: Phaser.GameObjects.Container
+
+    private openBurger = false
+    private openSettings = false
 
     constructor(scene: Phaser.Scene, x:number, y: number)
     {
         // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
+        this.scene = scene
+
+        const { width } = scene.scale
+
         // Добавляем изображения и текст в контейнер
         this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 48, 0, UI.MAINLOGO).setOrigin(0,0)
         this.burger = scene.add.image(CONFIG.SCREENWIDTH / 2 - 170, 26, UI.BURGER)
         this.settings = scene.add.image(CONFIG.SCREENWIDTH / 2 - 96, 26, UI.SETTINGS)
-
-
-
 
         // Отрисовываем изображения и текст
         this.add(this.logo)
@@ -40,6 +43,23 @@ export default class mainHeader extends Phaser.GameObjects.Container
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.settings.setScale(1)
         })
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+            if (this.openSettings)
+                {
+                    this.settingsHide()
+                    if (this.openBurger){this.burgerHide()}
+                }
+            else
+                {
+                    this.settingsShow()
+                    if (this.openBurger){this.burgerHide()}
+                }
+            
+        })
+
+        this.settingsMenu = scene.add.container(width - 96, 50).setScale(0)
+        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 234).setOrigin(1, 0)
+        this.settingsMenu.add(settingsPanel)
 
         // Кнопка бургер
         this.burger.setInteractive()
@@ -49,42 +69,146 @@ export default class mainHeader extends Phaser.GameObjects.Container
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
             this.burger.setScale(1)
         })
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+            if (this.openBurger)
+                {
+                    this.burgerHide()
+                    if (this.openSettings){this.settingsHide()}
+                }
+            else
+                {
+                    this.burgerShow()
+                    if (this.openSettings){this.settingsHide()}
+                }
+            
+        })
 
+        this.burgerMenu = scene.add.container(width - 170, 50).setScale(0)
+        const burgerPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 234).setOrigin(1, 0)
 
+        const linkOne = scene.add.text(-burgerPanel.width + 24, 58, 'О Petsitters', {
+            fontFamily:'Manrope',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            color:'#320064',
+            
+        }).setOrigin(0, 0)
 
+        const linkTwo = scene.add.text(-burgerPanel.width + 24, 96, 'Условия использования', {
+            fontFamily:'Manrope',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            color:'#320064',
+            
+        }).setOrigin(0, 0)
 
+        const linkThree = scene.add.text(-burgerPanel.width + 24, 134, 'Конфиденциальность', {
+            fontFamily:'Manrope',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            color:'#320064',
+            
+        }).setOrigin(0, 0)
 
+        this.burgerMenu.add(burgerPanel)
+        this.burgerMenu.add(linkOne)
+        this.burgerMenu.add(linkTwo)
+        this.burgerMenu.add(linkThree)
 
-        // this.add(this.voiceOn)
-        // this.add(this.voiceOff)
-        // this.add(this.siteIcon)
+        linkOne.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            this.openSite();
+        })
 
-        // Скрываем не нужные состояния
-        // this.voiceOff.setVisible(false)
+        linkTwo.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            this.openSite();
+        })
 
-        // // this.setSize(this.normalImage.width,this.normalImage.height)
+        linkThree.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            this.openSite();
+        })
+    }
 
+    burgerShow()
+    {
+        const { width } = this.scene.scale
 
-        // // Определяем действия для кнопки сайта
-        // this.siteIcon.setInteractive()
-        // .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //     this.openSite();
-        // })
+        if (this.openBurger)
+            {
+                return
+            }
 
-        // // Определяем действия для кнопки выключения звука
-        // this.voiceOn.setInteractive()
-        // .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //     this.voiceOff.setVisible(true)
-        //     this.voiceOn.setVisible(false)
-        // })
+        this.scene.tweens.add({
+            targets:this.burgerMenu,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 300,
+            ease: Phaser.Math.Easing.Sine.InOut
+        })
 
-        // // Определяем действия для кнопки включения звука
-        // this.voiceOff.setInteractive()
-        // .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //     this.voiceOff.setVisible(false)
-        //     this.voiceOn.setVisible(true)
-        // })
+        this.openBurger = true
+    }
 
+    burgerHide()
+    {
+        const { width } = this.scene.scale
+
+        if (!this.openBurger)
+            {
+                return
+            }
+
+        this.scene.tweens.add({
+            targets:this.burgerMenu,
+            scaleX: 0,
+            scaleY: 0,
+            duration: 300,
+            ease: Phaser.Math.Easing.Sine.InOut
+        })
+
+        this.openBurger = false
+    }
+
+    settingsShow()
+    {
+        const { width } = this.scene.scale
+
+        if (this.openSettings)
+            {
+                return
+            }
+
+        this.scene.tweens.add({
+            targets:this.settingsMenu,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 300,
+            ease: Phaser.Math.Easing.Sine.InOut
+        })
+
+        this.openSettings = true
+    }
+
+    settingsHide()
+    {
+        const { width } = this.scene.scale
+
+        if (!this.openSettings)
+            {
+                return
+            }
+
+        this.scene.tweens.add({
+            targets:this.settingsMenu,
+            scaleX: 0,
+            scaleY: 0,
+            duration: 300,
+            ease: Phaser.Math.Easing.Sine.InOut
+        })
+
+        this.openSettings = false
     }
 
     private openSite() {

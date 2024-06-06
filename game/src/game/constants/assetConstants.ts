@@ -7,6 +7,8 @@ export const UI = {
     SETTINGS: 'settings-icon',
     BURGER: 'burger',
 
+    PANEL:'menu-panel',
+
     voiceOn: 'voiceOn',
     voiceOff: 'voiceOff',
     site: 'siteIcon',

@@ -35,12 +35,14 @@ export class Preloader extends Scene
         this.load.setPath('assets');
 
         // Backgrounds
-        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.jpg')
+        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')
 
         // UI Main Header
         this.load.image(UI.MAINLOGO, 'ui/petsitter-logo.png')
         this.load.image(UI.SETTINGS, 'ui/settings-icon.png')
         this.load.image(UI.BURGER, 'ui/burger-icon.png')
+
+        this.load.image(UI.PANEL,'ui/menu-panel.png')
 
         this.load.image(UI.voiceOn, 'ui/voiceOn.png')
         this.load.image(UI.voiceOff, 'ui/voiceOff.png')

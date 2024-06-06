@@ -2,6 +2,8 @@ import Phaser from 'phaser'
 import { CONFIG } from './constants/gameConfig'
 import { scenes } from './scenes'
 
+import { Plugin as NineSlicePlugin } from 'phaser3-nineslice'
+
 
 const config = {
     type: Phaser.AUTO,
@@ -20,6 +22,9 @@ const config = {
           debug: true
         },
       },
+    plugins: {
+      global: [ NineSlicePlugin.DefaultCfg ]
+    },
     scene: scenes
 };
 
