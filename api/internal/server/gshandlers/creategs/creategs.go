@@ -30,10 +30,11 @@ type SessionCreator interface {
 }
 
 // New - возвращает новый хэндлер для создания игровой сессии.
-func New(ctx context.Context, log *slog.Logger, st SessionCreator) http.HandlerFunc {
+func New(ctx context.Context, alog slog.Logger, st SessionCreator) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const operation = "handlers.creategs.New"
 
+		log := &alog
 		log = log.With(
 			slog.String("op", operation),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
@@ -72,10 +73,11 @@ func New(ctx context.Context, log *slog.Logger, st SessionCreator) http.HandlerF
 
 		// Создаем нового юзера и игровую сессию по данным из запроса
 		gs, err := st.CreateSession(ctx, req.Name, req.Email)
+		// Если игрок с данным email уже существует, то возвращаем его игровую сессию
 		if errors.Is(err, storage.ErrUserExists) {
-			log.Error("user already exists", slog.String("email", req.Email))
-			render.Status(r, 422)
-			render.PlainText(w, r, "Error, failed to create new gameSession: user already exists")
+			log.Info("user already exists; returning user data", slog.String("email", req.Email))
+			render.Status(r, 200)
+			render.JSON(w, r, gs)
 			return
 		}
 		if errors.Is(err, storage.ErrInput) {
@@ -97,5 +99,6 @@ func New(ctx context.Context, log *slog.Logger, st SessionCreator) http.HandlerF
 		resp.GameSession = *gs
 		render.Status(r, 201)
 		render.JSON(w, r, resp)
+		log = nil
 	}
 }
