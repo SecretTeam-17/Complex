@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
+import iconButton from './iconButton'
 
 export default class mainHeader extends Phaser.GameObjects.Container
 {
@@ -58,8 +59,36 @@ export default class mainHeader extends Phaser.GameObjects.Container
         })
 
         this.settingsMenu = scene.add.container(width - 96, 50).setScale(0)
-        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 234).setOrigin(1, 0)
+        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL).setOrigin(1, 0)
         this.settingsMenu.add(settingsPanel)
+
+        const voiceONButton = new iconButton(scene, settingsPanel.width - 385, 90, 'ЗВУК ВКЛ', UI.VOICEON)
+
+        const voiceOffButton = new iconButton(scene, settingsPanel.width - 385, 90, 'ЗВУК ВЫКЛ', UI.VOICEOFF).setVisible(false)
+
+        const siteButton = new iconButton(scene, settingsPanel.width - 385, 150, 'НА САЙТ', UI.SITE)
+
+        this.settingsMenu.add(siteButton)
+        this.settingsMenu.add(voiceONButton)
+        this.settingsMenu.add(voiceOffButton)
+        
+        siteButton.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            this.openSite();
+        })
+
+        voiceONButton.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            voiceONButton.setVisible(false)
+            voiceOffButton.setVisible(true)
+        })
+
+        voiceOffButton.setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
+            voiceOffButton.setVisible(false)
+            voiceONButton.setVisible(true)
+        })
+
 
         // Кнопка бургер
         this.burger.setInteractive()

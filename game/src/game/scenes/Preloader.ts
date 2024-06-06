@@ -44,16 +44,18 @@ export class Preloader extends Scene
 
         this.load.image(UI.PANEL,'ui/menu-panel.png')
 
-        this.load.image(UI.voiceOn, 'ui/voiceOn.png')
-        this.load.image(UI.voiceOff, 'ui/voiceOff.png')
-        this.load.image(UI.voiceOff, 'ui/voiceOff.png')
-        this.load.image(UI.site, 'ui/siteIcon.png')
+        this.load.image(UI.VOICEON, 'ui/Voice.png')
+        this.load.image(UI.VOICEOFF, 'ui/VoiceOff.png')
+        this.load.image(UI.SITE, 'ui/exit.png')
         
 
         // Buttons
         this.load.image(UI.BUTTON.NORMAL, 'ui/buttonNormal.png')
         this.load.image(UI.BUTTON.HOVER, 'ui/buttonHover.png')
         this.load.image(UI.BUTTON.DISABLE, 'ui/buttonDisable.png')
+
+        this.load.image(UI.ICONBUTTON.NORMAL, 'ui/iconButtonNormal.png')
+        this.load.image(UI.ICONBUTTON.HOVER, 'ui/iconButtonHover.png')
 
         // Mascots
         this.load.image(MASCOTS.mascotCat.base, 'ui/mascotCat.png')

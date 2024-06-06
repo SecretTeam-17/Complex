@@ -1,9 +1,10 @@
 import { Scene } from 'phaser'
 import { EventBus } from '../EventBus'
-import { BACKGROUNDS } from '../constants/assetConstants'
+import { BACKGROUNDS, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
 import CustomButton from '../components/customButton'
+import iconButton from '../components/iconButton'
 import mainHeader from '../components/mainHeader'
 
 export class StartScreen extends Scene
@@ -26,6 +27,8 @@ export class StartScreen extends Scene
         // Добавляем кнопку
         const startButton = new CustomButton(this, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 140, 'СТАРТ')
         this.add.existing(startButton)
+
+
 
 
         startButton.setInteractive()

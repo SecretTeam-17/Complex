@@ -9,15 +9,19 @@ export const UI = {
 
     PANEL:'menu-panel',
 
-    voiceOn: 'voiceOn',
-    voiceOff: 'voiceOff',
-    site: 'siteIcon',
+    VOICEON: 'voiceOn',
+    VOICEOFF: 'voiceOff',
+    SITE: 'siteIcon',
     
     BUTTON:{
         NORMAL:'button-normal',
         HOVER: 'button-hover',
         DISABLE: 'button-disable'
-    }
+    },
+    ICONBUTTON:{
+        NORMAL:'icon-button-normal',
+        HOVER: 'icon-button-hover',
+    },
 
 }
 
