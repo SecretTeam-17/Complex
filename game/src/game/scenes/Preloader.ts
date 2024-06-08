@@ -1,5 +1,5 @@
 import { Scene } from 'phaser'
-import { BACKGROUNDS, MASCOTS, UI } from '../constants/assetConstants'
+import { BACKGROUNDS, MASCOTS, MODULE, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
 export class Preloader extends Scene
@@ -43,10 +43,14 @@ export class Preloader extends Scene
         this.load.image(UI.BURGER, 'ui/burger-icon.png')
 
         this.load.image(UI.PANEL,'ui/menu-panel.png')
+        this.load.image(UI.CARDPANEL,'ui/card-button.png')
+        this.load.image(UI.MODULEPANEL,'ui/module-card.png')
 
         this.load.image(UI.VOICEON, 'ui/Voice.png')
         this.load.image(UI.VOICEOFF, 'ui/VoiceOff.png')
         this.load.image(UI.SITE, 'ui/exit.png')
+        this.load.image(UI.BOOK, 'ui/book-icon.png')
+        this.load.image(UI.GAME,'ui/game-icon.png')
         
 
         // Buttons
@@ -61,11 +65,16 @@ export class Preloader extends Scene
         this.load.image(MASCOTS.MASCOTCAT.BASE, 'ui/mascotCat.png')
         this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
 
+        // Module One
+        this.load.image(MODULE.MODULEONE.PREIMAGE, 'modules/one/pre-module-one.png')
+
     }
 
     create ()
     {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('StartScreen');
+        // this.scene.start('StartScreen');
+        this.scene.start('MainMenu');
+
     }
 }

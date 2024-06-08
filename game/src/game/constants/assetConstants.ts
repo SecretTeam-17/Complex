@@ -8,10 +8,14 @@ export const UI = {
     BURGER: 'burger',
 
     PANEL:'menu-panel',
+    CARDPANEL: 'card-panel',
+    MODULEPANEL: 'module-panel',
 
     VOICEON: 'voiceOn',
     VOICEOFF: 'voiceOff',
     SITE: 'siteIcon',
+    BOOK: 'book',
+    GAME: 'game',
     
     BUTTON:{
         NORMAL:'button-normal',
@@ -22,7 +26,6 @@ export const UI = {
         NORMAL:'icon-button-normal',
         HOVER: 'icon-button-hover',
     },
-
 }
 
 export const MASCOTS = {
@@ -32,5 +35,11 @@ export const MASCOTS = {
     MASCOTDOG: {
         BASE: 'mascotDog'
 
+    }
+}
+
+export const MODULE = {
+    MODULEONE:{
+        PREIMAGE: 'pre-module-one'
     }
 }
