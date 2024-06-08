@@ -1,0 +1,27 @@
+services:
+  # Locust - WebUI for testers
+  master_locust:
+    container_name: master_locust
+    hostname: master_locust
+    image: locustio/locust:master
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - primary-network
+    ports:
+      - "8089:8089"
+      - "5557:5557"
+    volumes:
+      - $DOCKERDIR/appdata/locust:/locust
+    environment:
+      - TZ=$TZ
+    command: -f /locust/locustfile.py --master
+    depends_on:
+      - worker_locust
+
+  worker_locust:
+    image: locustio/locust:master
+    volumes:
+      - $DOCKERDIR/appdata/locust:/locust
+    command: -f /locust/locustfile.py --worker --master-host=192.168.10.101
