@@ -3,8 +3,7 @@ import { UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 import iconButton from './iconButton'
 
-export default class mainHeader extends Phaser.GameObjects.Container
-{
+export default class mainHeader extends Phaser.GameObjects.Container {
 
     // Определяем объекты контейнера
     private logo: Phaser.GameObjects.Image
@@ -17,8 +16,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
     private openBurger = false
     private openSettings = false
 
-    constructor(scene: Phaser.Scene, x:number, y: number)
-    {
+    constructor(scene: Phaser.Scene, x: number, y: number) {
         // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
@@ -27,7 +25,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
         const { width } = scene.scale
 
         // Добавляем изображения и текст в контейнер
-        this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 75, 0, UI.MAINLOGO).setOrigin(0,0)
+        this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 75, 0, UI.MAINLOGO).setOrigin(0, 0)
         this.burger = scene.add.image(CONFIG.SCREENWIDTH / 2 - 205, 36, UI.BURGER)
         this.settings = scene.add.image(CONFIG.SCREENWIDTH / 2 - 105, 36, UI.SETTINGS)
 
@@ -38,25 +36,23 @@ export default class mainHeader extends Phaser.GameObjects.Container
 
         // Кнопка настроек
         this.settings.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-            this.settings.setScale(1.1)
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-            this.settings.setScale(1)
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-            if (this.openSettings)
-                {
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+                this.settings.setScale(1.1)
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+                this.settings.setScale(1)
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                if (this.openSettings) {
                     this.settingsHide()
-                    if (this.openBurger){this.burgerHide()}
+                    if (this.openBurger) { this.burgerHide() }
                 }
-            else
-                {
+                else {
                     this.settingsShow()
-                    if (this.openBurger){this.burgerHide()}
+                    if (this.openBurger) { this.burgerHide() }
                 }
-            
-        })
+
+            })
 
         this.settingsMenu = scene.add.container(width - 116, 90).setScale(0)
         const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
@@ -71,69 +67,67 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.settingsMenu.add(siteButton)
         this.settingsMenu.add(voiceONButton)
         this.settingsMenu.add(voiceOffButton)
-        
+
         siteButton.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            this.openSite();
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.openSite()
+            })
 
         voiceONButton.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            voiceONButton.setVisible(false)
-            voiceOffButton.setVisible(true)
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                voiceONButton.setVisible(false)
+                voiceOffButton.setVisible(true)
+            })
 
         voiceOffButton.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            voiceOffButton.setVisible(false)
-            voiceONButton.setVisible(true)
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                voiceOffButton.setVisible(false)
+                voiceONButton.setVisible(true)
+            })
 
 
         // Кнопка бургер
         this.burger.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-            this.burger.setScale(1.1)
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-            this.burger.setScale(1)
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-            if (this.openBurger)
-                {
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+                this.burger.setScale(1.1)
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+                this.burger.setScale(1)
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                if (this.openBurger) {
                     this.burgerHide()
-                    if (this.openSettings){this.settingsHide()}
+                    if (this.openSettings) { this.settingsHide() }
                 }
-            else
-                {
+                else {
                     this.burgerShow()
-                    if (this.openSettings){this.settingsHide()}
+                    if (this.openSettings) { this.settingsHide() }
                 }
-            
-        })
+
+            })
 
         this.burgerMenu = scene.add.container(width - 210, 90).setScale(0)
         const burgerPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
 
         const linkOne = scene.add.text(-burgerPanel.width + 48, 98, 'О Petsitters', {
-            fontFamily:'Manrope',
+            fontFamily: 'Manrope',
             fontSize: '24px',
-            color:'#320064',
-            
+            color: '#320064',
+
         }).setOrigin(0, 0)
 
         const linkTwo = scene.add.text(-burgerPanel.width + 48, 156, 'Условия использования', {
-            fontFamily:'Manrope',
+            fontFamily: 'Manrope',
             fontSize: '24px',
-            color:'#320064',
-            
+            color: '#320064',
+
         }).setOrigin(0, 0)
 
         const linkThree = scene.add.text(-burgerPanel.width + 48, 214, 'Конфиденциальность', {
-            fontFamily:'Manrope',
+            fontFamily: 'Manrope',
             fontSize: '24px',
-            color:'#320064',
-            
+            color: '#320064',
+
         }).setOrigin(0, 0)
 
         this.burgerMenu.add(burgerPanel)
@@ -142,32 +136,28 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.burgerMenu.add(linkThree)
 
         linkOne.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            this.openSite();
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.openSite()
+            })
 
         linkTwo.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            this.openSite();
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.openSite()
+            })
 
         linkThree.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () =>{
-            this.openSite();
-        })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.openSite()
+            })
     }
 
-    burgerShow()
-    {
-        const { width } = this.scene.scale
-
-        if (this.openBurger)
-            {
-                return
-            }
+    burgerShow() {
+        if (this.openBurger) {
+            return
+        }
 
         this.scene.tweens.add({
-            targets:this.burgerMenu,
+            targets: this.burgerMenu,
             scaleX: 1,
             scaleY: 1,
             duration: 300,
@@ -177,17 +167,13 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.openBurger = true
     }
 
-    burgerHide()
-    {
-        const { width } = this.scene.scale
-
-        if (!this.openBurger)
-            {
-                return
-            }
+    burgerHide() {
+        if (!this.openBurger) {
+            return
+        }
 
         this.scene.tweens.add({
-            targets:this.burgerMenu,
+            targets: this.burgerMenu,
             scaleX: 0,
             scaleY: 0,
             duration: 300,
@@ -197,17 +183,13 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.openBurger = false
     }
 
-    settingsShow()
-    {
-        const { width } = this.scene.scale
-
-        if (this.openSettings)
-            {
-                return
-            }
+    settingsShow() {
+        if (this.openSettings) {
+            return
+        }
 
         this.scene.tweens.add({
-            targets:this.settingsMenu,
+            targets: this.settingsMenu,
             scaleX: 1,
             scaleY: 1,
             duration: 300,
@@ -217,17 +199,13 @@ export default class mainHeader extends Phaser.GameObjects.Container
         this.openSettings = true
     }
 
-    settingsHide()
-    {
-        const { width } = this.scene.scale
-
-        if (!this.openSettings)
-            {
-                return
-            }
+    settingsHide() {
+        if (!this.openSettings) {
+            return
+        }
 
         this.scene.tweens.add({
-            targets:this.settingsMenu,
+            targets: this.settingsMenu,
             scaleX: 0,
             scaleY: 0,
             duration: 300,
@@ -239,7 +217,7 @@ export default class mainHeader extends Phaser.GameObjects.Container
 
     private openSite() {
         const siteUrl = 'https://www.example.com'
-        window.open(siteUrl, '_blank');
+        window.open(siteUrl, '_blank')
     }
 
 }
