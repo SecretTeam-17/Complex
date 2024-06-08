@@ -12,19 +12,19 @@ export class Preloader extends Scene
     init ()
     {
         //  Отображаем фон для загрузочного экрана
-        this.add.image(0,0, 'loading-bg').setOrigin(0,0).setScale(1.25)
-        this.add.image(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2,'big-logo').setScale(0.75)
+        this.add.image(0,0, 'loading-bg').setOrigin(0,0)
+        this.add.image(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2,'big-logo')
 
         //  Полоса загрузки
-        this.add.rectangle(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 100, 500, 32).setStrokeStyle(1, 0xffffff);
+        this.add.rectangle(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2 + 200, CONFIG.SCREENWIDTH / 2, 64).setStrokeStyle(1, 0xffffff);
 
         //  Полоса прогресса
-        const bar = this.add.rectangle(CONFIG.SCREENWIDTH / 2 - 248, CONFIG.SCREENHIGHT -100, 4, 28, 0xC896FF);
+        const bar = this.add.rectangle(CONFIG.SCREENWIDTH / 4 + 4, CONFIG.SCREENHIGHT /2 + 200, 4, 60, 0xC896FF);
 
         //  Функция отображения прогресса загрузки
         this.load.on('progress', (progress) => {
 
-            bar.width = 4 + (496 * progress);
+            bar.width = 4 + (CONFIG.SCREENWIDTH / 2 - 8 * progress);
 
         });
     }
@@ -35,7 +35,7 @@ export class Preloader extends Scene
         this.load.setPath('assets');
 
         // Backgrounds
-        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')
+        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/New_bg.png')
 
         // UI Main Header
         this.load.image(UI.MAINLOGO, 'ui/petsitter-logo.png')

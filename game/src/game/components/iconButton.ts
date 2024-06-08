@@ -19,10 +19,10 @@ export default class iconButton extends Phaser.GameObjects.Container
         // Добавляем изображения и текст в контейнер
         this.normalImage = scene.add.image(0,0, UI.ICONBUTTON.NORMAL)
         this.hoverImage = scene.add.image(0, 0, UI.ICONBUTTON.HOVER)
-        this.iconImage = scene.add.image(-45,0, icon).setOrigin(0.5, 0.5)
-        this.text = scene.add.text(20,0,text, {
+        this.iconImage = scene.add.image(-70,0, icon).setOrigin(0.5, 0.5)
+        this.text = scene.add.text(30,0,text, {
             fontFamily:'Manrope',
-            fontSize: '16px',
+            fontSize: '28px',
             fontStyle: 'Bold',
             color:'#FDF8F8',
             

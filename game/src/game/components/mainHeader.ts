@@ -27,9 +27,9 @@ export default class mainHeader extends Phaser.GameObjects.Container
         const { width } = scene.scale
 
         // Добавляем изображения и текст в контейнер
-        this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 48, 0, UI.MAINLOGO).setOrigin(0,0)
-        this.burger = scene.add.image(CONFIG.SCREENWIDTH / 2 - 170, 26, UI.BURGER)
-        this.settings = scene.add.image(CONFIG.SCREENWIDTH / 2 - 96, 26, UI.SETTINGS)
+        this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 75, 0, UI.MAINLOGO).setOrigin(0,0)
+        this.burger = scene.add.image(CONFIG.SCREENWIDTH / 2 - 205, 36, UI.BURGER)
+        this.settings = scene.add.image(CONFIG.SCREENWIDTH / 2 - 105, 36, UI.SETTINGS)
 
         // Отрисовываем изображения и текст
         this.add(this.logo)
@@ -58,15 +58,15 @@ export default class mainHeader extends Phaser.GameObjects.Container
             
         })
 
-        this.settingsMenu = scene.add.container(width - 96, 50).setScale(0)
-        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL).setOrigin(1, 0)
+        this.settingsMenu = scene.add.container(width - 116, 90).setScale(0)
+        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
         this.settingsMenu.add(settingsPanel)
 
-        const voiceONButton = new iconButton(scene, settingsPanel.width - 385, 90, 'ЗВУК ВКЛ', UI.VOICEON)
+        const voiceONButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'ЗВУК', UI.VOICEON)
 
-        const voiceOffButton = new iconButton(scene, settingsPanel.width - 385, 90, 'ЗВУК ВЫКЛ', UI.VOICEOFF).setVisible(false)
+        const voiceOffButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'БЕЗ ЗВУКА', UI.VOICEOFF).setVisible(false)
 
-        const siteButton = new iconButton(scene, settingsPanel.width - 385, 150, 'НА САЙТ', UI.SITE)
+        const siteButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 + 70, 'НА САЙТ', UI.SITE)
 
         this.settingsMenu.add(siteButton)
         this.settingsMenu.add(voiceONButton)
@@ -112,29 +112,26 @@ export default class mainHeader extends Phaser.GameObjects.Container
             
         })
 
-        this.burgerMenu = scene.add.container(width - 170, 50).setScale(0)
-        const burgerPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 234).setOrigin(1, 0)
+        this.burgerMenu = scene.add.container(width - 210, 90).setScale(0)
+        const burgerPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
 
-        const linkOne = scene.add.text(-burgerPanel.width + 24, 68, 'О Petsitters', {
+        const linkOne = scene.add.text(-burgerPanel.width + 48, 98, 'О Petsitters', {
             fontFamily:'Manrope',
-            fontSize: '14px',
-            fontStyle: 'normal',
+            fontSize: '24px',
             color:'#320064',
             
         }).setOrigin(0, 0)
 
-        const linkTwo = scene.add.text(-burgerPanel.width + 24, 106, 'Условия использования', {
+        const linkTwo = scene.add.text(-burgerPanel.width + 48, 156, 'Условия использования', {
             fontFamily:'Manrope',
-            fontSize: '14px',
-            fontStyle: 'normal',
+            fontSize: '24px',
             color:'#320064',
             
         }).setOrigin(0, 0)
 
-        const linkThree = scene.add.text(-burgerPanel.width + 24, 144, 'Конфиденциальность', {
+        const linkThree = scene.add.text(-burgerPanel.width + 48, 214, 'Конфиденциальность', {
             fontFamily:'Manrope',
-            fontSize: '14px',
-            fontStyle: 'normal',
+            fontSize: '24px',
             color:'#320064',
             
         }).setOrigin(0, 0)

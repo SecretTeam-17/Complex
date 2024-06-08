@@ -18,11 +18,11 @@ export default class CustomButton extends Phaser.GameObjects.Container
 
         // Добавляем изображения и текст в контейнер
         this.normalImage = scene.add.image(0,0, UI.BUTTON.NORMAL)
-        this.hoverImage = scene.add.image(0,-10, UI.BUTTON.HOVER)
+        this.hoverImage = scene.add.image(0,-15, UI.BUTTON.HOVER)
         this.disableImage = scene.add.image(0,0, UI.BUTTON.DISABLE)
         this.text = scene.add.text(0,0,text, {
             fontFamily:'Manrope',
-            fontSize: '32px',
+            fontSize: '48px',
             fontStyle: 'Bold',
             color:'#FDF8F8',
             

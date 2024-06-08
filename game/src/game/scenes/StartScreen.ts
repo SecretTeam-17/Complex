@@ -17,19 +17,23 @@ export class StartScreen extends Scene
     create ()
     {
         // Добавляем задний фон
-        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0,0).setScale(0.5)
+        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0,0).setScale(1)
 
         // Добавляем хеадер
-        const Header = new mainHeader(this, CONFIG.SCREENWIDTH / 2, 24)
+        const Header = new mainHeader(this, CONFIG.SCREENWIDTH / 2, 38)
         this.add.existing(Header)
 
         // Добавляем кнопку
-        const startButton = new CustomButton(this, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 140, 'СТАРТ')
+        const startButton = new CustomButton(this, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 220, 'СТАРТ')
         this.add.existing(startButton)
 
         startButton.setInteractive()
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-            this.scene.start('MainMenu');
+            this.cameras.main.fadeOut(500, 0,0,0, (camera, progress) => {
+                if (progress === 1){
+                    this.scene.start('MainMenu');
+                }
+            })
         })
         .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 

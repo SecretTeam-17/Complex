@@ -1,5 +1,5 @@
 export const BACKGROUNDS = {
-    STARTSCREEN: 'startscreen-bg'
+    STARTSCREEN: 'startscreen-bg',
 }
 
 export const UI = {
