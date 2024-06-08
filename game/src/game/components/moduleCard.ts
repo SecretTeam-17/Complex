@@ -72,8 +72,8 @@ export default class moduleCard extends Phaser.GameObjects.Container {
         this.add(this.bar)
         this.add(this.barText)
         this.add(this.preImage)
-        this.add(this.normalImage)
         this.add(this.hoverImage)
+        this.add(this.normalImage)
         this.add(this.buttonText)
 
 
@@ -86,8 +86,8 @@ export default class moduleCard extends Phaser.GameObjects.Container {
         // Определяем действия для кнопки по навыедению и нажатию
         this.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                this.normalImage.setVisible(false)
                 this.hoverImage.setVisible(true)
+                this.normalImage.setVisible(false)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.normalImage.setVisible(true)
