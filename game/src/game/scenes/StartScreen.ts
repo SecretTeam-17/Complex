@@ -6,18 +6,15 @@ import { CONFIG } from '../constants/gameConfig'
 import CustomButton from '../components/customButton'
 import mainHeader from '../components/mainHeader'
 
-export class StartScreen extends Scene
-{
+export class StartScreen extends Scene {
 
-    constructor ()
-    {
-        super('StartScreen');
+    constructor() {
+        super('StartScreen')
     }
 
-    create ()
-    {
+    create() {
         // Добавляем задний фон
-        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0,0).setScale(1)
+        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)
 
         // Добавляем хеадер
         const Header = new mainHeader(this, CONFIG.SCREENWIDTH / 2, 38)
@@ -28,21 +25,21 @@ export class StartScreen extends Scene
         this.add.existing(startButton)
 
         startButton.setInteractive()
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-            this.cameras.main.fadeOut(500, 0,0,0, (camera, progress) => {
-                if (progress === 1){
-                    this.scene.start('MainMenu');
-                }
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
+                    if (progress === 1) {
+                        this.scene.start('MainMenu')
+                    }
+                })
             })
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 
-        })
-        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
 
-        })
+            })
 
-        EventBus.emit('current-scene-ready', this);
+        EventBus.emit('current-scene-ready', this)
     }
 
 }

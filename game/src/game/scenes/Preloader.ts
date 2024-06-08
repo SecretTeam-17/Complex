@@ -19,7 +19,7 @@ export class Preloader extends Scene {
         const bar = this.add.rectangle(CONFIG.SCREENWIDTH / 4 + 4, CONFIG.SCREENHIGHT / 2 + 200, 4, 60, 0xC896FF)
 
         //  Функция отображения прогресса загрузки
-        this.load.on('progress', (progress) => {
+        this.load.on('progress', (progress: number) => {
 
             bar.width = 4 + (CONFIG.SCREENWIDTH / 2 - 8 * progress)
 

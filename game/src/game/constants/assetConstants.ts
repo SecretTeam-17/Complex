@@ -7,7 +7,7 @@ export const UI = {
     SETTINGS: 'settings-icon',
     BURGER: 'burger',
 
-    PANEL:'menu-panel',
+    PANEL: 'menu-panel',
     CARDPANEL: 'card-panel',
     MODULEPANEL: 'module-panel',
 
@@ -16,21 +16,21 @@ export const UI = {
     SITE: 'siteIcon',
     BOOK: 'book',
     GAME: 'game',
-    
-    BUTTON:{
-        NORMAL:'button-normal',
+
+    BUTTON: {
+        NORMAL: 'button-normal',
         HOVER: 'button-hover',
         DISABLE: 'button-disable'
     },
-    ICONBUTTON:{
-        NORMAL:'icon-button-normal',
+    ICONBUTTON: {
+        NORMAL: 'icon-button-normal',
         HOVER: 'icon-button-hover',
     },
 }
 
 export const MASCOTS = {
     MASCOTCAT: {
-        BASE:'mascotCat'
+        BASE: 'mascotCat'
     },
     MASCOTDOG: {
         BASE: 'mascotDog'
@@ -39,7 +39,7 @@ export const MASCOTS = {
 }
 
 export const MODULE = {
-    MODULEONE:{
+    MODULEONE: {
         PREIMAGE: 'pre-module-one'
     }
 }
