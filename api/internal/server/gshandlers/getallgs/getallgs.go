@@ -1,9 +1,11 @@
 package getallgs
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"net/http"
+	"petsittersGameServer/internal/logger"
 	"petsittersGameServer/internal/storage"
 
 	"github.com/go-chi/chi/v5/middleware"
@@ -11,37 +13,42 @@ import (
 )
 
 type AllSessions interface {
-	GetSessions() ([]storage.GameSession, error)
+	GetSessions(ctx context.Context) ([]storage.GameSession, error)
 }
 
 // New - возвращает новый хэндлер для получения всех игровых сессий.
-func New(log *slog.Logger, st AllSessions) http.HandlerFunc {
+func New(alog slog.Logger, st AllSessions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const operation = "handlers.getallgs.New"
 
+		log := &alog
 		log = log.With(
 			slog.String("op", operation),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
 		)
 		log.Info("new request to receive all game sessions")
 
+		ctx := r.Context()
+
 		// Получаем слайс всех игровых сессий из БД
-		resp, err := st.GetSessions()
+		resp, err := st.GetSessions(ctx)
 		if errors.Is(err, storage.ErrSessionsEmpty) {
 			log.Error("game sessions not found")
-			w.WriteHeader(404)
+			render.Status(r, 404)
 			render.PlainText(w, r, "Error, failed to receive all game session: table is empty")
 			return
 		}
 		if err != nil {
-			log.Error("failed to receive all game sessions")
-			w.WriteHeader(404)
+			log.Error("failed to receive all game sessions", logger.Err(err))
+			render.Status(r, 404)
 			render.PlainText(w, r, "Error, failed to receive all game sessions: unknown error")
 			return
 		}
+		log.Info("all game sessions was returned successfully")
 
 		// Записываем слайс игровых сессий из БД в респонс
-		w.WriteHeader(200)
+		render.Status(r, 200)
 		render.JSON(w, r, resp)
+		log = nil
 	}
 }

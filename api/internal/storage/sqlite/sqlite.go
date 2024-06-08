@@ -1,11 +1,16 @@
 package sqlite
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+// Таймаут на создание талблиц в БД
+const timeout time.Duration = time.Second * 10
 
 // Storage - пул подключений к БД
 type Storage struct {
@@ -13,7 +18,7 @@ type Storage struct {
 }
 
 // New - конструктор пула подключений к БД. Создает также пустые таблицы, если их нет.
-func New(storagePath string) (*Storage, error) {
+func New(storagePath, questionPath string) (*Storage, error) {
 	const operation = "storage.sqlite.New"
 
 	// Создаем пул и проверяем его
@@ -26,53 +31,30 @@ func New(storagePath string) (*Storage, error) {
 		return nil, fmt.Errorf("%s: %w", operation, err)
 	}
 
-	// TODO: добавить таблицу с введенными игроком ответами
-
-	// Начинаем транзакцию
-	tx, err := db.Begin()
-	defer tx.Rollback()
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	err = initTables(ctx, db)
 	if err != nil {
 		return nil, fmt.Errorf("%s: %w", operation, err)
+	}
+
+	return &Storage{db: db}, nil
+}
+
+// initTables - создает таблицы игроков и игровых сессий, если таких нет в БД.
+func initTables(ctx context.Context, db *sql.DB) error {
+	const operation = "storage.sqlite.initTables"
+
+	// Начинаем транзакцию
+	tx, err := db.BeginTx(ctx, nil)
+	defer tx.Rollback()
+	if err != nil {
+		return fmt.Errorf("%s: %w", operation, err)
 	}
 
 	// Создаем таблицы:
-	// Таблица modules
-	_, err = tx.Exec(`
-		CREATE TABLE IF NOT EXISTS modules (
-			id INTEGER PRIMARY KEY,
-			name TEXT NOT NULL UNIQUE,
-			description TEXT DEFAULT ''
-		);
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
-	}
-	// Таблица questions
-	_, err = tx.Exec(`
-		CREATE TABLE IF NOT EXISTS questions (
-			id INTEGER PRIMARY KEY,
-			module INTEGER NOT NULL REFERENCES modules(id),
-			text TEXT NOT NULL,
-			has_input BOOLEAN DEFAULT FALSE
-		);
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
-	}
-	// Таблица answers
-	_, err = tx.Exec(`
-		CREATE TABLE IF NOT EXISTS answers (
-			id INTEGER PRIMARY KEY,
-			question_id INTEGER NOT NULL REFERENCES questions(id),
-			text TEXT NOT NULL,
-			is_correct BOOLEAN DEFAULT FALSE
-		);
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
-	}
 	// Таблица users
-	_, err = tx.Exec(`
+	_, err = tx.ExecContext(ctx, `
 		CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY,
 			name TEXT NOT NULL,
@@ -80,17 +62,17 @@ func New(storagePath string) (*Storage, error) {
 		);
 	`)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
+		return fmt.Errorf("%s: %w", operation, err)
 	}
 	// Индекс по полю email в таблице users
-	_, err = tx.Exec(`
+	_, err = tx.ExecContext(ctx, `
 		CREATE INDEX IF NOT EXISTS idx_email ON users(email);
 	`)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
+		return fmt.Errorf("%s: %w", operation, err)
 	}
 	// Таблица game_sessions
-	_, err = tx.Exec(`
+	_, err = tx.ExecContext(ctx, `
 		CREATE TABLE IF NOT EXISTS game_sessions (
 			id INTEGER PRIMARY KEY,
 			user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -105,32 +87,39 @@ func New(storagePath string) (*Storage, error) {
 		);
 	`)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
-	}
-
-	// Вносим обязательные данные в таблицу module
-	// Пока 4 модуля, потом заменим на реальные данные
-	_, err = tx.Exec(`
-		INSERT OR IGNORE INTO modules (name, description) VALUES
-		('module_name_1', 'description 1'),
-		('module_name_2', 'description 2'),
-		('module_name_3', 'description 3'),
-		('module_name_4', 'description 4');
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
+		return fmt.Errorf("%s: %w", operation, err)
 	}
 
 	// Подтверждаем транзакцию
 	err = tx.Commit()
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", operation, err)
+		return fmt.Errorf("%s: %w", operation, err)
 	}
-
-	return &Storage{db: db}, nil
+	return nil
 }
 
 // Close - обертка для закрытия подключения к БД.
 func (s *Storage) Close() error {
 	return s.db.Close()
 }
+
+// initModules - декодирует json файл с модулями в строку для записи в память сервера.
+// Не используется в текущей реализации.
+// func initModules(path string) (string, error) {
+// 	const operation = "storage.sqlite.initModules"
+
+// 	// Читаем из json файла в строку
+// 	file, err := os.ReadFile(path)
+// 	if err != nil {
+// 		return "", fmt.Errorf("%s: %w", operation, err)
+// 	}
+
+// 	// Вырезаем лишние пробелы и отступы
+// 	buf := new(bytes.Buffer)
+// 	err = json.Compact(buf, file)
+// 	if err != nil {
+// 		return "", fmt.Errorf("%s: %w", operation, err)
+// 	}
+
+// 	return buf.String(), nil
+// }

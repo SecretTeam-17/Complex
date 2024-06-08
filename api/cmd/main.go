@@ -16,6 +16,7 @@ import (
 	"petsittersGameServer/internal/server/gshandlers/truncate"
 	"petsittersGameServer/internal/server/gshandlers/updategs"
 	"petsittersGameServer/internal/server/index/indexpage"
+	"petsittersGameServer/internal/server/middleware/cors"
 	"petsittersGameServer/internal/storage/sqlite"
 	"petsittersGameServer/internal/tools/stopsignal"
 	"time"
@@ -34,7 +35,7 @@ func main() {
 	log.Debug("logger initialized")
 
 	// Инициализируем пул подключений к базе данных
-	storage, err := sqlite.New(cfg.StoragePath)
+	storage, err := sqlite.New(cfg.StoragePath, cfg.ModulesPath)
 	if err != nil {
 		log.Error("failed to init storage", logger.Err(err))
 		os.Exit(1)
@@ -46,25 +47,24 @@ func main() {
 
 	// Указываем, какие middleware использовать
 	router.Use(middleware.RequestID)
-	// router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
-	//router.Use(middleware.URLFormat)
+	router.Use(cors.Cors())
 
-	router.Get("/", indexpage.New(log))
+	router.Get("/", indexpage.New(*log))
 
 	// Объявляем REST API хэндлеры для работы со структурой GameSession
-	router.Get("/api/session/id/{id}", getgsid.New(log, storage))
-	router.Get("/api/session/email/{email}", getgsemail.New(log, storage))
-	router.Get("/api/session/all", getallgs.New(log, storage))
-	router.Get("/api/session/new/{id}", cleangs.New(log, storage))
+	router.Get("/api/session/id/{id}", getgsid.New(*log, storage))
+	router.Get("/api/session/email/{email}", getgsemail.New(*log, storage))
+	router.Get("/api/session/all", getallgs.New(*log, storage))
+	router.Get("/api/session/new/{id}", cleangs.New(*log, storage))
 
-	router.Post("/api/session", creategs.New(log, storage))
+	router.Post("/api/session", creategs.New(*log, storage))
 
-	router.Put("/api/session", updategs.New(log, storage))
+	router.Put("/api/session", updategs.New(*log, storage))
 
-	router.Delete("/api/session/id/{id}", deletegs.New(log, storage))
-	router.Delete("/api/session/verydangerousbutton", truncate.New(log, storage)) // Для тестирования
+	router.Delete("/api/session/id/{id}", deletegs.New(*log, storage))
+	router.Delete("/api/session/verydangerousbutton", truncate.New(*log, storage)) // Для тестирования
 
 	// Конфигурируем сервер из данных конфиг файла
 	srv := &http.Server{

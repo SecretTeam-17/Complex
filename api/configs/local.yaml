@@ -1,9 +1,9 @@
 env: "local" # окружение сервера. Варианты: local, dev, prod
 storage_path: "./storage/storage.db" # путь к файлу БД или адрес для подключения. SQLite создаст новый файл БД, если не найдет существующий
 storage_passwd: "DB_PASSWD" # не используется в SQLite
-log_path: "LOG_FILE_PATH" # путь к файлу логов
+modules_path: "./modules/modules.json" # путь к файлу с вопросами и ответами
 http_server:
   address: "localhost:8083"
   read_timeout: 5s
-  write_timeout: 5s
+  write_timeout: 10s
   idle_timeout: 60s

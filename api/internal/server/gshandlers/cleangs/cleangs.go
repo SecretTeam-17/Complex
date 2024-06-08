@@ -1,6 +1,7 @@
 package cleangs
 
 import (
+	"context"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -15,14 +16,15 @@ import (
 )
 
 type SessionCleaner interface {
-	CleanSession(id int) (*storage.GameSession, error)
+	CleanSession(ctx context.Context, id int) (*storage.GameSession, error)
 }
 
 // New - возвращает новый хэндлер для очистки игровой сессии по id.
-func New(log *slog.Logger, st SessionCleaner) http.HandlerFunc {
+func New(alog slog.Logger, st SessionCleaner) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const operation = "handlers.cleangs.New"
 
+		log := &alog
 		log = log.With(
 			slog.String("op", operation),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
@@ -34,22 +36,24 @@ func New(log *slog.Logger, st SessionCleaner) http.HandlerFunc {
 		id, err := strconv.Atoi(param)
 		if err != nil {
 			log.Error("invalid game session id", logger.Err(err))
-			w.WriteHeader(400)
+			render.Status(r, 400)
 			render.PlainText(w, r, "Error, failed to clean a game session: incorrect id")
 			return
 		}
 
+		ctx := r.Context()
+
 		// Получаем очищенную игровую сессию из БД
-		gs, err := st.CleanSession(id)
+		gs, err := st.CleanSession(ctx, id)
 		if errors.Is(err, storage.ErrSessionNotFound) {
 			log.Error("game session not found", slog.Int("session_id", id))
-			w.WriteHeader(404)
+			render.Status(r, 404)
 			render.PlainText(w, r, "Error, failed to clean a game session: id not found")
 			return
 		}
 		if err != nil {
-			log.Error("failed to clean a game session", slog.Int("session_id", id))
-			w.WriteHeader(404)
+			log.Error("failed to clean a game session", slog.Int("session_id", id), logger.Err(err))
+			render.Status(r, 404)
 			render.PlainText(w, r, "Error, failed to clean a game session: unknown error")
 			return
 		}
@@ -58,7 +62,8 @@ func New(log *slog.Logger, st SessionCleaner) http.HandlerFunc {
 		// Записываем сессию в структуру Response
 		var resp rp.Response
 		resp.GameSession = *gs
-		w.WriteHeader(200)
+		render.Status(r, 200)
 		render.JSON(w, r, resp)
+		log = nil
 	}
 }

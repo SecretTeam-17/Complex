@@ -1,6 +1,7 @@
 package updategs
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -16,14 +17,15 @@ import (
 )
 
 type SessionUpdater interface {
-	UpdateSession(gs storage.GameSession) error
+	UpdateSession(ctx context.Context, gs storage.GameSession) error
 }
 
 // New - возвращает новый хэндлер для обновления игровой сессии.
-func New(log *slog.Logger, st SessionUpdater) http.HandlerFunc {
+func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const operation = "handlers.updategs.New"
 
+		log := &alog
 		log = log.With(
 			slog.String("op", operation),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
@@ -35,17 +37,17 @@ func New(log *slog.Logger, st SessionUpdater) http.HandlerFunc {
 		err := render.DecodeJSON(r.Body, &req)
 		if errors.Is(err, io.EOF) {
 			log.Error("request body is empty")
-			w.WriteHeader(400)
+			render.Status(r, 400)
 			render.PlainText(w, r, "Error, failed to update a game session: empty request")
 			return
 		}
 		if err != nil {
 			log.Error("failed to decode request body", logger.Err(err))
-			w.WriteHeader(400)
+			render.Status(r, 400)
 			render.PlainText(w, r, "Error, failed to update a game session: failed to decode request")
 			return
 		}
-		log.Info("request body decoded", slog.Any("request", req))
+		log.Info("request body decoded")
 
 		// Валидация полей json из запроса
 		valid := validator.New()
@@ -53,36 +55,39 @@ func New(log *slog.Logger, st SessionUpdater) http.HandlerFunc {
 		if err != nil {
 			validateErr := err.(validator.ValidationErrors)
 			log.Error("invalid request", logger.Err(err))
-			w.WriteHeader(422)
+			render.Status(r, 422)
 			str := fmt.Sprintf("Error, failed to update a game session: %s", api.ValidationError(validateErr))
 			render.PlainText(w, r, str)
 			return
 		}
 
+		ctx := r.Context()
+
 		// Обновляем игровую сессию в БД
-		err = st.UpdateSession(req)
+		err = st.UpdateSession(ctx, req)
 		if errors.Is(err, storage.ErrModuleNotFound) {
 			log.Error("incorrect module", slog.Int("module", req.CurrentModule))
-			w.WriteHeader(422)
+			render.Status(r, 422)
 			render.PlainText(w, r, "Error, to update a game session: module not found in database")
 			return
 		}
 		if errors.Is(err, storage.ErrSessionNotFound) {
 			log.Error("game session not found", slog.Int("session_id", req.SessionID))
-			w.WriteHeader(404)
+			render.Status(r, 422)
 			render.PlainText(w, r, "Error, to update a game session: id not found")
 			return
 		}
 		if err != nil {
 			log.Error("failed to update a game session", logger.Err(err))
-			w.WriteHeader(422)
+			render.Status(r, 422)
 			render.PlainText(w, r, "Error, failed to update a game session: unknown error")
 			return
 		}
 		log.Info("game session updated", slog.Int("id", req.SessionID))
 
 		// Возвращаем статус 204 и пустое тело
-		w.WriteHeader(204)
+		render.Status(r, 204)
 		render.NoContent(w, r)
+		log = nil
 	}
 }
