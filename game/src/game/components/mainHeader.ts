@@ -1,4 +1,6 @@
 import Phaser from 'phaser'
+import { setSoundOff, setSoundOn } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import { UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 import iconButton from './iconButton'
@@ -6,6 +8,8 @@ import iconButton from './iconButton'
 export default class mainHeader extends Phaser.GameObjects.Container {
 
     // Определяем объекты контейнера
+    private bgMusic!: Phaser.Sound.WebAudioSound
+
     private logo: Phaser.GameObjects.Image
     private settings: Phaser.GameObjects.Image
     private burger: Phaser.GameObjects.Image
@@ -13,16 +17,28 @@ export default class mainHeader extends Phaser.GameObjects.Container {
     private settingsMenu: Phaser.GameObjects.Container
     private burgerMenu: Phaser.GameObjects.Container
 
+    private voiceONButton: iconButton
+    private voiceOffButton: iconButton
+
     private openBurger = false
     private openSettings = false
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         // Создаем контейнер в сцене по координатам x, y
+
         super(scene, x, y)
 
         this.scene = scene
 
         const { width } = scene.scale
+
+        this.bgMusic = this.scene.sound.add("bgMusic") as Phaser.Sound.WebAudioSound
+
+        this.bgMusic.setVolume(0.1)
+        this.bgMusic.setLoop(true)
+        this.bgMusic.play()
+
+
 
         // Добавляем изображения и текст в контейнер
         this.logo = scene.add.image(-CONFIG.SCREENWIDTH / 2 + 75, 0, UI.MAINLOGO).setOrigin(0, 0)
@@ -58,31 +74,29 @@ export default class mainHeader extends Phaser.GameObjects.Container {
         const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
         this.settingsMenu.add(settingsPanel)
 
-        const voiceONButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'ЗВУК', UI.VOICEON)
+        this.voiceONButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'ЗВУК', UI.VOICEON)
 
-        const voiceOffButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'БЕЗ ЗВУКА', UI.VOICEOFF).setVisible(false)
+        this.voiceOffButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'БЕЗ ЗВУКА', UI.VOICEOFF).setVisible(false)
 
         const siteButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 + 70, 'НА САЙТ', UI.SITE)
 
         this.settingsMenu.add(siteButton)
-        this.settingsMenu.add(voiceONButton)
-        this.settingsMenu.add(voiceOffButton)
+        this.settingsMenu.add(this.voiceONButton)
+        this.settingsMenu.add(this.voiceOffButton)
 
         siteButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.openSite()
             })
 
-        voiceONButton.setInteractive()
+        this.voiceONButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                voiceONButton.setVisible(false)
-                voiceOffButton.setVisible(true)
+                this.onMusicOff()
             })
 
-        voiceOffButton.setInteractive()
+        this.voiceOffButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                voiceOffButton.setVisible(false)
-                voiceONButton.setVisible(true)
+                this.onMusicOn()
             })
 
 
@@ -149,6 +163,8 @@ export default class mainHeader extends Phaser.GameObjects.Container {
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.openSite()
             })
+
+        this.onStoreChange()
     }
 
     burgerShow() {
@@ -218,6 +234,37 @@ export default class mainHeader extends Phaser.GameObjects.Container {
     private openSite() {
         const siteUrl = 'https://www.example.com'
         window.open(siteUrl, '_blank')
+    }
+
+
+    onStoreChange() {
+        const state = store.getState()
+        const SoundState = state.config.sound
+        if (SoundState) {
+            this.onMusicOn()
+        } else if (!SoundState) {
+            this.onMusicOff()
+        }
+    }
+
+    onMusicOff() {
+        this.bgMusic.setVolume(0)
+        this.voiceONButton.setVisible(false)
+        this.voiceONButton.disableInteractive()
+        this.voiceOffButton.setInteractive()
+        this.voiceOffButton.setVisible(true)
+
+        store.dispatch(setSoundOff())
+
+    }
+    onMusicOn() {
+        this.bgMusic.setVolume(0.1)
+        this.voiceOffButton.setVisible(false)
+        this.voiceOffButton.disableInteractive()
+        this.voiceONButton.setInteractive()
+        this.voiceONButton.setVisible(true)
+
+        store.dispatch(setSoundOn())
     }
 
 }

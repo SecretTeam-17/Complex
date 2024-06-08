@@ -1,0 +1,34 @@
+.react-parent {
+    /* Using padding just to highlight the independency of the 2 hierarchies: canvas and div react root */
+    padding: 5%;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+.html-root-tag {
+    position: absolute;
+    font-size: 25px;
+}
+
+.react-content {
+    /* Just some plceholder content */
+    border: solid red;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+}
+
+.music-toggler {
+    height: 10vh;
+    width: 10vw;
+    border-radius: 15px;
+    font-size: 2vw;
+}
+

@@ -30,6 +30,9 @@ export class Preloader extends Scene {
         // Загружаем основные компоненты
         this.load.setPath('assets')
 
+        // Audio
+        this.load.audio("bgMusic", 'audio/bgMusic.mp3');
+
         // Backgrounds
         this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/New_bg.png')
 
