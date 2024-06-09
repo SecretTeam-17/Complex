@@ -1,4 +1,6 @@
 import { Scene } from 'phaser'
+import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import { BACKGROUNDS, MASCOTS, MODULE, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
@@ -31,7 +33,7 @@ export class Preloader extends Scene {
         this.load.setPath('assets')
 
         // Audio
-        this.load.audio("bgMusic", 'audio/bgMusic.mp3');
+        this.load.audio("bgMusic", 'audio/bgMusic.mp3')
 
         // Backgrounds
         this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/New_bg.png')
@@ -72,6 +74,7 @@ export class Preloader extends Scene {
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('StartScreen')
+        store.dispatch(setCurrentScene('StartScreen'))
         // this.scene.start('MainMenu');
 
     }

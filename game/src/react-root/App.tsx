@@ -1,11 +1,12 @@
 import React from "react";
 import { Provider } from "react-redux";
 
-import "../../public/style.css";
-import PhaserRoot from "../game/PhaserRoot";
+import PhaserRoot from "../phaser-root/PhaserRoot";
 import { store } from "../redux/store";
-import ReactPlaceholder from "./components/ReactPlaceholder";
-import ReactRoot from "./components/ReactRoot";
+import ReactPlaceholder from "./components/common/ReactPlaceholder";
+import ReactRoot from "./components/common/ReactRoot";
+
+import "./App.css";
 
 const App: React.FC = () => {
     return (

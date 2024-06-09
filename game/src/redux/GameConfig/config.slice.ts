@@ -5,11 +5,21 @@ import { RootState } from '../store'
 interface ConfigState {
     sound: boolean
     soundPlaying: boolean
+
+    isAuth: boolean
+    isGreeting: boolean
+    isStuding: boolean
+
+    currentScene: string
 }
 
 const initialState: ConfigState = {
     sound: true,
     soundPlaying: false,
+    isAuth: false,
+    isGreeting: false,
+    isStuding: false,
+    currentScene: 'StartScreen'
 }
 
 const configSlice = createSlice({
@@ -22,12 +32,28 @@ const configSlice = createSlice({
         setMusicPlaying: (state, action) => {
             state.soundPlaying = action.payload
         },
+        setAuth: (state, action) => {
+            state.isAuth = action.payload
+        },
+        setGreeting: (state, action) => {
+            state.isGreeting = action.payload
+        },
+        setStuding: (state, action) => {
+            state.isStuding = action.payload
+        },
+        setCurrentScene: (state, action) => {
+            state.currentScene = action.payload
+        },
     }
 })
 
 export const getSoundOn = (state: RootState) => state.config.sound
 export const getSoundPlaying = (state: RootState) => state.config.soundPlaying
+export const getAuth = (state: RootState) => state.config.isAuth
+export const getGreeting = (state: RootState) => state.config.isGreeting
+export const getStuding = (state: RootState) => state.config.isStuding
+export const getCurrentScene = (state: RootState) => state.config.currentScene
 
-export const { setSound, setMusicPlaying } = configSlice.actions
+export const { setSound, setMusicPlaying, setAuth, setGreeting, setStuding, setCurrentScene } = configSlice.actions
 
 export default configSlice

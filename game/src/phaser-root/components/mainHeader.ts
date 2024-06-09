@@ -36,11 +36,11 @@ export default class mainHeader extends Phaser.GameObjects.Container {
         const SoundState = state.config.sound
         const soundPlaying = state.config.soundPlaying
 
-        this.bgMusic = this.scene.sound.add('bgMusic', { volume: 0.5, loop: true }) as Phaser.Sound.WebAudioSound
-        if (SoundState && !soundPlaying) {
-            this.bgMusic.play()
-            store.dispatch(setMusicPlaying(true))
-        }
+        // this.bgMusic = this.scene.sound.add('bgMusic', { volume: 0.5, loop: true }) as Phaser.Sound.WebAudioSound
+        // if (SoundState && !soundPlaying) {
+        //     this.bgMusic.play()
+        //     store.dispatch(setMusicPlaying(true))
+        // }
 
 
         // Добавляем изображения и текст в контейнер

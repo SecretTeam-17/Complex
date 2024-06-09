@@ -3,6 +3,8 @@ import { EventBus } from '../EventBus'
 import { BACKGROUNDS, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
+import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import cardButton from '../components/cardButton'
 import CustomButton from '../components/customButton'
 import gameCardSelector from '../components/gameCardSelector'
@@ -52,6 +54,7 @@ export class MainMenu extends Scene {
         startButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.scene.start('StartScreen')
+                store.dispatch(setCurrentScene('StartScreen'))
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 

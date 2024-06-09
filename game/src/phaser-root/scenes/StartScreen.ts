@@ -3,6 +3,8 @@ import { EventBus } from '../EventBus'
 import { BACKGROUNDS } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
+import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import CustomButton from '../components/customButton'
 import mainHeader from '../components/mainHeader'
 
@@ -28,7 +30,9 @@ export class StartScreen extends Scene {
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
                     if (progress === 1) {
+                        store.dispatch(setCurrentScene('MainMenu'))
                         this.scene.start('MainMenu')
+
                     }
                 })
             })

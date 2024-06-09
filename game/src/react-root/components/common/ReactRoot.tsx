@@ -10,7 +10,7 @@ export const ReactRoot: React.FC<StatsUIProps> = ({ children }) => {
     const uiRootRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const phaserParent = document.getElementById("game-container");
+        const phaserParent = document.getElementById("phaser-parent");
         const copySize = () => {
             window.setTimeout(() => {
                 if (phaserParent) {

@@ -1,0 +1,41 @@
+.container {
+    font-family: "Manrope";
+    display: flex;
+    width: 100%;
+    margin: 5% 10% 10% 10%;
+    background-color: var(--color-primary-white-card);
+    border-radius: var(--border-radius-large);
+}
+
+.wrapper__form {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 3vh 5vw;
+}
+
+.wrapper__form-form {
+    width: 60%;
+    display: flex;
+}
+
+.wrapper__form-greeting {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper__form-greeting-title {
+    font-size: 3vw;
+    text-align: left;
+    color: var(--color-primary-purple);
+}
+
+.wrapper__form-greeting-desc {
+    font-size: 1.2vw;
+    text-align: left;
+    display: flex;
+    color: var(--color-primary-purple);
+}
+
