@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { setSoundOff, setSoundOn } from '../../redux/GameConfig/config.slice'
+import { setMusicPlaying, setSound } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
 import { UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
@@ -32,12 +32,15 @@ export default class mainHeader extends Phaser.GameObjects.Container {
 
         const { width } = scene.scale
 
-        this.bgMusic = this.scene.sound.add("bgMusic") as Phaser.Sound.WebAudioSound
+        const state = store.getState()
+        const SoundState = state.config.sound
+        const soundPlaying = state.config.soundPlaying
 
-        this.bgMusic.setVolume(0.1)
-        this.bgMusic.setLoop(true)
-        this.bgMusic.play()
-
+        this.bgMusic = this.scene.sound.add('bgMusic', { volume: 0.5, loop: true }) as Phaser.Sound.WebAudioSound
+        if (SoundState && !soundPlaying) {
+            this.bgMusic.play()
+            store.dispatch(setMusicPlaying(true))
+        }
 
 
         // Добавляем изображения и текст в контейнер
@@ -240,31 +243,31 @@ export default class mainHeader extends Phaser.GameObjects.Container {
     onStoreChange() {
         const state = store.getState()
         const SoundState = state.config.sound
-        if (SoundState) {
-            this.onMusicOn()
-        } else if (!SoundState) {
+        if (!SoundState) {
             this.onMusicOff()
         }
     }
 
     onMusicOff() {
-        this.bgMusic.setVolume(0)
+        this.scene.sound.stopByKey('bgMusic')
         this.voiceONButton.setVisible(false)
         this.voiceONButton.disableInteractive()
         this.voiceOffButton.setInteractive()
         this.voiceOffButton.setVisible(true)
 
-        store.dispatch(setSoundOff())
+        store.dispatch(setMusicPlaying(false))
+        store.dispatch(setSound(false))
 
     }
     onMusicOn() {
-        this.bgMusic.setVolume(0.1)
+        this.bgMusic.play()
         this.voiceOffButton.setVisible(false)
         this.voiceOffButton.disableInteractive()
         this.voiceONButton.setInteractive()
         this.voiceONButton.setVisible(true)
 
-        store.dispatch(setSoundOn())
+        store.dispatch(setMusicPlaying(true))
+        store.dispatch(setSound(true))
     }
 
 }

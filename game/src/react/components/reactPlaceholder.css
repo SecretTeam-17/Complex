@@ -1,8 +1,8 @@
 .react-parent {
     /* Using padding just to highlight the independency of the 2 hierarchies: canvas and div react root */
     padding: 5%;
-    height: 100vh;
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
 }
 

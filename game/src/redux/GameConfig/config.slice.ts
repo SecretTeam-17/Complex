@@ -4,28 +4,30 @@ import { RootState } from '../store'
 
 interface ConfigState {
     sound: boolean
+    soundPlaying: boolean
 }
 
 const initialState: ConfigState = {
     sound: true,
+    soundPlaying: false,
 }
 
 const configSlice = createSlice({
     name: 'config',
     initialState,
     reducers: {
-        setSoundOn: state => {
-            state.sound = true
+        setSound: (state, action) => {
+            state.sound = action.payload
         },
-        setSoundOff: state => {
-            state.sound = false
-        }
-    },
-
+        setMusicPlaying: (state, action) => {
+            state.soundPlaying = action.payload
+        },
+    }
 })
 
-export const getSoundPosition = (state: RootState) => state.config.sound
+export const getSoundOn = (state: RootState) => state.config.sound
+export const getSoundPlaying = (state: RootState) => state.config.soundPlaying
 
-export const { setSoundOn, setSoundOff } = configSlice.actions
+export const { setSound, setMusicPlaying } = configSlice.actions
 
 export default configSlice

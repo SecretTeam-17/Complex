@@ -1,11 +1,15 @@
 import React from "react";
 
-import { getSoundPosition, setSoundOff } from "../../redux/GameConfig/config.slice";
+import {
+    getSoundOn,
+    setMusicPlaying,
+    setSound,
+} from "../../redux/GameConfig/config.slice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import "./reactPlaceholder.css";
 
 const ReactPlaceholder: React.FC = () => {
-    const SoundState = useAppSelector(getSoundPosition);
+    const SoundState = useAppSelector(getSoundOn);
     const dispatch = useAppDispatch();
     return (
         <div className="react-parent">
@@ -17,7 +21,8 @@ const ReactPlaceholder: React.FC = () => {
                 <button
                     className="music-toggler"
                     onClick={() => {
-                        dispatch(setSoundOff());
+                        dispatch(setSound(!SoundState));
+                        dispatch(setMusicPlaying(!SoundState));
                     }}
                 >
                     {`Sound ${SoundState ? "On" : "Off"}`}

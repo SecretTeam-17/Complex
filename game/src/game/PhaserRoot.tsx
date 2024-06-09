@@ -28,6 +28,7 @@ const PhaserRoot = () => {
             //     }
             // },
         });
+
         setPhaser(_phaser);
     }, []);
 
