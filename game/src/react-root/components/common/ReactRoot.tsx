@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import "./reactRoot.css";
+import { useAppSelector } from '../../../redux/hooks'
+import { getReactVisible } from '../../../redux/GameConfig/config.slice'
 
 interface StatsUIProps {
     children: ReactNode | ReactNode[];
@@ -8,6 +10,8 @@ interface StatsUIProps {
 export const ReactRoot: React.FC<StatsUIProps> = ({ children }) => {
     const [rootStyle, setRootStyle] = useState({});
     const uiRootRef = useRef<HTMLDivElement>(null);
+
+    const isReactVisible = useAppSelector(getReactVisible)
 
     useEffect(() => {
         const phaserParent = document.getElementById("phaser-parent");
@@ -36,7 +40,7 @@ export const ReactRoot: React.FC<StatsUIProps> = ({ children }) => {
     }, []);
 
     return (
-        <div className="react-root" ref={uiRootRef} style={rootStyle}>
+        <div className={`${isReactVisible ? 'react-root-show' : 'react-root-hide'}`} ref={uiRootRef} style={rootStyle}>
             {children}
         </div>
     );

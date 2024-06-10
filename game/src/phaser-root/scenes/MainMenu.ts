@@ -3,14 +3,13 @@ import { EventBus } from '../EventBus'
 import { BACKGROUNDS, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
-import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { setCurrentScene, setStuding } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
 import cardButton from '../components/cardButton'
 import CustomButton from '../components/customButton'
-import gameCardSelector from '../components/gameCardSelector'
+import customMiniButton from '../components/customMiniButton'
 import mainHeader from '../components/mainHeader'
 import mascotDog from '../components/mascotDog'
-import moduleCardSelector from '../components/moduleCardSelector'
 
 export class MainMenu extends Scene {
 
@@ -25,31 +24,30 @@ export class MainMenu extends Scene {
         // Добавляем задний фон
         this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)
 
-        // Добавляем кнопку
-        const startButton = new CustomButton(this, 250, CONFIG.SCREENHIGHT - 40, 'Назад').setScale(0.5)
-        this.add.existing(startButton)
-
-        // Добавляем большие кнопки
-        const moduleButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 350, 'ИСТОРИЯ', UI.GAME)
-        this.add.existing(moduleButton)
-        moduleButton.setVisible(false)
-
-        const gameButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 350, 'МИНИ ИГРЫ', UI.GAME)
-        this.add.existing(gameButton)
-
-        const bookButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 620, 'ОБУЧЕНИЕ', UI.BOOK)
-        this.add.existing(bookButton)
-
         // Добавляем маскотов
         const Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 306, CONFIG.SCREENHIGHT - 256).setScale(1.5)
         this.add.existing(Dog)
 
-        const moduleSelector = new moduleCardSelector(this, 150, 245)
-        this.add.existing(moduleSelector)
+        // Добавляем кнопки выбора режима игры
+        const moduleButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 350, UI.GAME)
+        this.add.existing(moduleButton).setVisible(false)
+        const gameButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 350, UI.GAME)
+        this.add.existing(gameButton)
+        const bookButton = new cardButton(this, CONFIG.SCREENWIDTH - 234, 620, UI.BOOK)
+        this.add.existing(bookButton)
 
-        const gameSelector = new gameCardSelector(this, 150, 245)
-        this.add.existing(gameSelector).setVisible(false)
+        // Добавляем кнопки для взаимодействия с выбором режима игры
+        const modulesChoiseButton = new customMiniButton(this, CONFIG.SCREENWIDTH - 234, 410, 'МОДУЛИ')
+        const gamesChoiseButton = new customMiniButton(this, CONFIG.SCREENWIDTH - 234, 410, 'МИНИ ИГРЫ')
+        const lessonsChoiseButton = new customMiniButton(this, CONFIG.SCREENWIDTH - 234, 680, 'ОБУЧЕНИЕ')
 
+        this.add.existing(modulesChoiseButton).setVisible(false)
+        this.add.existing(gamesChoiseButton)
+        this.add.existing(lessonsChoiseButton)
+
+        // Добавляем кнопку
+        const startButton = new CustomButton(this, 250, CONFIG.SCREENHIGHT - 40, 'Назад').setScale(0.5)
+        this.add.existing(startButton)
 
         startButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
@@ -63,12 +61,23 @@ export class MainMenu extends Scene {
 
             })
 
-        gameButton.setInteractive()
+        // const moduleSelector = new moduleCardSelector(this, 150, 245)
+        // this.add.existing(moduleSelector)
+
+        // const gameSelector = new gameCardSelector(this, 150, 245)
+        // this.add.existing(gameSelector).setVisible(false)
+
+
+
+
+        gamesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 gameButton.setVisible(false)
                 moduleButton.setVisible(true)
-                moduleSelector.setVisible(false)
-                gameSelector.setVisible(true)
+                modulesChoiseButton.setVisible(true)
+                gamesChoiseButton.setVisible(false)
+                // moduleSelector.setVisible(false)
+                // gameSelector.setVisible(true)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 
@@ -77,18 +86,19 @@ export class MainMenu extends Scene {
 
             })
 
-        moduleButton.setInteractive()
+        modulesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 gameButton.setVisible(true)
                 moduleButton.setVisible(false)
-                moduleSelector.setVisible(true)
-                gameSelector.setVisible(false)
+                gamesChoiseButton.setVisible(true)
+                modulesChoiseButton.setVisible(false)
+                // moduleSelector.setVisible(true)
+                // gameSelector.setVisible(false)
             })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
 
-            })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-
+        lessonsChoiseButton.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                store.dispatch(setStuding(true))
             })
 
         // Добавляем хеадер

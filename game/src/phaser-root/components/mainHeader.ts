@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import { setMusicPlaying, setSound } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
 import { UI } from '../constants/assetConstants'
+import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
 import iconButton from './iconButton'
 
@@ -9,6 +10,7 @@ export default class mainHeader extends Phaser.GameObjects.Container {
 
     // Определяем объекты контейнера
     private bgMusic!: Phaser.Sound.WebAudioSound
+    private Click: Phaser.Sound.BaseSound
 
     private logo: Phaser.GameObjects.Image
     private settings: Phaser.GameObjects.Image
@@ -32,9 +34,8 @@ export default class mainHeader extends Phaser.GameObjects.Container {
 
         const { width } = scene.scale
 
-        const state = store.getState()
-        const SoundState = state.config.sound
-        const soundPlaying = state.config.soundPlaying
+        // Sound
+        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // this.bgMusic = this.scene.sound.add('bgMusic', { volume: 0.5, loop: true }) as Phaser.Sound.WebAudioSound
         // if (SoundState && !soundPlaying) {
@@ -63,10 +64,12 @@ export default class mainHeader extends Phaser.GameObjects.Container {
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 if (this.openSettings) {
+                    this.Click.play()
                     this.settingsHide()
                     if (this.openBurger) { this.burgerHide() }
                 }
                 else {
+                    this.Click.play()
                     this.settingsShow()
                     if (this.openBurger) { this.burgerHide() }
                 }
@@ -89,16 +92,19 @@ export default class mainHeader extends Phaser.GameObjects.Container {
 
         siteButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.Click.play()
                 this.openSite()
             })
 
         this.voiceONButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.Click.play()
                 this.onMusicOff()
             })
 
         this.voiceOffButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.Click.play()
                 this.onMusicOn()
             })
 
@@ -113,10 +119,12 @@ export default class mainHeader extends Phaser.GameObjects.Container {
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 if (this.openBurger) {
+                    this.Click.play()
                     this.burgerHide()
                     if (this.openSettings) { this.settingsHide() }
                 }
                 else {
+                    this.Click.play()
                     this.burgerShow()
                     if (this.openSettings) { this.settingsHide() }
                 }
