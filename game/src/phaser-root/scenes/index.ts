@@ -9,6 +9,6 @@ export const scenes = [
     Preloader,
     StartScreen,
     MainMenu,
-    ModuleOne
+    ModuleOne,
 ]
 

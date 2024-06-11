@@ -5,6 +5,7 @@ import { EventBus } from '../../EventBus'
 import inGameBag from '../../components/inGameBag'
 import inGamePhone from '../../components/inGamePhone'
 import inGameSettingsMenu from '../../components/inGameSettingsMenu'
+import inGameTextbox from '../../components/inGameTextbox'
 import { UI } from '../../constants/assetConstants'
 import { AUDIO } from '../../constants/audioConstant'
 import { CONFIG } from '../../constants/gameConfig'
@@ -20,6 +21,8 @@ export class ModuleOne extends Scene {
     private Phone: inGamePhone
     private Bag: inGameBag
     private SettingsMenu!: inGameSettingsMenu
+
+    private textBox: inGameTextbox
 
     // BackGrounds
     private roomOne: Phaser.GameObjects.Image
@@ -37,7 +40,6 @@ export class ModuleOne extends Scene {
 
         // Sound
         const Click = this.sound.add(AUDIO.BUTTONCLICK)
-
 
         // Добавляем кнопку настроек
         this.SettingsMenu = new inGameSettingsMenu(this)
@@ -84,13 +86,13 @@ export class ModuleOne extends Scene {
         this.bgMusic = this.sound.add('bgMusic', { volume: 0.1, loop: true }) as Phaser.Sound.WebAudioSound
 
         // Добавляем задние фоны
-        this.roomOne = this.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWONE)
+        this.roomTwo = this.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWONE)
             .setOrigin(0, 0)
             .setScale(0.96)
             .setAlpha(0)
             .setDepth(0)
 
-        this.roomTwo = this.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWTWO)
+        this.roomOne = this.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWTWO)
             .setOrigin(0, 0)
             .setScale(0.96)
             .setAlpha(0)
@@ -212,6 +214,11 @@ export class ModuleOne extends Scene {
                     alpha: 1,
                     duration: 1000
                 })
+                this.textBox = new inGameTextbox(this, 'Малыш, опять эти коллекторы пишут...')
+                const self = this
+                setTimeout(function () {
+                    self.textBox.destroy()
+                }, 3000)
                 this.tweens.add({
                     targets: [this.Phone],
                     alpha: 1,
@@ -232,7 +239,7 @@ export class ModuleOne extends Scene {
                 this.tweens.add({
                     targets: [this.Phone],
                     alpha: 0,
-                    duration: 1500
+                    duration: 500
                 })
                 break
 

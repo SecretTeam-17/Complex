@@ -12,6 +12,7 @@ import customMiniButton from '../components/customMiniButton'
 import mainHeader from '../components/mainHeader'
 import mascotDog from '../components/mascotDog'
 
+
 export class MainMenu extends Scene {
 
     constructor() {
@@ -20,7 +21,6 @@ export class MainMenu extends Scene {
 
     create() {
 
-        this.cameras.main.fadeIn(500, 0, 0, 0)
 
         // Добавляем задний фон
         this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)

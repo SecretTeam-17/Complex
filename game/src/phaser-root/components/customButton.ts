@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 import { UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
-import { store } from '../../redux/store'
 
 export default class CustomButton extends Phaser.GameObjects.Container {
 
