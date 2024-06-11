@@ -1,4 +1,6 @@
 import Phaser from 'phaser'
+import { setCurrentScene, setModuleScene } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import { UI } from '../constants/assetConstants'
 
 export default class moduleCard extends Phaser.GameObjects.Container {
@@ -92,6 +94,16 @@ export default class moduleCard extends Phaser.GameObjects.Container {
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.normalImage.setVisible(true)
                 this.hoverImage.setVisible(false)
+            })
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
+                    if (progress === 1) {
+                        store.dispatch(setCurrentScene('ModuleOne'))
+                        store.dispatch(setModuleScene(undefined))
+                        this.scene.sound.removeAll()
+                        this.scene.scene.start('ModuleOne')
+                    }
+                })
             })
 
     }

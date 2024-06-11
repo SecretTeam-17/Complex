@@ -5,6 +5,7 @@ import { CONFIG } from '../constants/gameConfig'
 
 import { setCurrentScene, setStuding } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
+import ModulesSlider from '../components/ModulesSlider'
 import cardButton from '../components/cardButton'
 import CustomButton from '../components/customButton'
 import customMiniButton from '../components/customMiniButton'
@@ -61,8 +62,8 @@ export class MainMenu extends Scene {
 
             })
 
-        // const moduleSelector = new moduleCardSelector(this, 150, 245)
-        // this.add.existing(moduleSelector)
+        const modulesSlider = new ModulesSlider(this, 150, 245)
+        this.add.existing(modulesSlider)
 
         // const gameSelector = new gameCardSelector(this, 150, 245)
         // this.add.existing(gameSelector).setVisible(false)

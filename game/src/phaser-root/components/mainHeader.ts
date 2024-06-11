@@ -92,7 +92,6 @@ export default class mainHeader extends Phaser.GameObjects.Container {
 
         siteButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
                 this.openSite()
             })
 

@@ -15,6 +15,7 @@ export class StartScreen extends Scene {
     }
 
     create() {
+
         // Добавляем задний фон
         this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)
 

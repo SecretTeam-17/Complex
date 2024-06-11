@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import UIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import { useEffect, useState } from "react";
 import { CONFIG } from "./constants/gameConfig";
 import { scenes } from "./scenes";
@@ -27,6 +28,15 @@ const PhaserRoot = () => {
             //         debug: true
             //     }
             // },
+            plugins: {
+                scene: [
+                    {
+                        key: "rexUI",
+                        plugin: UIPlugin,
+                        mapping: "rexUI",
+                    },
+                ],
+            },
         });
 
         setPhaser(_phaser);

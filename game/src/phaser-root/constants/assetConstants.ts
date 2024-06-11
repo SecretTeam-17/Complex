@@ -17,6 +17,9 @@ export const UI = {
     BOOK: 'book',
     GAME: 'game',
 
+    ARROWLEFT: 'arrow-left',
+    ARROWRIGHT: 'arrow-right',
+
     BUTTON: {
         NORMAL: 'button-normal',
         HOVER: 'button-hover',
@@ -38,8 +41,9 @@ export const MASCOTS = {
     }
 }
 
-export const MODULE = {
-    MODULEONE: {
-        PREIMAGE: 'pre-module-one'
-    }
+export const INGAMEUI = {
+    TRASH: 'icon-trash',
+    PHONE: 'icon-phone',
+    BAG: 'icon-bag',
+    BOX: 'icon-box',
 }

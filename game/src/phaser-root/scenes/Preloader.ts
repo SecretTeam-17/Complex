@@ -1,9 +1,10 @@
 import { Scene } from 'phaser'
 import { setCurrentScene } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
-import { BACKGROUNDS, MASCOTS, MODULE, UI } from '../constants/assetConstants'
+import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
+import { MOODULEONE } from '../constants/moduleOneConstants'
 
 export class Preloader extends Scene {
     constructor() {
@@ -55,6 +56,15 @@ export class Preloader extends Scene {
         this.load.image(UI.BOOK, 'ui/book-icon.png')
         this.load.image(UI.GAME, 'ui/game-icon.png')
 
+        // inGame UI
+        this.load.image(INGAMEUI.BAG, 'ui/bag-icon.png')
+        this.load.image(INGAMEUI.PHONE, 'ui/phone-icon.png')
+        this.load.image(INGAMEUI.BOX, 'ui/box-icon.png')
+        this.load.image(INGAMEUI.TRASH, 'ui/trash-icon.png')
+
+        // Arrows
+        this.load.image(UI.ARROWLEFT, 'ui/arrow-left.png')
+        this.load.image(UI.ARROWRIGHT, 'ui/arrow-right.png')
 
         // Buttons
         this.load.image(UI.BUTTON.NORMAL, 'ui/buttonNormal.png')
@@ -69,15 +79,28 @@ export class Preloader extends Scene {
         this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
 
         // Module One
-        this.load.image(MODULE.MODULEONE.PREIMAGE, 'modules/one/pre-module-one.png')
+        this.load.image(MOODULEONE.PREIMAGE, 'modules/one/pre-module-one.png')
+        // Backgrounds
+        this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.KITCHEN, 'modules/one/kitchen.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER, 'modules/one/nearComputer.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.WITHDOG, 'modules/one/withDog.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
+
+        // Audio
+        this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')
+        this.load.audio(MOODULEONE.AUDIO.MESSAGE, 'audio/message.mp3')
+
 
     }
 
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('StartScreen')
+        // this.scene.start('StartScreen')
+        this.scene.start('MainMenu')
         store.dispatch(setCurrentScene('StartScreen'))
-        // this.scene.start('MainMenu')
+        // this.scene.start('ModuleOne')
 
     }
 }

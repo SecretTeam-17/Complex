@@ -12,6 +12,7 @@ interface ConfigState {
     isStuding: boolean
 
     currentScene: string
+    inModuleScene: string
 }
 
 const initialState: ConfigState = {
@@ -21,7 +22,8 @@ const initialState: ConfigState = {
     isAuth: false,
     isGreeting: false,
     isStuding: false,
-    currentScene: 'StartScreen'
+    currentScene: 'StartScreen',
+    inModuleScene: ''
 }
 
 const configSlice = createSlice({
@@ -49,6 +51,9 @@ const configSlice = createSlice({
         setCurrentScene: (state, action) => {
             state.currentScene = action.payload
         },
+        setModuleScene: (state, action) => {
+            state.inModuleScene = action.payload
+        },
     }
 })
 
@@ -62,6 +67,8 @@ export const getGreeting = (state: RootState) => state.config.isGreeting
 export const getStuding = (state: RootState) => state.config.isStuding
 export const getCurrentScene = (state: RootState) => state.config.currentScene
 
-export const { setSound, setMusicPlaying, setAuth, setGreeting, setStuding, setCurrentScene, setReactVisible } = configSlice.actions
+export const getInModuleScene = (state: RootState) => state.config.inModuleScene
+
+export const { setSound, setMusicPlaying, setAuth, setGreeting, setStuding, setCurrentScene, setReactVisible, setModuleScene } = configSlice.actions
 
 export default configSlice
