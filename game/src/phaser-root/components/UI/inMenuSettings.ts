@@ -1,14 +1,11 @@
-import { setCurrentScene, setModuleScene } from '../../redux/GameConfig/config.slice'
-import { store } from '../../redux/store'
-import { UI } from '../constants/assetConstants'
-import { AUDIO } from '../constants/audioConstant'
-import iconButton from './UI/iconButton'
+import { UI } from '../../constants/assetConstants'
+import iconButton from './iconButton'
 
-export default class inGameSettingsMenu {
+
+export default class inMenuSetting {
 
     // Определяем объекты класса
     private settingsMenu!: Phaser.GameObjects.Container
-    private Click!: Phaser.Sound.BaseSound
 
     private voiceONButton!: iconButton
     private voiceOffButton!: iconButton
@@ -17,52 +14,38 @@ export default class inGameSettingsMenu {
 
     openSettings = false
 
-    constructor(scene: Phaser.Scene) {
-
-        const { width } = scene.scale
+    constructor(scene: Phaser.Scene, x: number, y: number) {
 
         this.scene = scene
 
-        // Sound
-        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
-
         // Container
-        this.settingsMenu = scene.add.container(width - 116, 90).setScale(0).setDepth(1)
-        const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
+        this.settingsMenu = scene.add.container(x - 15, y + 15).setScale(0).setDepth(1)
+        const settingsPanel = scene.add.nineslice(0, 0, UI.PANEL, undefined, 410).setOrigin(1, 0).setScale(1, 0.83)
         this.settingsMenu.add(settingsPanel)
 
-        this.voiceONButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'ЗВУК', UI.VOICEON)
+        this.voiceONButton = new iconButton(scene, settingsPanel.width - 615, 100, 'ЗВУК', UI.VOICEON)
 
-        this.voiceOffButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 - 40, 'БЕЗ ЗВУКА', UI.VOICEOFF).setVisible(false)
+        this.voiceOffButton = new iconButton(scene, settingsPanel.width - 615, 100, 'БЕЗ ЗВУКА', UI.VOICEOFF).setVisible(false)
 
-        const exitButton = new iconButton(scene, settingsPanel.width - 614, settingsPanel.height / 2 + 70, 'В МЕНЮ', UI.SITE)
+        const siteButton = new iconButton(scene, settingsPanel.width - 615, 200, 'НА САЙТ', UI.SITE)
 
         this.settingsMenu.add(this.voiceONButton)
         this.settingsMenu.add(this.voiceOffButton)
-        this.settingsMenu.add(exitButton)
+        this.settingsMenu.add(siteButton)
 
-        exitButton.setInteractive()
+        siteButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
-                this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
-                    if (progress === 1) {
-                        store.dispatch(setCurrentScene('MainMenu'))
-                        store.dispatch(setModuleScene(undefined))
-                        this.scene.sound.removeAll()
-                        this.scene.scene.start('MainMenu')
-                    }
-                })
+                const siteUrl = 'https://www.example.com'
+                window.open(siteUrl, '_blank')
             })
 
         this.voiceONButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
                 this.onMusicOff()
             })
 
         this.voiceOffButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
                 this.onMusicOn()
             })
 
@@ -109,7 +92,7 @@ export default class inGameSettingsMenu {
 
     }
     private onMusicOn() {
-        this.scene.sound.setVolume(0.15)
+        this.scene.sound.setVolume(1)
 
         this.voiceOffButton.setVisible(false)
         this.voiceOffButton.disableInteractive()

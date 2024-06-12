@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
-import { UI } from '../constants/assetConstants'
-import { AUDIO } from '../constants/audioConstant'
+import { UI } from '../../constants/assetConstants'
+import { AUDIO } from '../../constants/audioConstant'
 
 export default class customMiniButton extends Phaser.GameObjects.Container {
 

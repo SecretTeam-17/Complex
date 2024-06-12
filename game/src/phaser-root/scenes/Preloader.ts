@@ -39,7 +39,7 @@ export class Preloader extends Scene {
         this.load.audio(AUDIO.BUTTONCLICK, 'audio/button-click.mp3')
 
         // Backgrounds
-        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/New_bg.png')
+        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')
 
         // UI Main Header
         this.load.image(UI.MAINLOGO, 'ui/petsitter-logo.png')
@@ -49,12 +49,14 @@ export class Preloader extends Scene {
         this.load.image(UI.PANEL, 'ui/menu-panel.png')
         this.load.image(UI.CARDPANEL, 'ui/card-button.png')
         this.load.image(UI.MODULEPANEL, 'ui/module-card.png')
+        this.load.image(UI.MINIMODULE, 'ui/miniModule.png')
 
         this.load.image(UI.VOICEON, 'ui/Voice.png')
         this.load.image(UI.VOICEOFF, 'ui/VoiceOff.png')
         this.load.image(UI.SITE, 'ui/exit.png')
         this.load.image(UI.BOOK, 'ui/book-icon.png')
         this.load.image(UI.GAME, 'ui/game-icon.png')
+        this.load.image(UI.MODULE, 'ui/modules-icon.png')
 
         // inGame UI
         this.load.image(INGAMEUI.BAG, 'ui/bag-icon.png')

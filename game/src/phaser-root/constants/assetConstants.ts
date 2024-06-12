@@ -16,6 +16,8 @@ export const UI = {
     SITE: 'siteIcon',
     BOOK: 'book',
     GAME: 'game',
+    MODULE: 'module',
+    MINIMODULE: 'miniModule',
 
     ARROWLEFT: 'arrow-left',
     ARROWRIGHT: 'arrow-right',

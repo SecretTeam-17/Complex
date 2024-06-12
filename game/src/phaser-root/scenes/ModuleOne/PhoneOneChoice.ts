@@ -24,8 +24,6 @@ export default class PhoneOneChoice {
 
     constructor(scene: Phaser.Scene) {
 
-        const { width } = scene.scale
-
         this.scene = scene
 
         // Container one

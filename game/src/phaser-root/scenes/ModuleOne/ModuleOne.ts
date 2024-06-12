@@ -139,14 +139,14 @@ export class ModuleOne extends Scene {
         let CurrentScene = state.config.currentScene
         if (CurrentScene === 'ModuleOne') { store.subscribe(this.onStoreChange.bind(this)) }
 
-        store.dispatch(setModuleScene('onSuccess'))
+        store.dispatch(setModuleScene('intro1'))
 
         EventBus.emit('current-scene-ready', this)
     }
 
     phoneChose(ModuleScene: string) {
         if (ModuleScene === 'withDog') {
-            store.dispatch(setModuleScene('intro1'))
+            store.dispatch(setModuleScene('PhoneOne'))
         } else {
             return
         }
@@ -224,6 +224,7 @@ export class ModuleOne extends Scene {
                 }, 5000)
                 break
             case 'withDog':
+                this.textBox.destroy()
                 this.tweens.add({
                     targets: this.computer,
                     alpha: 0,

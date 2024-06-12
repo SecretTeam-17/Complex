@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { UI } from '../constants/assetConstants'
+import { UI } from '../../constants/assetConstants'
 
 export default class cardButton extends Phaser.GameObjects.Container {
 
@@ -18,8 +18,6 @@ export default class cardButton extends Phaser.GameObjects.Container {
         // Отрисовываем изображения и текст
         this.add(this.panel)
         this.add(this.Icon)
-
-        this.setSize(this.panel.width, this.panel.height)
 
     }
 
