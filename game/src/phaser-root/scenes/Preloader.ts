@@ -100,8 +100,8 @@ export class Preloader extends Scene {
 
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        // this.scene.start('StartScreen')
-        this.scene.start('MainMenu')
+        this.scene.start('StartScreen')
+        // this.scene.start('MainMenu')
         store.dispatch(setCurrentScene('StartScreen'))
         // this.scene.start('ModuleOne')
 

@@ -111,7 +111,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 Click.play()
-            })
 
+            })
     }
 }

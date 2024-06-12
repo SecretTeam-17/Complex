@@ -1,3 +1,5 @@
+import { setCurrentScene } from '../../../redux/GameConfig/config.slice'
+import { store } from '../../../redux/store'
 import ModuleCard from './moduleCard'
 import ModuleCardMini from './moduleCardMini'
 
@@ -18,6 +20,8 @@ export default class ModuleCardSelector {
     private cardThreeMiniRight: ModuleCardMini
     private cardFourMini: ModuleCardMini
 
+    private scene: Phaser.Scene
+
     isVisible = false
 
     scaleOne = 1
@@ -25,6 +29,8 @@ export default class ModuleCardSelector {
     scaleThree = 0.90
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
+
+        this.scene = scene
 
         this.cardSelector = scene.add.container(x, y).setScale(1).setDepth(1)
 
@@ -103,6 +109,17 @@ export default class ModuleCardSelector {
         this.cardFourMini.panel.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.moduleFourButton()
+            })
+
+        this.cardOne.hoverImage.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
+                    if (progress === 1) {
+                        store.dispatch(setCurrentScene('ModuleOne'))
+                        this.scene.scene.start('ModuleOne')
+
+                    }
+                })
             })
     }
 
