@@ -8,6 +8,7 @@ export const MOODULEONE = {
         COMPUTER: 'computer',
         WITHDOG: 'withdog',
         PHONEONE: 'phoneone',
+        ONSOFA: 'onsofa',
     },
     AUDIO: {
         KEYBOARD: 'keyboard',

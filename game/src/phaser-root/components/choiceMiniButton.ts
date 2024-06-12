@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import { UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 
-export default class customMiniButton extends Phaser.GameObjects.Container {
+export default class choiceMiniButton extends Phaser.GameObjects.Container {
 
     // Определяем объекты контейнера
     normalImage: Phaser.GameObjects.Image
@@ -21,8 +21,8 @@ export default class customMiniButton extends Phaser.GameObjects.Container {
         this.soundClick = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Button
-        this.normalImage = scene.add.image(0, 0, UI.ICONBUTTON.NORMAL).setScale(0.85)
-        this.hoverImage = scene.add.image(0, 0, UI.ICONBUTTON.HOVER).setScale(0.85)
+        this.normalImage = scene.add.image(0, 0, UI.ICONBUTTON.NORMAL).setScale(1)
+        this.hoverImage = scene.add.image(0, 0, UI.ICONBUTTON.HOVER).setScale(1)
 
         // Добавляем изображения и текст в контейнер
         this.text = scene.add.text(0, 0, text, {

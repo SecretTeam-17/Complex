@@ -87,6 +87,7 @@ export class Preloader extends Scene {
         this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER, 'modules/one/nearComputer.png')
         this.load.image(MOODULEONE.BACKGROUNDS.WITHDOG, 'modules/one/withDog.png')
         this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.ONSOFA, 'modules/one/onSofa.png')
 
         // Audio
         this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')

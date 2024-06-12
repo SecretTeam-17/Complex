@@ -10,6 +10,7 @@ import { UI } from '../../constants/assetConstants'
 import { AUDIO } from '../../constants/audioConstant'
 import { CONFIG } from '../../constants/gameConfig'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
+import PhoneOneChoice from './PhoneOneChoice'
 
 
 export class ModuleOne extends Scene {
@@ -21,8 +22,10 @@ export class ModuleOne extends Scene {
     private Phone: inGamePhone
     private Bag: inGameBag
     private SettingsMenu!: inGameSettingsMenu
-
     private textBox: inGameTextbox
+
+    // Choices
+    private PhoneOneChoice: PhoneOneChoice
 
     // BackGrounds
     private roomOne: Phaser.GameObjects.Image
@@ -31,12 +34,16 @@ export class ModuleOne extends Scene {
     private computer: Phaser.GameObjects.Image
     private withDog: Phaser.GameObjects.Image
     private phoneOne: Phaser.GameObjects.Image
+    private onSofa: Phaser.GameObjects.Image
 
     constructor() {
         super('ModuleOne')
     }
 
     create() {
+
+        // Варианты ответов
+        this.PhoneOneChoice = new PhoneOneChoice(this)
 
         // Sound
         const Click = this.sound.add(AUDIO.BUTTONCLICK)
@@ -122,18 +129,24 @@ export class ModuleOne extends Scene {
             .setAlpha(0)
             .setDepth(0)
 
+        this.onSofa = this.add.image(0, 0, MOODULEONE.BACKGROUNDS.ONSOFA)
+            .setOrigin(0, 0)
+            .setScale(0.96)
+            .setAlpha(0)
+            .setDepth(0)
+
         let state = store.getState()
         let CurrentScene = state.config.currentScene
         if (CurrentScene === 'ModuleOne') { store.subscribe(this.onStoreChange.bind(this)) }
 
-        store.dispatch(setModuleScene('intro1'))
+        store.dispatch(setModuleScene('onSuccess'))
 
         EventBus.emit('current-scene-ready', this)
     }
 
     phoneChose(ModuleScene: string) {
         if (ModuleScene === 'withDog') {
-            store.dispatch(setModuleScene('PhoneOne'))
+            store.dispatch(setModuleScene('intro1'))
         } else {
             return
         }
@@ -199,9 +212,16 @@ export class ModuleOne extends Scene {
                         this.sound.add(MOODULEONE.AUDIO.MESSAGE).setVolume(0.2).play()
                     }
                 })
+
+                let self = this
                 setTimeout(function () {
+                    self.textBox = new inGameTextbox(self, 'Малыш, опять эти коллекторы пишут...')
+                }, 2000)
+
+                setTimeout(function () {
+                    self.textBox.destroy()
                     store.dispatch(setModuleScene('withDog'))
-                }, 3000)
+                }, 5000)
                 break
             case 'withDog':
                 this.tweens.add({
@@ -214,11 +234,6 @@ export class ModuleOne extends Scene {
                     alpha: 1,
                     duration: 1000
                 })
-                this.textBox = new inGameTextbox(this, 'Малыш, опять эти коллекторы пишут...')
-                const self = this
-                setTimeout(function () {
-                    self.textBox.destroy()
-                }, 3000)
                 this.tweens.add({
                     targets: [this.Phone],
                     alpha: 1,
@@ -240,6 +255,22 @@ export class ModuleOne extends Scene {
                     targets: [this.Phone],
                     alpha: 0,
                     duration: 500
+                })
+                let self1 = this
+                setTimeout(function () {
+                    self1.PhoneOneChoice.Show()
+                }, 2000)
+                break
+            case 'onSuccess':
+                this.tweens.add({
+                    targets: this.phoneOne,
+                    alpha: 0,
+                    duration: 1000
+                })
+                this.tweens.add({
+                    targets: this.onSofa,
+                    alpha: 1,
+                    duration: 1000
                 })
                 break
 

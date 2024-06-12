@@ -20,7 +20,7 @@ export default class inGameTextbox {
         this.textbar.fillStyle(0xffffff, 1)
         this.textbar.fillRoundedRect(0, 0, 500, 100, 16)
 
-        this.typingText = scene.add.text(10, 30, '', {
+        this.typingText = scene.add.text(10, 32, '', {
             fontFamily: 'Manrope',
             fontSize: '24px',
             fontStyle: 'Bold',
