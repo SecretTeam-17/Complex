@@ -1,7 +1,8 @@
-export const MOODULEONE = {
-    TITLE: 'Модуль 1. Подготовка',
+
+export const MOODULETHREE = {
+    TITLE: 'Модуль 3. Прогулка',
     TOTALCOUNTS: 10,
-    PREIMAGE: 'preimage-one',
+    PREIMAGE: 'preimage-three',
     BACKGROUNDS: {
         ROOMVIEWONE: 'roomviewone',
         ROOMVIEWTWO: 'roomviewtwo',

@@ -4,7 +4,10 @@ import { store } from '../../redux/store'
 import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
+import { MOODULEFOUR } from '../constants/moduleFourConstants'
 import { MOODULEONE } from '../constants/moduleOneConstants'
+import { MOODULETHREE } from '../constants/moduleThreeConstants'
+import { MOODULETWO } from '../constants/moduleTwoConstants'
 
 export class Preloader extends Scene {
     constructor() {
@@ -40,6 +43,12 @@ export class Preloader extends Scene {
 
         // Backgrounds
         this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')
+
+        //Pre-images
+        this.load.image(MOODULEONE.PREIMAGE, 'modules/pre-module-one.png')
+        this.load.image(MOODULETWO.PREIMAGE, 'modules/pre-module-two.png')
+        this.load.image(MOODULETHREE.PREIMAGE, 'modules/pre-module-three.png')
+        this.load.image(MOODULEFOUR.PREIMAGE, 'modules/pre-module-four.png')
 
         // UI Main Header
         this.load.image(UI.MAINLOGO, 'ui/petsitter-logo.png')
@@ -81,7 +90,6 @@ export class Preloader extends Scene {
         this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
 
         // Module One
-        this.load.image(MOODULEONE.PREIMAGE, 'modules/one/pre-module-one.png')
         // Backgrounds
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
