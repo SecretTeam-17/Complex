@@ -44,7 +44,7 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 		if err != nil {
 			log.Error("failed to decode request body", logger.Err(err))
 			render.Status(r, 400)
-			render.PlainText(w, r, "Error, failed to update a game session: failed to decode request")
+			render.PlainText(w, r, "Error, failed to update a game session: failed to decode request; incorrect input")
 			return
 		}
 		log.Info("request body decoded")
@@ -65,14 +65,8 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 
 		// Обновляем игровую сессию в БД
 		err = st.UpdateSession(ctx, req)
-		if errors.Is(err, storage.ErrModuleNotFound) {
-			log.Error("incorrect module", slog.Int("module", req.CurrentModule))
-			render.Status(r, 422)
-			render.PlainText(w, r, "Error, to update a game session: module not found in database")
-			return
-		}
 		if errors.Is(err, storage.ErrSessionNotFound) {
-			log.Error("game session not found", slog.Int("session_id", req.SessionID))
+			log.Error("game session not found", slog.String("id", req.Id.Hex()))
 			render.Status(r, 422)
 			render.PlainText(w, r, "Error, to update a game session: id not found")
 			return
@@ -83,7 +77,7 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 			render.PlainText(w, r, "Error, failed to update a game session: unknown error")
 			return
 		}
-		log.Info("game session updated", slog.Int("id", req.SessionID))
+		log.Info("game session updated", slog.String("id", req.Id.Hex()))
 
 		// Возвращаем статус 204 и пустое тело
 		render.Status(r, 204)
