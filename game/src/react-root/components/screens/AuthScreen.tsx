@@ -17,8 +17,6 @@ const AuthScreen: React.FC = () => {
                         захватывающее приключение?
                     </p>
                 </div>
-            </div>
-            <div className="wrapper__form-form">
                 <AuthForm />
             </div>
         </div>
@@ -26,4 +24,3 @@ const AuthScreen: React.FC = () => {
 };
 
 export default AuthScreen;
-

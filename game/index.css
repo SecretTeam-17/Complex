@@ -3,6 +3,14 @@
     src: url("assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
 }
 
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --color-primary-purple: #320064;
     --color-primary-white: #fdf8f8;
@@ -25,4 +33,3 @@ body {
     color: rgba(255, 255, 255, 0.87);
     background-color: #000000;
 }
-

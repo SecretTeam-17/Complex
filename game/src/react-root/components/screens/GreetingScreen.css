@@ -7,3 +7,32 @@
     border-radius: var(--border-radius-large);
 }
 
+.instruction__wrapper {
+    font-family: "Manrope";
+    color: var(--color-primary-purple);
+    width: 32.65vw;
+    max-height: 49.7vh;
+    margin: 5% 42% 15% 20%;
+    background-color: var(--color-primary-white-card);
+    border-radius: var(--border-radius-large);
+    display: flex;
+    flex-direction: column;
+    gap: 1.875vw;
+    padding: 5.55vh 4.69vw 6.1vh;
+    position: relative;
+}
+
+.instruction__wrapper::before {
+    content: url("../../../../public/assets/ui/polygon_instruction.png");
+    position: absolute;
+    right: -9px;
+    bottom: -35px;
+}
+
+.instruction__wrapper-title {
+    font-size: 3.2vw;
+}
+
+.instruction__wrapper-text {
+    font-size: 1.2vw;
+}

@@ -1,9 +1,30 @@
 .wiki-container {
+    position: absolute;
+    right: 50px;
     font-family: "Manrope";
     display: flex;
-    width: 100%;
-    margin: 1%;
-    background-color: var(--color-primary-white-card);
-    border-radius: var(--border-radius-large);
+    flex-direction: column;
+    gap: 3.3vh;
 }
 
+.wiki__wrapper {
+    width: 16.4vw;
+    height: 22.36vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8vh;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary-white-card);
+    padding: 2.2vh 1.5vw;
+}
+
+.wiki__icon {
+    width: 85px;
+}
+
+.button--small {
+    width: 13.3vw;
+    height: 5.8vh;
+}

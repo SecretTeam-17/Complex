@@ -1,6 +1,6 @@
 .react-root-hide {
     position: absolute;
-    visibility: hidden;
+    /* visibility: hidden; */
     /* z-index: -1; */
 }
 
@@ -8,4 +8,3 @@
     position: absolute;
     z-index: 1;
 }
-
