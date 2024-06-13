@@ -74,7 +74,7 @@
 
 .button--big {
     font-size: 32px;
-    max-width: 100%;
+    width: 100%;
     min-height: 11vh;
     border-radius: var(--border-radius);
 }

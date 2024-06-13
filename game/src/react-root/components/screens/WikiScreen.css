@@ -20,11 +20,28 @@
     padding: 2.2vh 1.5vw;
 }
 
-.wiki__icon {
-    width: 85px;
-}
-
 .button--small {
     width: 13.3vw;
     height: 5.8vh;
+}
+
+@media (max-width: 1050px) {
+    .button--small {
+        font-size: 16px;
+    }
+}
+@media (max-width: 900px) {
+    .button--small {
+        font-size: 14px;
+        border-radius: var(--border-radius-small);
+    }
+    .wiki__icon {
+        width: 65px;
+        height: 45px;
+    }
+    .wiki__wrapper {
+        width: 15vw;
+        height: 18vh;
+        border-radius: var(--border-radius-small);
+    }
 }
