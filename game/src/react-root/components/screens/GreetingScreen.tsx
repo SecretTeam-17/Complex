@@ -18,4 +18,3 @@ const GreetingScreen: React.FC = () => {
 };
 
 export default GreetingScreen;
-

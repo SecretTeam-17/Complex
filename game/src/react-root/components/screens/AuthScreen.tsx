@@ -24,4 +24,3 @@ const AuthScreen: React.FC = () => {
 };
 
 export default AuthScreen;
-
