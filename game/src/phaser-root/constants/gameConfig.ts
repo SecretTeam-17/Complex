@@ -1,0 +1,5 @@
+export const CONFIG = {
+    BACKGROUNDCOLOR: '#282c34',
+    SCREENWIDTH: 1920,
+    SCREENHIGHT: 1080,
+}

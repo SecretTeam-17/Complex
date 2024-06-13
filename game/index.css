@@ -1,0 +1,28 @@
+@font-face {
+    font-family: "Manrope";
+    src: url("assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
+}
+
+:root {
+    --color-primary-purple: #320064;
+    --color-primary-white: #fdf8f8;
+    --color-primary-violet: #c896ff;
+    --color-primary-white-card: #ffffff;
+    --color-secondary-green: #49891a;
+    --color-secondary-green-light: #63ac2e;
+    --color-secondary-gray: #bbbbbb;
+    --color-secondary-red-error: #fef3f3;
+    --color-secondary-red-error-stroke: #ff1b1b;
+
+    --border-radius-small: 16px;
+    --border-radius: 24px;
+    --border-radius-large: 48px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #000000;
+}
+

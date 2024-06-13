@@ -1,0 +1,15 @@
+.button-toggler {
+    height: 5vh;
+    width: 10vw;
+    border-radius: 15px;
+    font-size: 1vw;
+}
+
+.service-button {
+    position: absolute;
+    bottom: -10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
