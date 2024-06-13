@@ -7,7 +7,7 @@ import GameModeSelector from '../components/MainMenu/GameModeSelector'
 import ModuleCardSelector from '../components/MainMenu/moduleCardSelector'
 import inMenuBurger from '../components/UI/inMenuBurger'
 import inMenuSettings from '../components/UI/inMenuSettings'
-import mascotDog from '../components/mascotDog'
+import mascotDog from '../components/UI/mascotDog'
 import { AUDIO } from '../constants/audioConstant'
 
 
