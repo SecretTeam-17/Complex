@@ -32,7 +32,7 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 		)
 		log.Info("new request to update a game session")
 
-		// Декодируем тело запроса в структуру GameSession и проверяем на ошибки
+		// Декодируем тело запроса в структуру GameSession и проверяем на ошибки.
 		var req storage.GameSession
 		err := render.DecodeJSON(r.Body, &req)
 		if errors.Is(err, io.EOF) {
@@ -44,12 +44,12 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 		if err != nil {
 			log.Error("failed to decode request body", logger.Err(err))
 			render.Status(r, 400)
-			render.PlainText(w, r, "Error, failed to update a game session: failed to decode request")
+			render.PlainText(w, r, "Error, failed to update a game session: failed to decode request; incorrect input")
 			return
 		}
 		log.Info("request body decoded")
 
-		// Валидация полей json из запроса
+		// Валидация полей json из запроса.
 		valid := validator.New()
 		err = valid.Struct(req)
 		if err != nil {
@@ -63,16 +63,10 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 
 		ctx := r.Context()
 
-		// Обновляем игровую сессию в БД
+		// Обновляем игровую сессию в БД.
 		err = st.UpdateSession(ctx, req)
-		if errors.Is(err, storage.ErrModuleNotFound) {
-			log.Error("incorrect module", slog.Int("module", req.CurrentModule))
-			render.Status(r, 422)
-			render.PlainText(w, r, "Error, to update a game session: module not found in database")
-			return
-		}
 		if errors.Is(err, storage.ErrSessionNotFound) {
-			log.Error("game session not found", slog.Int("session_id", req.SessionID))
+			log.Error("game session not found", slog.String("id", req.Id.Hex()))
 			render.Status(r, 422)
 			render.PlainText(w, r, "Error, to update a game session: id not found")
 			return
@@ -83,9 +77,9 @@ func New(alog slog.Logger, st SessionUpdater) http.HandlerFunc {
 			render.PlainText(w, r, "Error, failed to update a game session: unknown error")
 			return
 		}
-		log.Info("game session updated", slog.Int("id", req.SessionID))
+		log.Info("game session updated", slog.String("id", req.Id.Hex()))
 
-		// Возвращаем статус 204 и пустое тело
+		// Возвращаем статус 204 и пустое тело.
 		render.Status(r, 204)
 		render.NoContent(w, r)
 		log = nil

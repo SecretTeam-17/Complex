@@ -1,5 +1,9 @@
 import { setCurrentScene } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
+import { MOODULEFOUR } from '../../constants/moduleFourConstants'
+import { MOODULEONE } from '../../constants/moduleOneConstants'
+import { MOODULETHREE } from '../../constants/moduleThreeConstants'
+import { MOODULETWO } from '../../constants/moduleTwoConstants'
 import ModuleCard from './moduleCard'
 import ModuleCardMini from './moduleCardMini'
 
@@ -35,30 +39,30 @@ export default class ModuleCardSelector {
         this.cardSelector = scene.add.container(x, y).setScale(1).setDepth(1)
 
         // Карточки модулей
-        this.cardOne = new ModuleCard(scene, 0, 0)
-        this.cardTwo = new ModuleCard(scene, 70, 0)
-        this.cardThree = new ModuleCard(scene, 140, 0)
-        this.cardFour = new ModuleCard(scene, 210, 0)
+        this.cardOne = new ModuleCard(scene, 0, 0, MOODULEONE.TITLE, MOODULEONE.TOTALCOUNTS, MOODULEONE.PREIMAGE)
+        this.cardTwo = new ModuleCard(scene, 70, 0, MOODULETWO.TITLE, MOODULETWO.TOTALCOUNTS, MOODULETWO.PREIMAGE)
+        this.cardThree = new ModuleCard(scene, 140, 0, MOODULETHREE.TITLE, MOODULETHREE.TOTALCOUNTS, MOODULETHREE.PREIMAGE)
+        this.cardFour = new ModuleCard(scene, 210, 0, MOODULEFOUR.TITLE, MOODULEFOUR.TOTALCOUNTS, MOODULEFOUR.PREIMAGE)
 
         //Маленькие карточки
-        this.cardOneMini = new ModuleCardMini(scene, 40, 470, 'Модуль 1')
+        this.cardOneMini = new ModuleCardMini(scene, 40, 470, MOODULEONE.TITLE)
         this.cardOneMini.container.setRotation(-1.5708)
 
-        this.carTwoMiniLeft = new ModuleCardMini(scene, 110, 470, 'Модуль 2. Слева')
+        this.carTwoMiniLeft = new ModuleCardMini(scene, 110, 470, MOODULETWO.TITLE)
         this.carTwoMiniLeft.container.setRotation(-1.5708)
 
-        this.cardTwoMiniRight = new ModuleCardMini(scene, 440, 470, 'Модуль 2. Справа')
+        this.cardTwoMiniRight = new ModuleCardMini(scene, 440, 470, MOODULETWO.TITLE)
         this.cardTwoMiniRight.container.setRotation(-1.5708)
 
-        this.cardThreeMiniLeft = new ModuleCardMini(scene, 180, 470, 'Модуль 3. Слева')
+        this.cardThreeMiniLeft = new ModuleCardMini(scene, 180, 470, MOODULETHREE.TITLE)
         this.cardThreeMiniLeft.container.setRotation(-1.5708)
 
-        this.cardThreeMiniRight = new ModuleCardMini(scene, 510, 460, 'Модуль 3. Справа')
+        this.cardThreeMiniRight = new ModuleCardMini(scene, 510, 460, MOODULETHREE.TITLE)
         this.cardThreeMiniRight.container
             .setRotation(-1.5708)
             .setScale(this.scaleTwo)
 
-        this.cardFourMini = new ModuleCardMini(scene, 580, 450, 'Модуль 4')
+        this.cardFourMini = new ModuleCardMini(scene, 580, 450, MOODULEFOUR.TITLE)
         this.cardFourMini.container
             .setRotation(-1.5708)
             .setScale(this.scaleThree)

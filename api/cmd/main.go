@@ -17,7 +17,7 @@ import (
 	"petsittersGameServer/internal/server/gshandlers/updategs"
 	"petsittersGameServer/internal/server/index/indexpage"
 	"petsittersGameServer/internal/server/middleware/cors"
-	"petsittersGameServer/internal/storage/sqlite"
+	"petsittersGameServer/internal/storage/mongodb"
 	"petsittersGameServer/internal/tools/stopsignal"
 	"time"
 
@@ -35,7 +35,8 @@ func main() {
 	log.Debug("logger initialized")
 
 	// Инициализируем пул подключений к базе данных
-	storage, err := sqlite.New(cfg.StoragePath, cfg.ModulesPath)
+	//storage, err := sqlite.New(cfg.StoragePath, cfg.ModulesPath)
+	storage, err := mongodb.New(cfg.StoragePath)
 	if err != nil {
 		log.Error("failed to init storage", logger.Err(err))
 		os.Exit(1)

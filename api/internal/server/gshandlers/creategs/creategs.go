@@ -2,6 +2,7 @@ package creategs
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -20,13 +21,15 @@ import (
 
 // Request - структура запроса для создания игровой сессии.
 type Request struct {
-	Name  string `json:"username" validate:"required,max=100"`
-	Email string `json:"email" validate:"required,email,max=100"`
+	Name      string          `json:"username" validate:"required,max=100"`
+	Email     string          `json:"email" validate:"required,email,max=100"`
+	Stats     json.RawMessage `json:"stats"`
+	Modules   json.RawMessage `json:"modules"`
+	Minigames json.RawMessage `json:"minigames"`
 }
 
-// Возможно, интерфейсы хранилища лучше перенести в пакет storage
 type SessionCreator interface {
-	CreateSession(ctx context.Context, name, email string) (*storage.GameSession, error)
+	CreateSession(ctx context.Context, name, email string, stats, modules, minigames []byte) (*storage.GameSession, error)
 }
 
 // New - возвращает новый хэндлер для создания игровой сессии.
@@ -41,7 +44,7 @@ func New(alog slog.Logger, st SessionCreator) http.HandlerFunc {
 		)
 		log.Info("new request to create a game session")
 
-		// Декодируем тело запроса в структуру Request и проверяем на ошибки
+		// Декодируем тело запроса в структуру Request и проверяем на ошибки.
 		var req Request
 		err := render.DecodeJSON(r.Body, &req)
 		if errors.Is(err, io.EOF) {
@@ -56,9 +59,32 @@ func New(alog slog.Logger, st SessionCreator) http.HandlerFunc {
 			render.PlainText(w, r, "Error, failed to create new gameSession: failed to decode request")
 			return
 		}
-		log.Info("request body decoded", slog.Any("request", req))
+		log.Info("request body decoded")
 
-		// Валидация полей json из запроса
+		// // Преобразуем поля stats, modules и minigames в слайсы байт.
+		// stats, err := req.Stats.MarshalJSON()
+		// if err != nil {
+		// 	log.Error("failed to marshal JSON stats", logger.Err(err))
+		// 	render.Status(r, 400)
+		// 	render.PlainText(w, r, "Error, failed to create new gameSession: failed to marshal JSON stats")
+		// 	return
+		// }
+		// modules, err := req.Modules.MarshalJSON()
+		// if err != nil {
+		// 	log.Error("failed to marshal JSON modules", logger.Err(err))
+		// 	render.Status(r, 400)
+		// 	render.PlainText(w, r, "Error, failed to create new gameSession: failed to marshal JSON modules")
+		// 	return
+		// }
+		// minigames, err := req.Minigames.MarshalJSON()
+		// if err != nil {
+		// 	log.Error("failed to marshal JSON minigames", logger.Err(err))
+		// 	render.Status(r, 400)
+		// 	render.PlainText(w, r, "Error, failed to create new gameSession: failed to marshal JSON minigames")
+		// 	return
+		// }
+
+		// Валидация полей json из запроса.
 		valid := validator.New()
 		err = valid.Struct(req)
 		if err != nil {
@@ -73,11 +99,11 @@ func New(alog slog.Logger, st SessionCreator) http.HandlerFunc {
 
 		ctx := r.Context()
 
-		// Создаем нового юзера и игровую сессию по данным из запроса
-		gs, err := st.CreateSession(ctx, req.Name, req.Email)
-		// Если игрок с данным email уже существует, то возвращаем его игровую сессию
+		// Создаем нового юзера и игровую сессию по данным из запроса.
+		gs, err := st.CreateSession(ctx, req.Name, req.Email, req.Stats, req.Modules, req.Minigames)
+		// Если игрок с данным email уже существует, то возвращаем его игровую сессию.
 		if errors.Is(err, storage.ErrUserExists) {
-			log.Info("user already exists; returning user data", slog.String("email", req.Email))
+			log.Info("game session already exists; returning session data", slog.String("email", req.Email))
 			render.Status(r, 200)
 			render.JSON(w, r, gs)
 			return
@@ -94,7 +120,7 @@ func New(alog slog.Logger, st SessionCreator) http.HandlerFunc {
 			render.PlainText(w, r, "Error, failed to create new gameSession: unknown error")
 			return
 		}
-		log.Info("new gameSession created", slog.Int("id", gs.SessionID))
+		log.Info("new gameSession created", slog.String("id", gs.Id.Hex()))
 
 		// Записываем данные сессии в структуру Response
 		var resp rp.Response

@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { MASCOTS } from '../constants/assetConstants'
+import { MASCOTS } from '../../constants/assetConstants'
 
 export default class mascotCat extends Phaser.GameObjects.Container {
 

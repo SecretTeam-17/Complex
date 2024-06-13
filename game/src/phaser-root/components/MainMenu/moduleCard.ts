@@ -1,6 +1,5 @@
 import { UI } from '../../constants/assetConstants'
 import { AUDIO } from '../../constants/audioConstant'
-import { MOODULEONE } from '../../constants/moduleOneConstants'
 
 
 export default class ModuleCard extends Phaser.GameObjects.Container {
@@ -22,7 +21,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
     openSettings = false
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, title: string, totalcounts: number, preimage: string) {
 
         super(scene, x, y)
 
@@ -38,7 +37,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         this.panel.strokeRoundedRect(0, 0, 410, 505, 32)
 
         // Title
-        this.title = scene.add.text(410 / 2, 30, 'Модуль 1. Прогулка', {
+        this.title = scene.add.text(410 / 2, 30, title, {
             fontFamily: 'Manrope',
             fontSize: '30px',
             fontStyle: 'Bold',
@@ -55,9 +54,9 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
         this.bar = scene.add.graphics()
         this.bar.fillStyle(0x49891A, 1)
-        this.bar.fillRoundedRect(60, 80, (290) * (80 / 100), 30, 16)
+        this.bar.fillRoundedRect(60, 80, (290) * (1 / totalcounts), 30, 16)
 
-        this.barText = scene.add.text(205, 95, '80/100 завершено', {
+        this.barText = scene.add.text(205, 95, '0/' + totalcounts + ' завершено', {
             fontFamily: 'Manrope',
             fontSize: '16px',
             fontStyle: 'Normal',
@@ -66,7 +65,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
             .setOrigin(0.5, 0.5)
 
         // preImage
-        this.preImage = scene.add.image(205, 370, MOODULEONE.PREIMAGE).setOrigin(0.5, 1)
+        this.preImage = scene.add.image(205, 370, preimage).setOrigin(0.5, 1).setScale(0.5)
 
         // Button
         this.normalImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.NORMAL).setOrigin(0.5, 1)
