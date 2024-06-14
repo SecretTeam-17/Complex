@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import "./AuthForm.css";
-import { startConfetti } from "./confetti.js";
+import { startConfetti } from "./confetti.tsx";
 
 const AuthForm = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
     //Проверка правильности имени
-    const changeName = (e) => {
+    const changeName = (e:any) => {
         setName(e.target.value);
         const re = /^([а-яА-Я]{1}[а-яё]{1,23}|[a-zA-Z]{1}[a-z]{1,23})$/;
         if (!re.test(String(e.target.value).toLowerCase())) {
@@ -19,7 +19,7 @@ const AuthForm = () => {
         }
     };
     //Проверка правильности почты
-    const changeEmail = (e) => {
+    const changeEmail = (e:any) => {
         setEmail(e.target.value);
         const re = /^([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)$/;
         if (!re.test(String(e.target.value).toLowerCase())) {
@@ -37,7 +37,7 @@ const AuthForm = () => {
     const [nameError, setNameError] = useState("Имя не может быть пустым");
     const [emailError, setEmailError] = useState("Email не может быть пустым");
 
-    const blurHandler = (e) => {
+    const blurHandler = (e:any) => {
         switch (e.target.name) {
             case "name":
                 setNameDirty(true);
@@ -59,7 +59,7 @@ const AuthForm = () => {
         }
     }, [nameError, emailError]);
 
-    const submitData = (e) => {
+    const submitData = (e:any) => {
         e.preventDefault();
         startConfetti(3000, 100, 5000);
 

@@ -1,35 +1,30 @@
 const confetti = {
     maxCount: 3000, //set max confetti count
-    speed: 2, //set the particle animation speed
+    speed: 1, //set the particle animation speed
     frameInterval: 15, //the confetti animation frame interval in milliseconds
     alpha: 1.0, //the alpha opacity of the confetti (between 0 and 1, where 1 is opaque and 0 is invisible)
     gradient: false, //whether to use gradients for the confetti particles
     start: null, //call to start confetti animation (with optional timeout in milliseconds, and optional min and max random confetti count)
-    stop: null, //call to stop adding confetti
-    toggle: null, //call to start or stop the confetti animation depending on whether it's already running
-    pause: null, //call to freeze confetti animation
-    resume: null, //call to unfreeze confetti animation
-    togglePause: null, //call to toggle whether the confetti animation is paused
-    remove: null, //call to stop the confetti animation and remove all confetti immediately
-    isPaused: null, //call and returns true or false depending on whether the confetti animation is paused
-    isRunning: null, //call and returns true or false depending on whether the animation is running
+    // stop: null, //call to stop adding confetti
+    // toggle: null, //call to start or stop the confetti animation depending on whether it's already running
+    // pause: null, //call to freeze confetti animation
+    // resume: null, //call to unfreeze confetti animation
+    // togglePause: null, //call to toggle whether the confetti animation is paused
+    // remove: null, //call to stop the confetti animation and remove all confetti immediately
+    // isPaused: null, //call and returns true or false depending on whether the confetti animation is paused
+    // isRunning: null, //call and returns true or false depending on whether the animation is running
 };
 
-confetti.start = startConfetti;
-confetti.stop = stopConfetti;
-confetti.toggle = toggleConfetti;
-confetti.pause = pauseConfetti;
-confetti.resume = resumeConfetti;
-confetti.togglePause = toggleConfettiPause;
-confetti.isPaused = isConfettiPaused;
-confetti.remove = removeConfetti;
-confetti.isRunning = isConfettiRunning;
-const supportsAnimationFrame =
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame;
+// confetti.start = startConfetti;
+// confetti.stop = stopConfetti;
+// confetti.toggle = toggleConfetti;
+// confetti.pause = pauseConfetti;
+// confetti.resume = resumeConfetti;
+// confetti.togglePause = toggleConfettiPause;
+// confetti.isPaused = isConfettiPaused;
+// confetti.remove = removeConfetti;
+// confetti.isRunning = isConfettiRunning;
+const supportsAnimationFrame = window.requestAnimationFrame;
 const colors = [
     "rgba(30,144,255,",
     "rgba(107,142,35,",
@@ -48,11 +43,11 @@ let streamingConfetti = false;
 let animationTimer = null;
 let pause = false;
 let lastFrameTime = Date.now();
-let particles = [];
+let particles: any = [];
 let waveAngle = 0;
-let context = null;
+let context: any = null;
 
-function resetParticle(particle, width, height) {
+function resetParticle(particle: any, width: number, height: number) {
     particle.color =
         colors[(Math.random() * colors.length) | 0] + (confetti.alpha + ")");
     particle.color2 =
@@ -66,23 +61,23 @@ function resetParticle(particle, width, height) {
     return particle;
 }
 
-function toggleConfettiPause() {
-    if (pause) resumeConfetti();
-    else pauseConfetti();
-}
+// function toggleConfettiPause() {
+//     if (pause) resumeConfetti();
+//     else pauseConfetti();
+// }
 
-function isConfettiPaused() {
-    return pause;
-}
+// function isConfettiPaused() {
+//     return pause;
+// }
 
-function pauseConfetti() {
-    pause = true;
-}
+// function pauseConfetti() {
+//     pause = true;
+// }
 
-function resumeConfetti() {
-    pause = false;
-    runAnimation();
-}
+// function resumeConfetti() {
+//     pause = false;
+//     runAnimation();
+// }
 
 function runAnimation() {
     if (pause) return;
@@ -102,22 +97,18 @@ function runAnimation() {
     }
 }
 
-function startConfetti(timeout, min, max) {
+function startConfetti(timeout: number, min: number, max: number) {
     const width = window.innerWidth;
     const height = window.innerHeight;
     window.requestAnimationFrame = (function () {
         return (
             window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
             function (callback) {
                 return window.setTimeout(callback, confetti.frameInterval);
             }
         );
     })();
-    let canvas = document.getElementById("confetti-canvas");
+    let canvas: HTMLCanvasElement = document.getElementById("confetti-canvas");
     if (canvas === null) {
         canvas = document.createElement("canvas");
         canvas.setAttribute("id", "confetti-canvas");
@@ -168,22 +159,22 @@ function stopConfetti() {
     streamingConfetti = false;
 }
 
-function removeConfetti() {
-    stop();
-    pause = false;
-    particles = [];
-}
+// function removeConfetti() {
+//     stop();
+//     pause = false;
+//     particles = [];
+// }
 
-function toggleConfetti() {
-    if (streamingConfetti) stopConfetti();
-    else startConfetti();
-}
+// function toggleConfetti() {
+//     if (streamingConfetti) stopConfetti();
+//     else startConfetti();
+// }
 
-function isConfettiRunning() {
-    return streamingConfetti;
-}
+// function isConfettiRunning() {
+//     return streamingConfetti;
+// }
 
-function drawParticles(context) {
+function drawParticles(context: any) {
     let particle;
     let x, y, x2, y2;
     for (let i = 0; i < particles.length; i++) {

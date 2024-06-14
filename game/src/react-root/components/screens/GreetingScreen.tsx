@@ -1,10 +1,10 @@
 import React from "react";
-import { startConfetti } from "./confetti.js";
+import { startConfetti } from "./confetti";
 
 import "./GreetingScreen.css";
 
 const GreetingScreen: React.FC = () => {
-    const nextGame = (e) => {
+    const nextGame = (e: any) => {
         e.preventDefault();
         startConfetti(3000, 100, 5000);
     };
