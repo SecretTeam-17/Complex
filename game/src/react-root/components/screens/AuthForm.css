@@ -101,9 +101,43 @@
         border-radius: var(--border-radius-small);
     }
     .button {
-        border-radius: var(--border-radius-small);
+        font-size: 16px;
     }
     .button--big {
+        font-size: 20px;
         min-height: 8vh;
+        border-radius: var(--border-radius-small);
+    }
+}
+
+@media (max-width: 750px) {
+    .button {
+        font-size: 14px;
+    }
+    .button--big {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .form__greeting {
+        gap: 2vh;
+    }
+    .form__greeting-input {
+        min-height: 6vh;
+        font-size: 14px;
+
+        &::placeholder {
+            font-size: 14px;
+        }
+    }
+    .button--big {
+        font-size: 16px;
+        min-height: 6vh;
+    }
+    .error1,
+    .error2 {
+        font-size: 10px;
+        top: -13px;
     }
 }

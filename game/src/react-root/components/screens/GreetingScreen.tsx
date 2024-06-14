@@ -17,7 +17,11 @@ const NewPlayerComponent: React.FC<{ onStart: () => void }> = ({ onStart }) => (
             В этой игре вы будете проходить через различные задания и ситуации,
             чтобы улучшить свои навыки догситтера
         </p>
-        <button className="button" type="button" onClick={onStart}>
+        <button
+            className="button button--instruction"
+            type="button"
+            onClick={onStart}
+        >
             начать
         </button>
     </div>
@@ -33,13 +37,19 @@ const ReturningPlayerComponent: React.FC<ReturningPlayerComponentProps> = ({
     onContinue,
 }) => (
     <div className="instruction__wrapper">
-        <h2 className="instruction__wrapper-title">
-            Добро пожаловать, {username}!
+        <h2 className="instruction__wrapper-title-continue">
+            Добро пожаловать,
+            <br />
+            {username}!
         </h2>
-        <p className="instruction__wrapper-text">
+        <p className="instruction__wrapper-text-continue">
             С возвращением! Продолжайте с того места, где вы остановились.
         </p>
-        <button className="button" type="button" onClick={onContinue}>
+        <button
+            className="button button--instruction-continue"
+            type="button"
+            onClick={onContinue}
+        >
             продолжить
         </button>
     </div>
@@ -82,4 +92,3 @@ const GreetingScreen: React.FC = () => {
 };
 
 export default GreetingScreen;
-
