@@ -17,7 +17,7 @@ const ServiceButton: React.FC = () => {
     const isStuding = useAppSelector(getStuding);
 
     const dispatch = useAppDispatch();
-    
+
     return (
         <div className="service-button">
             <button
@@ -49,4 +49,3 @@ const ServiceButton: React.FC = () => {
 };
 
 export default ServiceButton;
-

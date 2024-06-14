@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./AuthForm.css";
+import { startConfetti } from "./confetti.js";
 
 const AuthForm = () => {
     const [name, setName] = useState("");
@@ -60,6 +61,8 @@ const AuthForm = () => {
 
     const submitData = (e) => {
         e.preventDefault();
+        startConfetti(3000, 100, 5000);
+
         // Что мы делаем дальше с данными формы
         console.log(name, email);
     };
