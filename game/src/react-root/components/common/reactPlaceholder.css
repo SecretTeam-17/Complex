@@ -7,7 +7,6 @@
 
 .react-content {
     display: flex;
-    border: solid red;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -22,3 +21,4 @@
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Likely future */
 }
+

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
 
@@ -8,7 +8,6 @@ interface ConfigState {
 
     ReactVisible: boolean
     isAuth: boolean
-    isGreeting: boolean
     isStuding: boolean
 
     currentScene: string
@@ -20,7 +19,6 @@ const initialState: ConfigState = {
     soundPlaying: false,
     ReactVisible: false,
     isAuth: false,
-    isGreeting: false,
     isStuding: false,
     currentScene: 'StartScreen',
     inModuleScene: ''
@@ -30,28 +28,25 @@ const configSlice = createSlice({
     name: 'config',
     initialState,
     reducers: {
-        setSound: (state, action) => {
+        setSound: (state, action: PayloadAction<boolean>) => {
             state.sound = action.payload
         },
-        setMusicPlaying: (state, action) => {
+        setMusicPlaying: (state, action: PayloadAction<boolean>) => {
             state.soundPlaying = action.payload
         },
-        setReactVisible: (state, action) => {
+        setReactVisible: (state, action: PayloadAction<boolean>) => {
             state.ReactVisible = action.payload
         },
-        setAuth: (state, action) => {
+        setAuth: (state, action: PayloadAction<boolean>) => {
             state.isAuth = action.payload
         },
-        setGreeting: (state, action) => {
-            state.isGreeting = action.payload
-        },
-        setStuding: (state, action) => {
+        setStuding: (state, action: PayloadAction<boolean>) => {
             state.isStuding = action.payload
         },
-        setCurrentScene: (state, action) => {
+        setCurrentScene: (state, action: PayloadAction<string>) => {
             state.currentScene = action.payload
         },
-        setModuleScene: (state, action) => {
+        setModuleScene: (state, action: PayloadAction<string>) => {
             state.inModuleScene = action.payload
         },
     }
@@ -63,12 +58,11 @@ export const getSoundPlaying = (state: RootState) => state.config.soundPlaying
 export const getReactVisible = (state: RootState) => state.config.ReactVisible
 
 export const getAuth = (state: RootState) => state.config.isAuth
-export const getGreeting = (state: RootState) => state.config.isGreeting
 export const getStuding = (state: RootState) => state.config.isStuding
 export const getCurrentScene = (state: RootState) => state.config.currentScene
 
 export const getInModuleScene = (state: RootState) => state.config.inModuleScene
 
-export const { setSound, setMusicPlaying, setAuth, setGreeting, setStuding, setCurrentScene, setReactVisible, setModuleScene } = configSlice.actions
+export const { setSound, setMusicPlaying, setAuth, setStuding, setCurrentScene, setReactVisible, setModuleScene } = configSlice.actions
 
 export default configSlice

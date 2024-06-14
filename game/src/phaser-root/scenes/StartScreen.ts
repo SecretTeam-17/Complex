@@ -3,7 +3,7 @@ import { EventBus } from '../EventBus'
 import { BACKGROUNDS, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
-import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { setCurrentScene, setReactVisible } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
 import BigButton from '../components/UI/bigButton'
 import inMenuBurger from '../components/UI/inMenuBurger'
@@ -92,6 +92,7 @@ export class StartScreen extends Scene {
                 this.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
                     if (progress === 1) {
                         store.dispatch(setCurrentScene('MainMenu'))
+                        store.dispatch(setReactVisible(true))
                         this.scene.start('MainMenu')
 
                     }

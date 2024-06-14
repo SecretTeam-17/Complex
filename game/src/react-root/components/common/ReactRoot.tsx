@@ -1,17 +1,41 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
+import {
+    getReactVisible,
+    setAuth,
+} from "../../../redux/GameConfig/config.slice";
+import { setGame } from "../../../redux/GameSession/session.slice";
+import { useGetSessionQuery } from "../../../redux/apiSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import "./reactRoot.css";
-import { useAppSelector } from '../../../redux/hooks'
-import { getReactVisible } from '../../../redux/GameConfig/config.slice'
 
 interface StatsUIProps {
     children: ReactNode | ReactNode[];
 }
 
 export const ReactRoot: React.FC<StatsUIProps> = ({ children }) => {
+    const dispatch = useAppDispatch();
     const [rootStyle, setRootStyle] = useState({});
     const uiRootRef = useRef<HTMLDivElement>(null);
+    const isReactVisible = useAppSelector(getReactVisible);
 
-    const isReactVisible = useAppSelector(getReactVisible)
+    const sessionId = localStorage.getItem("sessionId");
+
+    const { data, isSuccess, isError, error } = useGetSessionQuery(
+        sessionId || "",
+        {
+            skip: !sessionId,
+        }
+    );
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            console.log("Сессия успешно получена:", data);
+            dispatch(setGame(data));
+            dispatch(setAuth(true));
+        } else if (isError) {
+            console.error("Не удалось создать сессию:", error);
+        }
+    }, [isSuccess, isError, data, error, dispatch]);
 
     useEffect(() => {
         const phaserParent = document.getElementById("phaser-parent");
@@ -40,7 +64,13 @@ export const ReactRoot: React.FC<StatsUIProps> = ({ children }) => {
     }, []);
 
     return (
-        <div className={`${isReactVisible ? 'react-root-show' : 'react-root-hide'}`} ref={uiRootRef} style={rootStyle}>
+        <div
+            className={`${
+                isReactVisible ? "react-root-show" : "react-root-hide"
+            }`}
+            ref={uiRootRef}
+            style={rootStyle}
+        >
             {children}
         </div>
     );
