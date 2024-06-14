@@ -30,6 +30,7 @@ export const UI = {
     ICONBUTTON: {
         NORMAL: 'icon-button-normal',
         HOVER: 'icon-button-hover',
+        DISABLE: 'icon-button-disable'
     },
 }
 

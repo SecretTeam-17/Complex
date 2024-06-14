@@ -36,13 +36,15 @@ export default class ModuleCardSelector {
 
         this.scene = scene
 
+        const state = store.getState()
+
         this.cardSelector = scene.add.container(x, y).setScale(1).setDepth(1)
 
         // Карточки модулей
-        this.cardOne = new ModuleCard(scene, 0, 0, MOODULEONE.TITLE, MOODULEONE.TOTALCOUNTS, MOODULEONE.PREIMAGE)
-        this.cardTwo = new ModuleCard(scene, 70, 0, MOODULETWO.TITLE, MOODULETWO.TOTALCOUNTS, MOODULETWO.PREIMAGE)
-        this.cardThree = new ModuleCard(scene, 140, 0, MOODULETHREE.TITLE, MOODULETHREE.TOTALCOUNTS, MOODULETHREE.PREIMAGE)
-        this.cardFour = new ModuleCard(scene, 210, 0, MOODULEFOUR.TITLE, MOODULEFOUR.TOTALCOUNTS, MOODULEFOUR.PREIMAGE)
+        this.cardOne = new ModuleCard(scene, 0, 0, MOODULEONE.TITLE, MOODULEONE.TOTALCOUNTS, MOODULEONE.PREIMAGE, state.game.modules.moduleOne.score, state.game.modules.moduleOne.isAvailable)
+        this.cardTwo = new ModuleCard(scene, 70, 0, MOODULETWO.TITLE, MOODULETWO.TOTALCOUNTS, MOODULETWO.PREIMAGE, state.game.modules.moduleTwo.score, state.game.modules.moduleTwo.isAvailable)
+        this.cardThree = new ModuleCard(scene, 140, 0, MOODULETHREE.TITLE, MOODULETHREE.TOTALCOUNTS, MOODULETHREE.PREIMAGE, state.game.modules.moduleThree.score, state.game.modules.moduleThree.isAvailable)
+        this.cardFour = new ModuleCard(scene, 210, 0, MOODULEFOUR.TITLE, MOODULEFOUR.TOTALCOUNTS, MOODULEFOUR.PREIMAGE, state.game.modules.moduleFour.score, state.game.modules.moduleFour.isAvailable)
 
         //Маленькие карточки
         this.cardOneMini = new ModuleCardMini(scene, 40, 470, MOODULEONE.TITLE)

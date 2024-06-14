@@ -9,7 +9,7 @@ import cardButton from './cardButton'
 export default class GameModeSelector {
 
     // Определяем объекты класса
-    private container!: Phaser.GameObjects.Container
+    container!: Phaser.GameObjects.Container
 
     modulesChoiseButton!: customMiniButton
     gamesChoiseButton!: customMiniButton
@@ -21,7 +21,7 @@ export default class GameModeSelector {
     constructor(scene: Phaser.Scene) {
 
         // Container
-        this.container = scene.add.container(CONFIG.SCREENWIDTH - 234, 350).setScale(1).setDepth(0.5)
+        this.container = scene.add.container(CONFIG.SCREENWIDTH + 234, 350).setScale(1).setDepth(0.5)
 
         const moduleCard = new cardButton(scene, 0, 0, UI.MODULE)
         const gameCard = new cardButton(scene, 0, 0, UI.GAME)

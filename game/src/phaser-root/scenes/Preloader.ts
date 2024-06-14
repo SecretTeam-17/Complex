@@ -84,6 +84,7 @@ export class Preloader extends Scene {
 
         this.load.image(UI.ICONBUTTON.NORMAL, 'ui/iconButtonNormal.png')
         this.load.image(UI.ICONBUTTON.HOVER, 'ui/iconButtonHover.png')
+        this.load.image(UI.ICONBUTTON.DISABLE, 'ui/iconButtonDisable.png')
 
         // Mascots
         this.load.image(MASCOTS.MASCOTCAT.BASE, 'ui/mascotCat.png')

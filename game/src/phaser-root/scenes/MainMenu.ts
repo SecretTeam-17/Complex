@@ -3,6 +3,7 @@ import { EventBus } from '../EventBus'
 import { BACKGROUNDS, UI } from '../constants/assetConstants'
 import { CONFIG } from '../constants/gameConfig'
 
+import { store } from '../../redux/store'
 import GameModeSelector from '../components/MainMenu/GameModeSelector'
 import ModuleCardSelector from '../components/MainMenu/moduleCardSelector'
 import inMenuBurger from '../components/UI/inMenuBurger'
@@ -16,6 +17,9 @@ export class MainMenu extends Scene {
     // UI
     private SettingsMenu: inMenuSettings
     private BurgerMenu: inMenuBurger
+    private Dog: mascotDog
+    private gameModeSelector: GameModeSelector
+    private selector: ModuleCardSelector
 
     constructor() {
         super('MainMenu')
@@ -84,17 +88,58 @@ export class MainMenu extends Scene {
             })
 
         // Добавляем маскотов
-        const Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 306, CONFIG.SCREENHIGHT - 256).setScale(1.5)
-        this.add.existing(Dog)
+        this.Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 306, CONFIG.SCREENHIGHT - 256).setScale(1.5).setAlpha(0)
+        this.add.existing(this.Dog)
 
 
         // Панели выбора режима игры
-        const gameModeSelector = new GameModeSelector(this)
+        this.gameModeSelector = new GameModeSelector(this)
 
         // Панель выбора модулей
-        const selector = new ModuleCardSelector(this, 340, 237)
+        this.selector = new ModuleCardSelector(this, 340, 237)
+        this.selector.cardSelector.setAlpha(0)
+
+        // Проверяем начальное состояние
+        let state = store.getState()
+        let isAuth = state.config.isAuth
+        if (isAuth) {
+            this.Dog.setAlpha(1)
+        }
+        let isReact = state.config.ReactVisible
+        if (!isReact) {
+            this.onStoreChange()
+        }
+
+        store.subscribe(this.onStoreChange.bind(this))
 
         EventBus.emit('current-scene-ready', this)
+    }
+
+    onStoreChange() {
+        let state = store.getState()
+        let isAuth = state.config.isAuth
+        let isReact = state.config.ReactVisible
+        if (isAuth) {
+            this.tweens.add({
+                targets: this.Dog,
+                alpha: 1,
+                duration: 100
+            })
+            if (!isReact) {
+                this.tweens.add({
+                    targets: this.gameModeSelector.container,
+                    x: CONFIG.SCREENWIDTH - 234,
+                    duration: 300,
+                    ease: Phaser.Math.Easing.Sine.InOut,
+                })
+                this.tweens.add({
+                    targets: this.selector.cardSelector,
+                    alpha: 1,
+                    duration: 500
+                })
+            }
+        }
+
     }
 
 }

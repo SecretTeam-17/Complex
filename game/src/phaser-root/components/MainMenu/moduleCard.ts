@@ -10,6 +10,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
     private preImage: Phaser.GameObjects.Image
     private normalImage: Phaser.GameObjects.Image
+    private disableImage: Phaser.GameObjects.Image
     hoverImage: Phaser.GameObjects.Image
     private buttonText: Phaser.GameObjects.Text
 
@@ -21,7 +22,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
     openSettings = false
 
-    constructor(scene: Phaser.Scene, x: number, y: number, title: string, totalcounts: number, preimage: string) {
+    constructor(scene: Phaser.Scene, x: number, y: number, title: string, totalcounts: number, preimage: string, score: number, isAvailable: boolean) {
 
         super(scene, x, y)
 
@@ -54,7 +55,12 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
         this.bar = scene.add.graphics()
         this.bar.fillStyle(0x49891A, 1)
-        this.bar.fillRoundedRect(60, 80, (290) * (1 / totalcounts), 30, 16)
+        if (score / totalcounts < 0.1) {
+            this.bar.fillRoundedRect(60, 80, (290) * 0.1, 30, 16)
+        } else {
+            this.bar.fillRoundedRect(60, 80, (290) * (score / totalcounts), 30, 16)
+        }
+
 
         this.barText = scene.add.text(205, 95, '0/' + totalcounts + ' завершено', {
             fontFamily: 'Manrope',
@@ -70,6 +76,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         // Button
         this.normalImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.NORMAL).setOrigin(0.5, 1)
         this.hoverImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.HOVER).setOrigin(0.5, 1)
+        this.disableImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.DISABLE).setOrigin(0.5, 1)
 
         this.buttonText = scene.add.text(205, 505 - 50, 'НАЧАТЬ', {
             fontFamily: 'Manrope',
@@ -89,7 +96,16 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         this.container.add(this.preImage)
         this.container.add(this.hoverImage)
         this.container.add(this.normalImage)
+        this.container.add(this.disableImage)
         this.container.add(this.buttonText)
+
+        // Проверка доступности модуля
+        if (!isAvailable) {
+            this.normalImage.setAlpha(0)
+            this.hoverImage.setAlpha(0)
+        } else {
+            this.disableImage.setAlpha(0)
+        }
 
         // Определяем действия для кнопки по навыедению и нажатию
         this.normalImage.setInteractive()
