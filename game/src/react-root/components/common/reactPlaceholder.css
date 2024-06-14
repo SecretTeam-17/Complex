@@ -22,3 +22,15 @@
     user-select: none; /* Likely future */
 }
 
+@media (max-width: 850px) {
+    .react-content {
+        padding-bottom: 5vh;
+    }
+}
+
+@media (max-width: 750px) {
+    .react-content {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}

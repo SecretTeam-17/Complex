@@ -33,6 +33,48 @@
     font-size: 3.2vw;
 }
 
+.instruction__wrapper-title-continue {
+    font-size: 2.3vw;
+}
+
 .instruction__wrapper-text {
     font-size: 1.2vw;
+}
+
+.instruction__wrapper-text-continue {
+    font-size: 1.1vw;
+}
+
+.button--instruction-continue {
+    width: 16vw;
+}
+
+@media (max-width: 950px) {
+    .instruction__wrapper {
+        gap: 1.5vw;
+    }
+    .button--instruction-continue {
+        font-size: 16px;
+    }
+}
+@media (max-width: 850px) {
+    .instruction__wrapper {
+        margin: 5% 42% 20% 20%;
+        padding: 5vh 4vw 6vh;
+        border-radius: var(--border-radius);
+    }
+    .button--instruction-continue {
+        font-size: 14px;
+        letter-spacing: normal;
+    }
+}
+
+@media (max-width: 750px) {
+    .instruction__wrapper {
+        padding: 3vh 4vw 4vh;
+    }
+    .button--instruction-continue {
+        font-size: 10px;
+        height: 5vh;
+    }
 }

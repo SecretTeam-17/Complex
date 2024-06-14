@@ -57,3 +57,11 @@
         padding: 3.3vh 4.5vw;
     }
 }
+
+@media (max-width: 650px) {
+    .wrapper__form {
+        height: 30vh;
+        border-radius: var(--border-radius);
+        padding: 3vh 4vw;
+    }
+}
