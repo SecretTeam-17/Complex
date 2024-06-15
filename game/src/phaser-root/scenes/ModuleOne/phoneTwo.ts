@@ -344,7 +344,7 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                 .setOrigin(0, 0)
                 .setScale(1)
                 .setAlpha(0)
-                .setDepth(0)
+                .setDepth(3)
             this.scene.tweens.add({
                 targets: this.background,
                 alpha: 1,
@@ -354,6 +354,7 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                     const listFullImage = this.scene.add.image(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2, MOODULEONE.LISTFULL)
                         .setOrigin(0.5, 0.5)
                         .setAlpha(0)
+                        .setDepth(3)
 
                     this.scene.tweens.add({
                         targets: listFullImage,
