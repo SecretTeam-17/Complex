@@ -581,7 +581,6 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
     private hideAllElements() {
         // Hide backgrounds
         this.bgOne.setAlpha(0)
-        this.bgTwo.setAlpha(0)
         this.bgThree.setAlpha(0)
         this.blankList.setAlpha(0)
 
