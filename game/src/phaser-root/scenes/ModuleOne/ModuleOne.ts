@@ -1,4 +1,5 @@
 import { Scene } from 'phaser'
+import { setPhone, setSavePoint } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import { EventBus } from '../../EventBus'
 import inGameBag from '../../components/inGameBag'
@@ -7,9 +8,12 @@ import inGameSettingsMenu from '../../components/inGameSettingsMenu'
 import { UI } from '../../constants/assetConstants'
 import { AUDIO } from '../../constants/audioConstant'
 import { CONFIG } from '../../constants/gameConfig'
+import sceneHUB from './scene-HUB'
+import sceneAltEnd from './scene-altend'
 import sceneComputer from './scene-computer'
 import sceneIntro from './scene-intro'
 import sceneOnSofa from './scene-onSofa'
+import scenePhoneOne from './scene-phoneone'
 
 export class ModuleOne extends Scene {
     SettingsMenu: inGameSettingsMenu
@@ -65,6 +69,14 @@ export class ModuleOne extends Scene {
             .setAlpha(0)
             .setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                const state = store.getState()
+                const phoneIndex = state.config.phone
+                if (phoneIndex === 1) {
+                    store.dispatch(setPhone(0))
+                    // this.Phone.disableInteractive()
+                    store.dispatch(setSavePoint('phoneOne'))
+
+                }
             })
 
         this.Bag = new inGameBag(this, CONFIG.SCREENWIDTH - 285, CONFIG.SCREENHIGHT - 135)
@@ -107,6 +119,15 @@ export class ModuleOne extends Scene {
                 case 'onSofa':
                     this.activeSceneContainer.add(new sceneOnSofa(this, 0, 0))
                     break
+                case 'phoneOne':
+                    this.activeSceneContainer.add(new scenePhoneOne(this, 0, 0))
+                    break
+                case 'altEnd':
+                    this.activeSceneContainer.add(new sceneAltEnd(this, 0, 0))
+                    break
+                case 'HUB':
+                    this.activeSceneContainer.add(new sceneHUB(this, 0, 0))
+                    break
                 default:
                     this.activeSceneContainer = null
                     break
@@ -122,6 +143,14 @@ export class ModuleOne extends Scene {
             this.tweens.add({
                 targets: this.Phone,
                 alpha: 1,
+                duration: 1000,
+            })
+        }
+
+        if (phoneIndex === 0) {
+            this.tweens.add({
+                targets: this.Phone,
+                alpha: 0,
                 duration: 1000,
             })
         }

@@ -89,19 +89,23 @@ export class Preloader extends Scene {
         this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
 
         // Module One
+        this.load.image(MOODULEONE.MINCUTE, 'modules/one/mingcute.png')
+        this.load.image(MOODULEONE.BALOON, 'modules/one/instruction.png')
         // Backgrounds
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
         this.load.image(MOODULEONE.BACKGROUNDS.KITCHEN, 'modules/one/kitchen.png')
         this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER1, 'modules/one/nearComputer1.png')
         this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER2, 'modules/one/nearComputer2.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.WITHDOG, 'modules/one/withDog.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.HUB, 'modules/one/HUB.png')
         this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ONSOFA, 'modules/one/onSofa.png')
 
         // Audio
         this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')
-        this.load.audio(MOODULEONE.AUDIO.MESSAGE, 'audio/message.mp3')
+        this.load.audio(MOODULEONE.AUDIO.MESSAGE, 'audio/notification_sound_2.mp3')
+        this.load.audio(MOODULEONE.AUDIO.KNOPKA, 'audio/knopka_sound.mp3')
+        this.load.audio(MOODULEONE.AUDIO.COMPLETE, 'audio/level_completed.mp3')
 
 
     }

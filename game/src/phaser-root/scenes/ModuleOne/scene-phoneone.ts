@@ -1,30 +1,44 @@
-import { setCurrentScene, setModuleScene } from '../../../redux/GameConfig/config.slice'
+import Phaser from 'phaser'
+import { setPhone, setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import choiceMiniButton from '../../components/choiceMiniButton'
+import { MOODULEONE } from '../../constants/moduleOneConstants'
 
-export default class PhoneOneChoice {
+export default class scenePhoneOne extends Phaser.GameObjects.Container {
+    background: Phaser.GameObjects.Image
+    noteOne: Phaser.GameObjects.Image
+    noteTwo: Phaser.GameObjects.Image
+    noteThree: Phaser.GameObjects.Image
+    messageSound: Phaser.Sound.BaseSound
+    choiceMenu: Phaser.GameObjects.Container
+    choicePanel: Phaser.GameObjects.Graphics
+    ButtonOne: choiceMiniButton
+    ButtonTwo: choiceMiniButton
+    choiceMenu2: Phaser.GameObjects.Container
+    choicePanel2: Phaser.GameObjects.Graphics
+    typingText2: Phaser.GameObjects.Text
+    ButtonOne2: choiceMiniButton
+    ButtonTwo2: choiceMiniButton
 
-    // Определяем объекты класса
-    private choiceMenu!: Phaser.GameObjects.Container
-    private choiceMenu2!: Phaser.GameObjects.Container
+    isVisible: boolean
 
-    private choicePanel: Phaser.GameObjects.Graphics
-    private choicePanel2: Phaser.GameObjects.Graphics
-
-    private ButtonOne: choiceMiniButton
-    private ButtonTwo: choiceMiniButton
-
-    private ButtonOne2: choiceMiniButton
-    private ButtonTwo2: choiceMiniButton
-    private typingText2: Phaser.GameObjects.Text
-
-    private scene: Phaser.Scene
-
-    isVisible = false
-
-    constructor(scene: Phaser.Scene) {
-
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+        super(scene, x, y)
         this.scene = scene
+
+        // Инициализация фонa
+        this.background = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.PHONEONE)
+            .setOrigin(0, 0)
+            .setScale(1)
+            .setAlpha(0)
+            .setDepth(0)
+
+        scene.tweens.add({
+            targets: this.background,
+            alpha: 1,
+            ease: 'Linear',
+            duration: 1000
+        })
 
         // Container one
         this.choiceMenu = scene.add.container(740, 640).setScale(0).setDepth(1)
@@ -44,7 +58,9 @@ export default class PhoneOneChoice {
         this.ButtonOne.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.Hide()
-                store.dispatch(setModuleScene('onSuccess'))
+                store.dispatch(setPhone(2))
+                store.dispatch(setScore(4))
+                store.dispatch(setSavePoint('HUB'))
             })
 
         this.ButtonTwo.setInteractive()
@@ -55,14 +71,14 @@ export default class PhoneOneChoice {
 
 
         // Container two
-        this.choiceMenu2 = scene.add.container(540, 440).setAlpha(0).setDepth(1)
+        this.choiceMenu2 = scene.add.container(360, 530).setAlpha(0).setDepth(1)
         this.choicePanel2 = scene.add.graphics()
         this.choicePanel2.fillStyle(0xffffff, 1)
         this.choicePanel2.fillRoundedRect(0, 0, 684, 258, 24)
 
-        this.typingText2 = scene.add.text(30, 42, 'Вы уверены?', {
+        this.typingText2 = scene.add.text(32, 42, 'Вы уверены?', {
             fontFamily: 'Manrope',
-            fontSize: '28px',
+            fontSize: '24px',
             fontStyle: 'Bold',
             color: '#320064',
 
@@ -79,20 +95,18 @@ export default class PhoneOneChoice {
 
         this.ButtonOne2.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
-                    if (progress === 1) {
-                        store.dispatch(setCurrentScene('MainMenu'))
-                        store.dispatch(setModuleScene(undefined))
-                        this.scene.sound.removeAll()
-                        this.scene.scene.start('MainMenu')
-                    }
-                })
+                this.panelTwoHide()
+                store.dispatch(setSavePoint('altEnd'))
             })
         this.ButtonTwo2.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.Show()
                 this.panelTwoHide()
             })
+
+        scene.time.delayedCall(1000, () => {
+            this.Show()
+        }, [], this)
     }
 
 

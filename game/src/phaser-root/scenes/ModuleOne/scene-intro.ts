@@ -87,7 +87,7 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
         this.hideBackground(previousIndex, () => {
             if (this.currentBackgroundIndex === this.backgrounds.length - 1) {
                 // Выполнить действия после завершения всех анимаций
-                this.scene.time.delayedCall(2000, () => {
+                this.scene.time.delayedCall(3000, () => {
                     store.dispatch(setSavePoint('computer'))
                     store.dispatch(setScore(2))
                 })

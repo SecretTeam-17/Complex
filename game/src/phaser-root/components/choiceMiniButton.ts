@@ -16,7 +16,6 @@ export default class choiceMiniButton extends Phaser.GameObjects.Container {
         // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
-
         // Sound
         this.soundClick = scene.sound.add(AUDIO.BUTTONCLICK)
 
@@ -27,7 +26,7 @@ export default class choiceMiniButton extends Phaser.GameObjects.Container {
         // Добавляем изображения и текст в контейнер
         this.text = scene.add.text(0, 0, text, {
             fontFamily: 'Manrope',
-            fontSize: '28px',
+            fontSize: '24px',
             fontStyle: 'Bold',
             color: '#FDF8F8',
         })

@@ -16,7 +16,6 @@ export default class mascotDog extends Phaser.GameObjects.Container {
         // Отрисовываем изображения
         this.add(this.baseImage)
 
-
         this.setSize(this.baseImage.width, this.baseImage.height)
 
 

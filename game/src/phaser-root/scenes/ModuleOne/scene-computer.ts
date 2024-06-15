@@ -82,7 +82,7 @@ export default class sceneComputer extends Phaser.GameObjects.Container {
         this.hideBackground(previousIndex, () => {
             if (this.currentBackgroundIndex === this.backgrounds.length - 1) {
                 // Выполнить действия после завершения всех анимаций
-                this.scene.time.delayedCall(4000, () => {
+                this.scene.time.delayedCall(5000, () => {
                     this.scene.tweens.add({
                         targets: this.bgTwo,
                         alpha: 0,
