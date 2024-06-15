@@ -62,7 +62,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         }
 
 
-        this.barText = scene.add.text(205, 95, '0/' + totalcounts + ' завершено', {
+        this.barText = scene.add.text(205, 95, score + '/' + totalcounts + ' завершено', {
             fontFamily: 'Manrope',
             fontSize: '16px',
             fontStyle: 'Normal',

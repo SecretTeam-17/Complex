@@ -1,4 +1,4 @@
-import { setCurrentScene, setModuleScene } from '../../redux/GameConfig/config.slice'
+import { setCurrentScene } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
 import { UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
@@ -47,7 +47,6 @@ export default class inGameSettingsMenu {
                 this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
                     if (progress === 1) {
                         store.dispatch(setCurrentScene('MainMenu'))
-                        store.dispatch(setModuleScene(undefined))
                         this.scene.sound.removeAll()
                         this.scene.scene.start('MainMenu')
                     }

@@ -9,7 +9,6 @@ import { useAppSelector } from "../../../redux/hooks";
 import AuthScreen from "../screens/AuthScreen";
 import GreetingScreen from "../screens/GreetingScreen";
 import WikiScreen from "../screens/WikiScreen";
-import ServiceButton from "../ui/ServiceButton";
 import "./reactPlaceholder.css";
 
 const ReactPlaceholder: React.FC = () => {
@@ -24,8 +23,7 @@ const ReactPlaceholder: React.FC = () => {
                 {!isAuth && currentScene === "MainMenu" && <AuthScreen />}
                 {isAuth && currentScene === "MainMenu" && <GreetingScreen />}
                 {isStuding && currentScene === "MainMenu" && <WikiScreen />}
-
-                <ServiceButton />
+                {/* <ServiceButton /> */}
             </div>
         </div>
     );

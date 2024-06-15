@@ -3,6 +3,11 @@
     src: url("assets/fonts/Manrope-VariableFont_wght.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "Comfortaa";
+    src: url("assets/fonts/Comfortaa-VariableFont_wght.ttf") format("truetype");
+}
+
 *,
 *::before,
 *::after {
@@ -34,3 +39,4 @@ body {
     color: rgba(255, 255, 255, 0.87);
     background-color: #000000;
 }
+

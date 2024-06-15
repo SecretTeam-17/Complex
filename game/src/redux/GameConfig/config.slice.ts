@@ -12,6 +12,11 @@ interface ConfigState {
 
     currentScene: string
     inModuleScene: string
+
+    score: number
+    phone: number
+    bag: number
+    savePoint: string
 }
 
 const initialState: ConfigState = {
@@ -21,7 +26,12 @@ const initialState: ConfigState = {
     isAuth: false,
     isStuding: false,
     currentScene: 'StartScreen',
-    inModuleScene: ''
+    inModuleScene: '',
+
+    score: 1,
+    phone: 0,
+    bag: 0,
+    savePoint: 'intro'
 }
 
 const configSlice = createSlice({
@@ -49,6 +59,19 @@ const configSlice = createSlice({
         setModuleScene: (state, action: PayloadAction<string>) => {
             state.inModuleScene = action.payload
         },
+
+        setScore: (state, action: PayloadAction<number>) => {
+            state.score = action.payload
+        },
+        setPhone: (state, action: PayloadAction<number>) => {
+            state.phone = action.payload
+        },
+        setBag: (state, action: PayloadAction<number>) => {
+            state.bag = action.payload
+        },
+        setSavePoint: (state, action: PayloadAction<string>) => {
+            state.savePoint = action.payload
+        },
     }
 })
 
@@ -61,8 +84,6 @@ export const getAuth = (state: RootState) => state.config.isAuth
 export const getStuding = (state: RootState) => state.config.isStuding
 export const getCurrentScene = (state: RootState) => state.config.currentScene
 
-export const getInModuleScene = (state: RootState) => state.config.inModuleScene
-
-export const { setSound, setMusicPlaying, setAuth, setStuding, setCurrentScene, setReactVisible, setModuleScene } = configSlice.actions
+export const { setSound, setMusicPlaying, setAuth, setStuding, setCurrentScene, setReactVisible, setModuleScene, setPhone, setBag, setScore, setSavePoint } = configSlice.actions
 
 export default configSlice

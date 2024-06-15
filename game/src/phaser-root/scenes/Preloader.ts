@@ -1,6 +1,4 @@
 import { Scene } from 'phaser'
-import { setCurrentScene } from '../../redux/GameConfig/config.slice'
-import { store } from '../../redux/store'
 import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
@@ -95,7 +93,8 @@ export class Preloader extends Scene {
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
         this.load.image(MOODULEONE.BACKGROUNDS.KITCHEN, 'modules/one/kitchen.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER, 'modules/one/nearComputer.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER1, 'modules/one/nearComputer1.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER2, 'modules/one/nearComputer2.png')
         this.load.image(MOODULEONE.BACKGROUNDS.WITHDOG, 'modules/one/withDog.png')
         this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ONSOFA, 'modules/one/onSofa.png')
@@ -109,9 +108,9 @@ export class Preloader extends Scene {
 
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('StartScreen')
-        // this.scene.start('MainMenu')
-        store.dispatch(setCurrentScene('StartScreen'))
+        // this.scene.start('StartScreen')
+        this.scene.start('MainMenu')
+        // store.dispatch(setCurrentScene('StartScreen'))
         // this.scene.start('ModuleOne')
 
     }
