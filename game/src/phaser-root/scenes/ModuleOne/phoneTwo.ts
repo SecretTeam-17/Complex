@@ -364,6 +364,7 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                         onComplete: () => {
                             const inventoryButton = new choiceMiniButton(this.scene, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 75, 'ДОБАВИТЬ В ИНВЕНТАРЬ')
                                 .setAlpha(0)
+                                .setDepth(3)
 
                             this.scene.add.existing(inventoryButton)
 
