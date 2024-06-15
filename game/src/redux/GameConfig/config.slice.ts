@@ -27,9 +27,9 @@ const initialState: ConfigState = {
     currentScene: 'StartScreen',
 
     score: 1,
-    phone: 2,
+    phone: 0,
     bag: 0,
-    savePoint: 'HUB'
+    savePoint: 'intro'
 }
 
 const configSlice = createSlice({

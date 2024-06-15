@@ -8,6 +8,7 @@ import inGameSettingsMenu from '../../components/inGameSettingsMenu'
 import { UI } from '../../constants/assetConstants'
 import { AUDIO } from '../../constants/audioConstant'
 import { CONFIG } from '../../constants/gameConfig'
+import scenePhoneTwo from './phoneTwo'
 import sceneHUB from './scene-HUB'
 import sceneAltEnd from './scene-altend'
 import sceneComputer from './scene-computer'
@@ -73,9 +74,11 @@ export class ModuleOne extends Scene {
                 const phoneIndex = state.config.phone
                 if (phoneIndex === 1) {
                     store.dispatch(setPhone(0))
-                    // this.Phone.disableInteractive()
                     store.dispatch(setSavePoint('phoneOne'))
-
+                }
+                if (phoneIndex === 2) {
+                    store.dispatch(setPhone(0))
+                    store.dispatch(setSavePoint('phoneTwo'))
                 }
             })
 
@@ -127,6 +130,9 @@ export class ModuleOne extends Scene {
                     break
                 case 'HUB':
                     this.activeSceneContainer.add(new sceneHUB(this, 0, 0))
+                    break
+                case 'phoneTwo':
+                    this.activeSceneContainer.add(new scenePhoneTwo(this, 0, 0))
                     break
                 default:
                     this.activeSceneContainer = null

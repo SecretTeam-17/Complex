@@ -1,4 +1,6 @@
 import { Scene } from 'phaser'
+import { setCurrentScene } from '../../redux/GameConfig/config.slice'
+import { store } from '../../redux/store'
 import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
@@ -91,6 +93,11 @@ export class Preloader extends Scene {
         // Module One
         this.load.image(MOODULEONE.MINCUTE, 'modules/one/mingcute.png')
         this.load.image(MOODULEONE.BALOON, 'modules/one/instruction.png')
+        this.load.image(MOODULEONE.CHECKBOXOFF, 'modules/one/CheckboxOff.png')
+        this.load.image(MOODULEONE.CHECKBOXON, 'modules/one/CheckboxOn.png')
+        this.load.image(MOODULEONE.LISTFULL, 'modules/one/listFull.png')
+        this.load.image(MOODULEONE.LISTBLANK, 'modules/one/listBlank.png')
+
         // Backgrounds
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
@@ -100,22 +107,27 @@ export class Preloader extends Scene {
         this.load.image(MOODULEONE.BACKGROUNDS.HUB, 'modules/one/HUB.png')
         this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
         this.load.image(MOODULEONE.BACKGROUNDS.ONSOFA, 'modules/one/onSofa.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.CALLONE, 'modules/one/callOne.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.CALLTWO, 'modules/one/callTwo.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.ROOMRIGHT, 'modules/one/roomRight.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.PHONETWO, 'modules/one/phoneScreen.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.BLURROOM, 'modules/one/blurRoom.png')
 
         // Audio
         this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')
         this.load.audio(MOODULEONE.AUDIO.MESSAGE, 'audio/notification_sound_2.mp3')
         this.load.audio(MOODULEONE.AUDIO.KNOPKA, 'audio/knopka_sound.mp3')
         this.load.audio(MOODULEONE.AUDIO.COMPLETE, 'audio/level_completed.mp3')
+        this.load.audio(MOODULEONE.AUDIO.CALL, 'audio/callNumber.mp3')
 
 
     }
 
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        // this.scene.start('StartScreen')
-        this.scene.start('MainMenu')
-        // store.dispatch(setCurrentScene('StartScreen'))
-        // this.scene.start('ModuleOne')
+        this.scene.start('StartScreen')
+        // this.scene.start('MainMenu')
+        store.dispatch(setCurrentScene('StartScreen'))
 
     }
 }

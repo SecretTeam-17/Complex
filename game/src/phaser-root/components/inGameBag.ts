@@ -1,14 +1,19 @@
 import Phaser from 'phaser'
 import { INGAMEUI } from '../constants/assetConstants'
+import { AUDIO } from '../constants/audioConstant'
 
 export default class inGameBag extends Phaser.GameObjects.Container {
 
     private Bag: Phaser.GameObjects.Image
+    private Click!: Phaser.Sound.BaseSound
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         // Создаем контейнер в сцене по координатам x, y
 
         super(scene, x, y)
+
+        // Sound
+        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Добавляем изображение значка настроек
         this.Bag = scene.add.image(0, 0, INGAMEUI.BAG)
@@ -23,7 +28,7 @@ export default class inGameBag extends Phaser.GameObjects.Container {
                 this.Bag.setScale(1)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-
+                this.Click.play()
             })
 
     }

@@ -27,7 +27,7 @@ export default class inGameSettingsMenu {
         this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Container
-        this.settingsMenu = scene.add.container(width - 116, 90).setScale(0).setDepth(1)
+        this.settingsMenu = scene.add.container(width - 116, 90).setScale(0).setDepth(10)
         const settingsPanel = scene.add.nineslice(0, 20, UI.PANEL, undefined, 410).setOrigin(1, 0)
         this.settingsMenu.add(settingsPanel)
 

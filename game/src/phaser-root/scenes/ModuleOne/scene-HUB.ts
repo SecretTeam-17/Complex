@@ -1,4 +1,6 @@
 import Phaser from 'phaser'
+import { setPhone, setSavePoint } from '../../../redux/GameConfig/config.slice'
+import { store } from '../../../redux/store'
 import choiceMiniButton from '../../components/choiceMiniButton'
 import { CONFIG } from '../../constants/gameConfig'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
@@ -10,6 +12,7 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
     typingText: Phaser.GameObjects.Text
     ButtonOne: choiceMiniButton
     ButtonTwo: choiceMiniButton
+    buttonText: string
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
@@ -44,7 +47,16 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
         })
             .setOrigin(0, 0)
 
-        this.ButtonOne = new choiceMiniButton(scene, 180, 150, 'ПОЗВОНИТЬ\nЗАКАЗЧИКА')
+        const state = store.getState()
+        const phoneIndex = state.config.phone
+        if (phoneIndex === 2) {
+            this.buttonText = 'ПОЗВОНИТЬ\nЗАКАЗЧИКУ'
+        } else {
+            this.buttonText = 'ОТДОХНУТЬ'
+        }
+
+        this.ButtonOne = new choiceMiniButton(scene, 180, 150, this.buttonText)
+
         this.ButtonTwo = new choiceMiniButton(scene, 505, 150, 'ПОДГОТОВИТЬ\n     КВАРТИРУ')
 
         this.choiceMenu.add(this.choicePanel)
@@ -54,6 +66,9 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
 
         this.ButtonOne.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                if(this.buttonText  ===  'ОТДОХНУТЬ')  {} else {
+                store.dispatch(setPhone(0))
+                store.dispatch(setSavePoint('phoneTwo'))}
             })
         this.ButtonTwo.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {

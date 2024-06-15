@@ -4,6 +4,10 @@ export const MOODULEONE = {
     PREIMAGE: 'preimage-one',
     MINCUTE: 'mincut',
     BALOON: 'balloon',
+    LISTBLANK: 'listblank',
+    LISTFULL: 'listfull',
+    CHECKBOXON: 'checkboxon',
+    CHECKBOXOFF: 'checkboxoff',
     BACKGROUNDS: {
         ROOMVIEWONE: 'roomviewone',
         ROOMVIEWTWO: 'roomviewtwo',
@@ -13,11 +17,17 @@ export const MOODULEONE = {
         HUB: 'HUB',
         PHONEONE: 'phoneone',
         ONSOFA: 'onsofa',
+        CALLONE: 'callone',
+        CALLTWO: 'calltwo',
+        PHONETWO: 'phonetwo',
+        ROOMRIGHT: 'roomright',
+        BLURROOM: 'blurroom',
     },
     AUDIO: {
         KEYBOARD: 'keyboard',
         MESSAGE: 'message',
         KNOPKA: 'knopka',
-        COMPLETE: 'complete'
+        COMPLETE: 'complete',
+        CALL: 'call',
     }
 }
