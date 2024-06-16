@@ -26,7 +26,7 @@ const initialState: ConfigState = {
     isStuding: false,
     currentScene: 'StartScreen',
 
-    score: 1,
+    score: 0,
     phone: 0,
     bag: 0,
     savePoint: 'intro'

@@ -1,6 +1,4 @@
 import { Scene } from 'phaser'
-import { setCurrentScene } from '../../redux/GameConfig/config.slice'
-import { store } from '../../redux/store'
 import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
 import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
@@ -120,6 +118,27 @@ export class Preloader extends Scene {
         this.load.audio(MOODULEONE.AUDIO.COMPLETE, 'audio/level_completed.mp3')
         this.load.audio(MOODULEONE.AUDIO.CALL, 'audio/callNumber.mp3')
 
+        // Collect Room
+        this.load.image(MOODULEONE.COLLECTONE.title, 'modules/one/collectOne/title.png')
+        this.load.image(MOODULEONE.COLLECTONE.blank, 'modules/one/collectOne/blank.png')
+        this.load.image(MOODULEONE.COLLECTONE.neck, 'modules/one/collectOne/neck.png')
+        this.load.image(MOODULEONE.COLLECTONE.bone, 'modules/one/collectOne/bone.png')
+        this.load.image(MOODULEONE.COLLECTONE.milk, 'modules/one/collectOne/milk.png')
+        this.load.image(MOODULEONE.COLLECTONE.plain, 'modules/one/collectOne/plain.png')
+        this.load.image(MOODULEONE.COLLECTONE.hat, 'modules/one/collectOne/hat.png')
+        this.load.image(MOODULEONE.COLLECTONE.food, 'modules/one/collectOne/food.png')
+        this.load.image(MOODULEONE.COLLECTONE.misk, 'modules/one/collectOne/misk.png')
+        this.load.image(MOODULEONE.COLLECTONE.photo, 'modules/one/collectOne/photo.png')
+        this.load.image(MOODULEONE.COLLECTONE.bag, 'modules/one/collectOne/bag.png')
+        this.load.image(MOODULEONE.COLLECTONE.baloon1, 'modules/one/collectOne/between1.png')
+        this.load.image(MOODULEONE.COLLECTONE.baloon2, 'modules/one/collectOne/between2.png')
+        this.load.image(MOODULEONE.COLLECTONE.trash, 'modules/one/collectOne/trash.png')
+        this.load.image(MOODULEONE.COLLECTONE.scissors, 'modules/one/collectOne/scisors.png')
+        this.load.image(MOODULEONE.COLLECTONE.povodok, 'modules/one/collectOne/povodok.png')
+        this.load.image(MOODULEONE.COLLECTONE.shetka, 'modules/one/collectOne/shetka.png')
+        this.load.image(MOODULEONE.COLLECTONE.tabs, 'modules/one/collectOne/koleso.png')
+
+
 
     }
 
@@ -127,7 +146,6 @@ export class Preloader extends Scene {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('StartScreen')
         // this.scene.start('MainMenu')
-        store.dispatch(setCurrentScene('StartScreen'))
 
     }
 }

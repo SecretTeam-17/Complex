@@ -35,11 +35,14 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
     punkt7: Phaser.GameObjects.Text
     title: Phaser.GameObjects.Text
     background: Phaser.GameObjects.Image
+    currentScore: number
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
 
         this.scene = scene
+        const state = store.getState()
+        this.currentScore = state.config.score
 
         // Sound
         this.call = scene.sound.add(MOODULEONE.AUDIO.CALL).setVolume(0.4)
@@ -187,9 +190,14 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
         this.ButtonOne2.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.panelTwoHide()
-                this.bgTwo.setAlpha(0)
-                this.bgOne.setAlpha(0)
+                scene.tweens.add({
+                    targets: [this.background, this.bgTwo, this.bgOne],
+                    alpha: 0,
+                    ease: 'Linear',
+                    duration: 1000
+                })
                 store.dispatch(setPhone(2))
+                store.dispatch(setScore(this.currentScore + 3))
                 store.dispatch(setSavePoint('HUB'))
             })
         this.ButtonTwo2.setInteractive()

@@ -15,7 +15,7 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
 
-        scene.sound.add(MOODULEONE.AUDIO.KEYBOARD).play()
+        scene.sound.add(MOODULEONE.AUDIO.KEYBOARD).setVolume(0.3).play()
 
         // Инициализация фонов
         this.roomTwo = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWONE)
@@ -88,6 +88,7 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
             if (this.currentBackgroundIndex === this.backgrounds.length - 1) {
                 // Выполнить действия после завершения всех анимаций
                 this.scene.time.delayedCall(3000, () => {
+                    this.hideBackground(this.currentBackgroundIndex)
                     store.dispatch(setSavePoint('computer'))
                     store.dispatch(setScore(2))
                 })

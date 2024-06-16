@@ -11,6 +11,8 @@ import { CONFIG } from '../../constants/gameConfig'
 import scenePhoneTwo from './phoneTwo'
 import sceneHUB from './scene-HUB'
 import sceneAltEnd from './scene-altend'
+import sceneCollectKitchen from './scene-collectkitchen'
+import sceneCollectRoom from './scene-collectroom'
 import sceneComputer from './scene-computer'
 import sceneIntro from './scene-intro'
 import sceneOnSofa from './scene-onSofa'
@@ -66,7 +68,7 @@ export class ModuleOne extends Scene {
         // Добавляем интерфейсные кнопки
         this.Phone = new inGamePhone(this, CONFIG.SCREENWIDTH - 135, CONFIG.SCREENHIGHT - 135)
         this.add.existing(this.Phone)
-            .setDepth(10)
+            .setDepth(5)
             .setAlpha(0)
             .setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
@@ -84,7 +86,7 @@ export class ModuleOne extends Scene {
 
         this.Bag = new inGameBag(this, CONFIG.SCREENWIDTH - 285, CONFIG.SCREENHIGHT - 135)
         this.add.existing(this.Bag)
-            .setDepth(10)
+            .setDepth(5)
             .setAlpha(0)
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
             })
@@ -110,7 +112,7 @@ export class ModuleOne extends Scene {
 
             this.activeSceneContainer = this.activeSceneContainer === this.sceneContainer1 ? this.sceneContainer2 : this.sceneContainer1
 
-            this.activeSceneContainer = this.add.container(0, 0)
+            this.activeSceneContainer = this.add.container(0, 0).setDepth(3)
 
             switch (savePoint) {
                 case 'intro':
@@ -129,10 +131,20 @@ export class ModuleOne extends Scene {
                     this.activeSceneContainer.add(new sceneAltEnd(this, 0, 0))
                     break
                 case 'HUB':
+                    this.Bag.setX(CONFIG.SCREENWIDTH - 285)
+                    this.Phone.setX(CONFIG.SCREENWIDTH - 135)
                     this.activeSceneContainer.add(new sceneHUB(this, 0, 0))
                     break
                 case 'phoneTwo':
                     this.activeSceneContainer.add(new scenePhoneTwo(this, 0, 0))
+                    break
+                case 'CollectRoom':
+                    this.activeSceneContainer.add(new sceneCollectRoom(this, 0, 0))
+                    break
+                case 'CollectRoom2':
+                    this.Bag.setX(CONFIG.SCREENWIDTH / 2 - 150)
+                    this.Phone.setX(CONFIG.SCREENWIDTH / 2 + 150)
+                    this.activeSceneContainer.add(new sceneCollectKitchen(this, 0, 0))
                     break
                 default:
                     this.activeSceneContainer = null
@@ -166,6 +178,14 @@ export class ModuleOne extends Scene {
             this.tweens.add({
                 targets: this.Bag,
                 alpha: 1,
+                duration: 1000,
+            })
+        }
+
+        if (bagIndex === 0) {
+            this.tweens.add({
+                targets: this.Bag,
+                alpha: 0,
                 duration: 1000,
             })
         }

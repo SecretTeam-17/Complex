@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { setPhone, setSavePoint } from '../../../redux/GameConfig/config.slice'
+import { setSavePoint } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import choiceMiniButton from '../../components/choiceMiniButton'
 import { CONFIG } from '../../constants/gameConfig'
@@ -13,32 +13,70 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
     ButtonOne: choiceMiniButton
     ButtonTwo: choiceMiniButton
     buttonText: string
+    currentScore: number
+    ttypingText: string
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
         this.scene = scene
 
-        // Инициализация фонa
-        this.background = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.HUB)
-            .setOrigin(0, 0)
-            .setScale(1)
-            .setAlpha(0)
-            .setDepth(0)
+        const state = store.getState()
+        this.currentScore = state.config.score
 
-        scene.tweens.add({
-            targets: this.background,
-            alpha: 1,
-            ease: 'Linear',
-            duration: 1000
-        })
+        if (this.currentScore < 6) {
+            this.background = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.HUB)
+                .setOrigin(0, 0)
+                .setScale(1)
+                .setAlpha(0)
+                .setDepth(0)
+
+            scene.tweens.add({
+                targets: this.background,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 1000
+            })
+        } else {
+
+            this.background = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.ONSOFA)
+                .setOrigin(0, 0)
+                .setScale(1)
+                .setAlpha(0)
+                .setDepth(0)
+
+            scene.tweens.add({
+                targets: this.background,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 1000
+            })
+
+            if (this.currentScore === 10) {
+                this.scene.time.delayedCall(1000, () => {
+                    const baloon = this.scene.add.image(1350, 520, MOODULEONE.COLLECTONE.baloon1)
+                    this.scene.add.existing(baloon.setDepth(5))
+                    this.scene.time.delayedCall(2000, () => {
+                        baloon.destroy()
+                    }, [], this)
+                }, [], this)
+            }
+        }
+        this.add(this.background)
 
         // Container
         this.choiceMenu = scene.add.container(75, CONFIG.SCREENHIGHT - 306).setAlpha(1).setDepth(1)
+        this.add(this.choiceMenu)
         this.choicePanel = scene.add.graphics()
         this.choicePanel.fillStyle(0xffffff, 1)
         this.choicePanel.fillRoundedRect(0, 0, 684, 228, 24)
 
-        this.typingText = scene.add.text(32, 42, 'С чего начнем?', {
+        if (this.currentScore < 7) {
+            this.ttypingText = 'С чего начнем?'
+        } else {
+            this.ttypingText = 'Что дальше?'
+        }
+
+        this.typingText = scene.add.text(32, 42, this.ttypingText, {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
@@ -47,9 +85,7 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
         })
             .setOrigin(0, 0)
 
-        const state = store.getState()
-        const phoneIndex = state.config.phone
-        if (phoneIndex === 2) {
+        if (this.currentScore < 10) {
             this.buttonText = 'ПОЗВОНИТЬ\nЗАКАЗЧИКУ'
         } else {
             this.buttonText = 'ОТДОХНУТЬ'
@@ -66,13 +102,28 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
 
         this.ButtonOne.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                if(this.buttonText  ===  'ОТДОХНУТЬ')  {} else {
-                store.dispatch(setPhone(0))
-                store.dispatch(setSavePoint('phoneTwo'))}
+                if (this.buttonText === 'ОТДОХНУТЬ') {
+                    if (this.currentScore < 10) {
+                        store.dispatch(setSavePoint('CollectRoom'))
+                    } else {
+                        store.dispatch(setSavePoint('CollectRoom2'))
+                    }
+                } else {
+                    store.dispatch(setSavePoint('phoneTwo'))
+                }
             })
         this.ButtonTwo.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                if (this.currentScore < 10) {
+                    if (this.currentScore === 7) {
+                        store.dispatch(setSavePoint('CollectRoom2'))
+                    } else {
+                        store.dispatch(setSavePoint('CollectRoom'))
+                    }
+                } else {
+                    store.dispatch(setSavePoint('CollectRoom2'))
+                }
             })
-
     }
 }
+

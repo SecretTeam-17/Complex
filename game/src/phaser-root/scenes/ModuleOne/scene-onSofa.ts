@@ -91,6 +91,12 @@ export default class sceneOnSofa extends Phaser.GameObjects.Container {
         // Останавливаем все текущие твины и удаляем таймеры
         this.activeTweens.forEach(tween => tween.stop())
         this.activeTimers.forEach(timer => timer.destroy())
+        this.scene.tweens.add({
+            targets: [this.noteOne, this.noteTwo, this.noteThree],
+            alpha: 0,
+            ease: 'Linear',
+            duration: 1000
+        })
 
         // Очищаем массивы активных твинов и таймеров
         this.activeTweens = []

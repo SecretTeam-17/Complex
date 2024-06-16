@@ -58,6 +58,12 @@ export default class scenePhoneOne extends Phaser.GameObjects.Container {
         this.ButtonOne.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.Hide()
+                scene.tweens.add({
+                    targets: this.background,
+                    alpha: 0,
+                    ease: 'Linear',
+                    duration: 1000
+                })
                 store.dispatch(setPhone(2))
                 store.dispatch(setScore(4))
                 store.dispatch(setSavePoint('HUB'))
