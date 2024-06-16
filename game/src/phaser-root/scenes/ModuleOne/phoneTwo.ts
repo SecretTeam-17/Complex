@@ -376,6 +376,12 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                             })
 
                             inventoryButton.setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                                this.scene.tweens.add({
+                                    targets: [inventoryButton, listFullImage, this.background, this.bgTwo],
+                                    alpha: 0,
+                                    ease: 'Linear',
+                                    duration: 500,
+                                })
                                 store.dispatch(setScore(7))
                                 store.dispatch(setPhone(3))
                                 store.dispatch(setBag(1))

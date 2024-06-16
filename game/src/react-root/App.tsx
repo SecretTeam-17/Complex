@@ -11,6 +11,15 @@ import "./App.css";
 const App: React.FC = () => {
     return (
         <Provider store={store}>
+            <div className="overlay">
+                <div className="imgRotatePhone">
+                    <img src="/rotate-phone.png" />
+                    <p className="imgRotatePhoneText">Переверните экран.</p>
+                    <p className="imgRotatePhoneRecommend">
+                        Убедитесь что у вас включён автоповорот экрана.
+                    </p>
+                </div>
+            </div>
             <div className="app-root">
                 <ReactRoot>
                     <ReactPlaceholder />
