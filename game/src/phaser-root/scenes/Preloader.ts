@@ -70,10 +70,8 @@ export class Preloader extends Scene {
         this.load.image(INGAMEUI.PHONE, 'ui/phone-icon.png')
         this.load.image(INGAMEUI.BOX, 'ui/box-icon.png')
         this.load.image(INGAMEUI.TRASH, 'ui/trash-icon.png')
+        this.load.image(INGAMEUI.STAR, 'ui/Star.png')
 
-        // Arrows
-        this.load.image(UI.ARROWLEFT, 'ui/arrow-left.png')
-        this.load.image(UI.ARROWRIGHT, 'ui/arrow-right.png')
 
         // Buttons
         this.load.image(UI.BUTTON.NORMAL, 'ui/buttonNormal.png')
@@ -110,6 +108,7 @@ export class Preloader extends Scene {
         this.load.image(MOODULEONE.BACKGROUNDS.ROOMRIGHT, 'modules/one/roomRight.png')
         this.load.image(MOODULEONE.BACKGROUNDS.PHONETWO, 'modules/one/phoneScreen.png')
         this.load.image(MOODULEONE.BACKGROUNDS.BLURROOM, 'modules/one/blurRoom.png')
+        this.load.image(MOODULEONE.BACKGROUNDS.TOYSGAME, 'modules/one/bgLast.png')
 
         // Audio
         this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')
@@ -138,14 +137,27 @@ export class Preloader extends Scene {
         this.load.image(MOODULEONE.COLLECTONE.shetka, 'modules/one/collectOne/shetka.png')
         this.load.image(MOODULEONE.COLLECTONE.tabs, 'modules/one/collectOne/koleso.png')
 
+        // Toys game
+        this.load.image(MOODULEONE.TOYSGAME.title, 'modules/one/collectTwo/title.png')
+        this.load.image(MOODULEONE.TOYSGAME.frisbitext, 'modules/one/collectTwo/frisbiText.png')
+        this.load.image(MOODULEONE.TOYSGAME.frisbiicon, 'modules/one/collectTwo/frisbiIcon.png')
+        this.load.image(MOODULEONE.TOYSGAME.vorottext, 'modules/one/collectTwo/vorotText.png')
+        this.load.image(MOODULEONE.TOYSGAME.voroticon, 'modules/one/collectTwo/vorotIcon.png')
+        this.load.image(MOODULEONE.TOYSGAME.toytext, 'modules/one/collectTwo/toyText.png')
+        this.load.image(MOODULEONE.TOYSGAME.toyicon, 'modules/one/collectTwo/toyIcon.png')
+        this.load.image(MOODULEONE.TOYSGAME.cunttext, 'modules/one/collectTwo/cuntText.png')
+        this.load.image(MOODULEONE.TOYSGAME.cunticon, 'modules/one/collectTwo/cuntIcon.png')
+        this.load.image(MOODULEONE.TOYSGAME.kongtext, 'modules/one/collectTwo/kongText.png')
+        this.load.image(MOODULEONE.TOYSGAME.kongicon, 'modules/one/collectTwo/kongIcon.png')
+
 
 
     }
 
     create() {
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('StartScreen')
-        // this.scene.start('MainMenu')
+        // this.scene.start('StartScreen')
+        this.scene.start('MainMenu')
 
     }
 }

@@ -1,6 +1,6 @@
 export const MOODULEONE = {
     TITLE: 'Модуль 1. Подготовка',
-    TOTALCOUNTS: 20,
+    TOTALCOUNTS: 15,
     PREIMAGE: 'preimage-one',
     MINCUTE: 'mincut',
     BALOON: 'balloon',
@@ -22,6 +22,7 @@ export const MOODULEONE = {
         PHONETWO: 'phonetwo',
         ROOMRIGHT: 'roomright',
         BLURROOM: 'blurroom',
+        TOYSGAME: 'toysgame',
     },
     COLLECTONE: {
         title: 'title',
@@ -42,6 +43,19 @@ export const MOODULEONE = {
         povodok: 'povodok',
         shetka: 'shetka',
         tabs: 'tabs',
+    },
+    TOYSGAME: {
+        title: 'title2',
+        frisbitext: 'frisbitext',
+        frisbiicon: 'frisbiticon',
+        vorottext: 'vorottext',
+        voroticon: 'voroticon',
+        toytext: 'toytext',
+        toyicon: 'toyicon',
+        cunttext: 'cunttext',
+        cunticon: 'cunticon',
+        kongtext: 'kongtext',
+        kongicon: 'kongicon',
     },
     AUDIO: {
         KEYBOARD: 'keyboard',

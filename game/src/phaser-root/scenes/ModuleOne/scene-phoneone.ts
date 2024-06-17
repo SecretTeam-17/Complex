@@ -39,10 +39,11 @@ export default class scenePhoneOne extends Phaser.GameObjects.Container {
             ease: 'Linear',
             duration: 1000
         })
+        this.add(this.background)
 
         // Container one
         this.choiceMenu = scene.add.container(740, 640).setScale(0).setDepth(1)
-
+        this.add(this.choiceMenu)
 
         this.choicePanel = scene.add.graphics()
         this.choicePanel.fillStyle(0xffffff, 1)
@@ -78,6 +79,8 @@ export default class scenePhoneOne extends Phaser.GameObjects.Container {
 
         // Container two
         this.choiceMenu2 = scene.add.container(360, 530).setAlpha(0).setDepth(1)
+        this.add(this.choiceMenu2)
+        
         this.choicePanel2 = scene.add.graphics()
         this.choicePanel2.fillStyle(0xffffff, 1)
         this.choicePanel2.fillRoundedRect(0, 0, 684, 258, 24)

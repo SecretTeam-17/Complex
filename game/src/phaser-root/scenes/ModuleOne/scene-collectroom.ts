@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { setBag, setPhone, setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
+import { setBag, setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import choiceMiniButton from '../../components/choiceMiniButton'
 import inGameBag from '../../components/inGameBag'
@@ -52,12 +52,12 @@ export default class SceneCollectRoom extends Phaser.GameObjects.Container {
         })
 
         this.title = scene.add.image(CONFIG.SCREENWIDTH / 2, 220, MOODULEONE.COLLECTONE.title)
-        this.add(this.background) // Добавить в контейнер
-        this.add(this.title) // Добавить в контейнер
+        this.add(this.background)
+        this.add(this.title)
 
         // Icons
-        this.Bag = new inGameBag(scene, CONFIG.SCREENWIDTH / 2 - 100, CONFIG.SCREENHIGHT - 135)
-        this.Box = new inGameBox(scene, CONFIG.SCREENWIDTH / 2 + 100, CONFIG.SCREENHIGHT - 135)
+        this.Bag = new inGameBag(scene, CONFIG.SCREENWIDTH / 2 - 150, CONFIG.SCREENHIGHT - 135)
+        this.Box = new inGameBox(scene, CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT - 135)
         this.add(this.Bag.setDepth(1))
         this.add(this.Box.setDepth(1))
 
@@ -184,9 +184,8 @@ export default class SceneCollectRoom extends Phaser.GameObjects.Container {
                     duration: 1000
                 })
                 this.hideAllElements()
-                store.dispatch(setPhone(3))
                 store.dispatch(setBag(2))
-                store.dispatch(setScore(this.currentScore + 3))
+                store.dispatch(setScore(7))
                 store.dispatch(setSavePoint('HUB'))
             })
         this.add(this.continueButton)

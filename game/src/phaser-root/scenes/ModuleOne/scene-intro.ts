@@ -47,7 +47,14 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
         })
 
         this.textBox = new inGameTextbox(scene, 'В уютной комнате, сидя за моим компьютером\nя с нетерпением заполняю анкету на сайте Petsitter,\nпредвкушая, как начну делать то, что люблю, и найду\nработу мечты.')
+
+        this.add(this.roomTwo)
+        this.add(this.roomOne)
+        this.add(this.kitchen)
+        this.add(this.textBox.TextPanel)
     }
+
+
 
     showBackground(index: number, onComplete?: () => void) {
         const background = this.backgrounds[index]

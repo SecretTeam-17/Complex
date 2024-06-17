@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { setBag, setPhone, setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
+import { setBag, setPhone, setSavePoint } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import choiceMiniButton from '../../components/choiceMiniButton'
 import { CONFIG } from '../../constants/gameConfig'
@@ -41,8 +41,6 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
         super(scene, x, y)
 
         this.scene = scene
-        const state = store.getState()
-        this.currentScore = state.config.score
 
         // Sound
         this.call = scene.sound.add(MOODULEONE.AUDIO.CALL).setVolume(0.4)
@@ -72,6 +70,11 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
             .setScale(1)
             .setAlpha(0)
             .setDepth(3)
+
+        this.add(this.bgOne)
+        this.add(this.bgTwo)
+        this.add(this.bgThree)
+        this.add(this.blankList)
 
         this.punkt1 = this.scene.add.text(1150, 275, 'Мальвина никогда не бывала на\nпередержке', {
             fontFamily: 'Comfortaa',
@@ -136,11 +139,21 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
             .setAlpha(0)
             .setDepth(4)
 
+        this.add(this.punkt1)
+        this.add(this.punkt2)
+        this.add(this.punkt3)
+        this.add(this.punkt4)
+        this.add(this.punkt5)
+        this.add(this.punkt6)
+        this.add(this.punkt7)
+
         // Запуск анимаций и звуков
         this.initAnimations()
 
         // Container one
         this.choiceMenu = scene.add.container(500, 740).setScale(0).setDepth(3)
+        this.add(this.choiceMenu)
+
         this.choicePanel = scene.add.graphics()
         this.choicePanel.fillStyle(0xffffff, 1)
         this.choicePanel.fillRoundedRect(0, 0, 384, 278, 24)
@@ -166,6 +179,8 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
 
         // Container two
         this.choiceMenu2 = scene.add.container(648, CONFIG.SCREENHIGHT - 306).setAlpha(0).setDepth(3)
+        this.add(this.choiceMenu2)
+
         this.choicePanel2 = scene.add.graphics()
         this.choicePanel2.fillStyle(0xffffff, 1)
         this.choicePanel2.fillRoundedRect(0, 0, 684, 228, 24)
@@ -180,7 +195,7 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
             .setOrigin(0, 0)
 
         this.ButtonOne2 = new choiceMiniButton(scene, 180, 150, 'ДА')
-        this.ButtonTwo2 = new choiceMiniButton(scene, 505, 150, ' ПОЖАЛУЙ,\nЕЩЕ НЕ ВСЕ')
+        this.ButtonTwo2 = new choiceMiniButton(scene, 505, 150, 'ЕЩЕ НЕ ВСЕ')
 
         this.choiceMenu2.add(this.choicePanel2)
         this.choiceMenu2.add(this.ButtonOne2)
@@ -189,16 +204,7 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
 
         this.ButtonOne2.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.panelTwoHide()
-                scene.tweens.add({
-                    targets: [this.background, this.bgTwo, this.bgOne],
-                    alpha: 0,
-                    ease: 'Linear',
-                    duration: 1000
-                })
-                store.dispatch(setPhone(2))
-                store.dispatch(setScore(this.currentScore + 3))
-                store.dispatch(setSavePoint('HUB'))
+                store.dispatch(setSavePoint('ModuleOneEnd'))
             })
         this.ButtonTwo2.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
@@ -208,7 +214,6 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
 
         // Создание контейнеров для чекбоксов
         this.createChecklistContainers()
-
     }
 
     initAnimations() {
@@ -390,7 +395,6 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                                     ease: 'Linear',
                                     duration: 500,
                                 })
-                                store.dispatch(setScore(7))
                                 store.dispatch(setPhone(3))
                                 store.dispatch(setBag(1))
                                 store.dispatch(setSavePoint('HUB'))

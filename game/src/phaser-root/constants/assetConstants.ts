@@ -19,9 +19,6 @@ export const UI = {
     MODULE: 'module',
     MINIMODULE: 'miniModule',
 
-    ARROWLEFT: 'arrow-left',
-    ARROWRIGHT: 'arrow-right',
-
     BUTTON: {
         NORMAL: 'button-normal',
         HOVER: 'button-hover',
@@ -49,4 +46,5 @@ export const INGAMEUI = {
     PHONE: 'icon-phone',
     BAG: 'icon-bag',
     BOX: 'icon-box',
+    STAR: 'star',
 }

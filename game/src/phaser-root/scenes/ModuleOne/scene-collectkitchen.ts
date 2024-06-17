@@ -132,7 +132,7 @@ export default class sceneCollectKitchen extends Phaser.GameObjects.Container {
                     duration: 1000
                 })
                 this.hideAllElements()
-                store.dispatch(setScore(this.currentScore + 3))
+                store.dispatch(setScore(10))
                 store.dispatch(setSavePoint('HUB'))
             })
         this.add(this.continueButton)

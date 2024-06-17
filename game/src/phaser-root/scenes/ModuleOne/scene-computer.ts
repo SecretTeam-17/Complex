@@ -42,6 +42,10 @@ export default class sceneComputer extends Phaser.GameObjects.Container {
         })
 
         this.textBox = new inGameTextbox(scene, 'Я готова встретить будущее с распростертыми\nобъятиями, ведь оно сулит интересные приключения и\nисполнение мечты.')
+
+        this.add(this.bgOne)
+        this.add(this.bgTwo)
+        this.add(this.textBox.TextPanel)
     }
 
     showBackground(index: number, onComplete?: () => void) {
@@ -83,11 +87,7 @@ export default class sceneComputer extends Phaser.GameObjects.Container {
             if (this.currentBackgroundIndex === this.backgrounds.length - 1) {
                 // Выполнить действия после завершения всех анимаций
                 this.scene.time.delayedCall(5000, () => {
-                    this.scene.tweens.add({
-                        targets: this.bgTwo,
-                        alpha: 0,
-                        duration: 1000
-                    })
+                    this.hideBackground(this.currentBackgroundIndex)
                     store.dispatch(setSavePoint('onSofa'))
                     store.dispatch(setScore(3))
                     store.dispatch(setPhone(1))
