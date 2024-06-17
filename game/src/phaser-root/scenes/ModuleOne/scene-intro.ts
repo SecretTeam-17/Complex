@@ -1,40 +1,27 @@
 import Phaser from 'phaser'
 import { setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
-import inGameTextbox from '../../components/inGameTextbox'
+import InGameTextbox from '../../components/inGameTextbox'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
 
-export default class sceneIntro extends Phaser.GameObjects.Container {
-    roomTwo: Phaser.GameObjects.Image
-    roomOne: Phaser.GameObjects.Image
-    kitchen: Phaser.GameObjects.Image
-    currentBackgroundIndex: number
-    backgrounds: Phaser.GameObjects.Image[]
-    textBox: inGameTextbox
+export default class SceneIntro extends Phaser.GameObjects.Container {
+    private roomTwo: Phaser.GameObjects.Image
+    private roomOne: Phaser.GameObjects.Image
+    private kitchen: Phaser.GameObjects.Image
+    private currentBackgroundIndex: number
+    private backgrounds: Phaser.GameObjects.Image[]
+    private textBox: InGameTextbox
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y)
 
+        // Воспроизведение звук нажатия клавиш
         scene.sound.add(MOODULEONE.AUDIO.KEYBOARD).setVolume(0.3).play()
 
         // Инициализация фонов
-        this.roomTwo = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWONE)
-            .setOrigin(0, 0)
-            .setScale(0.96)
-            .setAlpha(0)
-            .setDepth(0)
-
-        this.roomOne = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.ROOMVIEWTWO)
-            .setOrigin(0, 0)
-            .setScale(0.96)
-            .setAlpha(0)
-            .setDepth(0)
-
-        this.kitchen = scene.add.image(0, 0, MOODULEONE.BACKGROUNDS.KITCHEN)
-            .setOrigin(0, 0)
-            .setScale(0.96)
-            .setAlpha(0)
-            .setDepth(0)
+        this.roomTwo = this.createBackground(scene, MOODULEONE.BACKGROUNDS.ROOMVIEWONE)
+        this.roomOne = this.createBackground(scene, MOODULEONE.BACKGROUNDS.ROOMVIEWTWO)
+        this.kitchen = this.createBackground(scene, MOODULEONE.BACKGROUNDS.KITCHEN)
 
         // Массив фонов для переключения
         this.backgrounds = [this.roomTwo, this.kitchen, this.roomOne]
@@ -46,17 +33,27 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
             this.scheduleNextSwitch(scene)
         })
 
-        this.textBox = new inGameTextbox(scene, 'В уютной комнате, сидя за моим компьютером\nя с нетерпением заполняю анкету на сайте Petsitter,\nпредвкушая, как начну делать то, что люблю, и найду\nработу мечты.')
+        // Инициализация текстового поля
+        this.textBox = new InGameTextbox(scene, 'В уютной комнате, сидя за моим компьютером\nя с нетерпением заполняю анкету на сайте Petsitter,\nпредвкушая, как начну делать то, что люблю, и найду\nработу мечты.')
 
+        // Добавление объектов в контейнер
         this.add(this.roomTwo)
         this.add(this.roomOne)
         this.add(this.kitchen)
-        this.add(this.textBox.TextPanel)
+        this.add(this.textBox.textPanel)
     }
 
+    // Создание фона
+    private createBackground(scene: Phaser.Scene, texture: string): Phaser.GameObjects.Image {
+        return scene.add.image(0, 0, texture)
+            .setOrigin(0, 0)
+            .setScale(0.96)
+            .setAlpha(0)
+            .setDepth(0)
+    }
 
-
-    showBackground(index: number, onComplete?: () => void) {
+    // Показ фона
+    private showBackground(index: number, onComplete?: () => void) {
         const background = this.backgrounds[index]
         this.scene.tweens.add({
             targets: background,
@@ -66,7 +63,8 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
         })
     }
 
-    hideBackground(index: number, onComplete?: () => void) {
+    // Скрытие фона
+    private hideBackground(index: number, onComplete?: () => void) {
         const background = this.backgrounds[index]
         this.scene.tweens.add({
             targets: background,
@@ -76,7 +74,8 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
         })
     }
 
-    scheduleNextSwitch(scene: Phaser.Scene) {
+    // Запланировать следующее переключение фона
+    private scheduleNextSwitch(scene: Phaser.Scene) {
         if (this.currentBackgroundIndex < this.backgrounds.length - 1) {
             scene.time.addEvent({
                 delay: 2000,
@@ -86,7 +85,8 @@ export default class sceneIntro extends Phaser.GameObjects.Container {
         }
     }
 
-    switchBackground() {
+    // Переключение фона
+    private switchBackground() {
         const previousIndex = this.currentBackgroundIndex
         this.currentBackgroundIndex++
 

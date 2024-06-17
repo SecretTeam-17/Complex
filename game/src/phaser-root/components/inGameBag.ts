@@ -1,34 +1,45 @@
 import Phaser from 'phaser'
 import { AUDIO, INGAMEUI } from '../constants/assetConstants'
 
-export default class inGameBag extends Phaser.GameObjects.Container {
-
-    private Bag: Phaser.GameObjects.Image
-    private Click!: Phaser.Sound.BaseSound
+export default class InGameBag extends Phaser.GameObjects.Container {
+    private bag: Phaser.GameObjects.Image
+    private clickSound: Phaser.Sound.BaseSound
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        // Создаем контейнер в сцене по координатам x, y
-
         super(scene, x, y)
 
-        // Sound
-        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
+        // Инициализация звука клика
+        this.clickSound = this.initializeClickSound(scene)
 
-        // Добавляем изображение значка настроек
-        this.Bag = scene.add.image(0, 0, INGAMEUI.BAG)
-        this.add(this.Bag)
+        // Добавление изображения сумки и его настройка
+        this.bag = this.createBagImage(scene)
+        this.add(this.bag)
 
-        // Кнопка настроек поведение при наведении
-        this.Bag.setInteractive()
+        // Настройка интерактивного поведения сумки
+        this.setupBagInteractions()
+    }
+
+    // Инициализация звука клика
+    private initializeClickSound(scene: Phaser.Scene): Phaser.Sound.BaseSound {
+        return scene.sound.add(AUDIO.BUTTONCLICK)
+    }
+
+    // Создание изображения сумки
+    private createBagImage(scene: Phaser.Scene): Phaser.GameObjects.Image {
+        return scene.add.image(0, 0, INGAMEUI.BAG)
+    }
+
+    // Настройка интерактивного поведения сумки
+    private setupBagInteractions() {
+        this.bag.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                this.Bag.setScale(1.1)
+                this.bag.setScale(1.1)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                this.Bag.setScale(1)
+                this.bag.setScale(1)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
+                this.clickSound.play()
             })
-
     }
 }

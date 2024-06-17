@@ -6,18 +6,15 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
     // Определяем объекты класса
     container!: Phaser.GameObjects.Container
     private panel!: Phaser.GameObjects.Graphics
-
     private preImage: Phaser.GameObjects.Image
     private normalImage: Phaser.GameObjects.Image
     private disableImage: Phaser.GameObjects.Image
     hoverImage: Phaser.GameObjects.Image
     private buttonText: Phaser.GameObjects.Text
-
     private title: Phaser.GameObjects.Text
     private progress: Phaser.GameObjects.Graphics
     private bar: Phaser.GameObjects.Graphics
     private barText: Phaser.GameObjects.Text
-
 
     openSettings = false
 
