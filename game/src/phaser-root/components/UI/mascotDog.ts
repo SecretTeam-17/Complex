@@ -7,7 +7,6 @@ export default class mascotDog extends Phaser.GameObjects.Container {
     private baseImage: Phaser.GameObjects.Image
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
         // Добавляем изображения в контейнер
@@ -17,7 +16,6 @@ export default class mascotDog extends Phaser.GameObjects.Container {
         this.add(this.baseImage)
 
         this.setSize(this.baseImage.width, this.baseImage.height)
-
 
         // Определяем действия для кнопки по навыедению и нажатию
         this.setInteractive()

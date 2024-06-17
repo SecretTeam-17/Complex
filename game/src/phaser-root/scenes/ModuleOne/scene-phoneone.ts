@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import { setPhone, setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
-import choiceMiniButton from '../../components/choiceMiniButton'
+import choiceMiniButton from '../../components/UI/choiceMiniButton'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
 
 export default class scenePhoneOne extends Phaser.GameObjects.Container {
@@ -80,7 +80,7 @@ export default class scenePhoneOne extends Phaser.GameObjects.Container {
         // Container two
         this.choiceMenu2 = scene.add.container(360, 530).setAlpha(0).setDepth(1)
         this.add(this.choiceMenu2)
-        
+
         this.choicePanel2 = scene.add.graphics()
         this.choicePanel2.fillStyle(0xffffff, 1)
         this.choicePanel2.fillRoundedRect(0, 0, 684, 258, 24)

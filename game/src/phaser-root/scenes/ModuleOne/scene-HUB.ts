@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import { setSavePoint } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
-import choiceMiniButton from '../../components/choiceMiniButton'
+import choiceMiniButton from '../../components/UI/choiceMiniButton'
 import { CONFIG } from '../../constants/gameConfig'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
 
@@ -60,7 +60,7 @@ export default class sceneHUB extends Phaser.GameObjects.Container {
         if (this.currentScore === 4) {
             this.ttypingText = 'С чего начнем?'
         } else if (this.currentScore === 10) {
-            this.ttypingText = 'Нужна еда для собаки,стоитпредупредить\nзаказчика. Осталось последнее дело...'
+            this.ttypingText = 'Нужна еда для собаки,стоит предупредить\nзаказчика. Осталось последнее дело...'
         }
 
         // Добавляем текст только после завершения блока с определением this.ttypingText

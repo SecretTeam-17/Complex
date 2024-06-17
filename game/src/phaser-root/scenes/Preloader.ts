@@ -1,11 +1,6 @@
 import { Scene } from 'phaser'
-import { BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
-import { AUDIO } from '../constants/audioConstant'
 import { CONFIG } from '../constants/gameConfig'
-import { MOODULEFOUR } from '../constants/moduleFourConstants'
-import { MOODULEONE } from '../constants/moduleOneConstants'
-import { MOODULETHREE } from '../constants/moduleThreeConstants'
-import { MOODULETWO } from '../constants/moduleTwoConstants'
+import { loadAssets } from './assetLoader'
 
 export class Preloader extends Scene {
     constructor() {
@@ -13,151 +8,37 @@ export class Preloader extends Scene {
     }
 
     init() {
-        //  Отображаем фон для загрузочного экрана
+        // Отображаем фон для загрузочного экрана
         this.add.image(0, 0, 'loading-bg').setOrigin(0, 0)
         this.add.image(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2, 'big-logo')
 
-        //  Полоса загрузки
+        // Полоса загрузки
         this.add.rectangle(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2 + 200, CONFIG.SCREENWIDTH / 2, 64).setStrokeStyle(1, 0xffffff)
 
-        //  Полоса прогресса
+        // Полоса прогресса
         const bar = this.add.rectangle(CONFIG.SCREENWIDTH / 4 + 4, CONFIG.SCREENHIGHT / 2 + 200, 4, 60, 0xC896FF)
 
-        //  Функция отображения прогресса загрузки
+        // Процент загрузки
+        const loadingText = this.add.text(CONFIG.SCREENWIDTH / 2, CONFIG.SCREENHIGHT / 2 + 200, "0%", {
+            fontFamily: 'Comfortaa',
+            fontSize: '24px',
+            fontStyle: 'Bold',
+            color: '#320064',
+        }).setOrigin(0.5, 0.5)
+
+        // Функция отображения прогресса загрузки
         this.load.on('progress', (progress: number) => {
-
-            bar.width = 4 + (CONFIG.SCREENWIDTH / 2 - 8 * progress)
-
+            bar.width = 4 + (CONFIG.SCREENWIDTH / 2 - 8) * progress
+            loadingText.setText(`${Math.round(progress * 100)}%`)
         })
     }
 
     preload() {
-        // Загружаем основные компоненты
         this.load.setPath('assets')
-
-        // Audio
-        this.load.audio("bgMusic", 'audio/bgMusic.mp3')
-        this.load.audio(AUDIO.BUTTONCLICK, 'audio/button-click.mp3')
-
-        // Backgrounds
-        this.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')
-
-        //Pre-images
-        this.load.image(MOODULEONE.PREIMAGE, 'modules/pre-module-one.png')
-        this.load.image(MOODULETWO.PREIMAGE, 'modules/pre-module-two.png')
-        this.load.image(MOODULETHREE.PREIMAGE, 'modules/pre-module-three.png')
-        this.load.image(MOODULEFOUR.PREIMAGE, 'modules/pre-module-four.png')
-
-        // UI Main Header
-        this.load.image(UI.MAINLOGO, 'ui/petsitter-logo.png')
-        this.load.image(UI.SETTINGS, 'ui/settings-icon.png')
-        this.load.image(UI.BURGER, 'ui/burger-icon.png')
-
-        this.load.image(UI.PANEL, 'ui/menu-panel.png')
-        this.load.image(UI.CARDPANEL, 'ui/card-button.png')
-        this.load.image(UI.MODULEPANEL, 'ui/module-card.png')
-        this.load.image(UI.MINIMODULE, 'ui/miniModule.png')
-
-        this.load.image(UI.VOICEON, 'ui/Voice.png')
-        this.load.image(UI.VOICEOFF, 'ui/VoiceOff.png')
-        this.load.image(UI.SITE, 'ui/exit.png')
-        this.load.image(UI.BOOK, 'ui/book-icon.png')
-        this.load.image(UI.GAME, 'ui/game-icon.png')
-        this.load.image(UI.MODULE, 'ui/modules-icon.png')
-
-        // inGame UI
-        this.load.image(INGAMEUI.BAG, 'ui/bag-icon.png')
-        this.load.image(INGAMEUI.PHONE, 'ui/phone-icon.png')
-        this.load.image(INGAMEUI.BOX, 'ui/box-icon.png')
-        this.load.image(INGAMEUI.TRASH, 'ui/trash-icon.png')
-        this.load.image(INGAMEUI.STAR, 'ui/Star.png')
-
-
-        // Buttons
-        this.load.image(UI.BUTTON.NORMAL, 'ui/buttonNormal.png')
-        this.load.image(UI.BUTTON.HOVER, 'ui/buttonHover.png')
-        this.load.image(UI.BUTTON.DISABLE, 'ui/buttonDisable.png')
-
-        this.load.image(UI.ICONBUTTON.NORMAL, 'ui/iconButtonNormal.png')
-        this.load.image(UI.ICONBUTTON.HOVER, 'ui/iconButtonHover.png')
-        this.load.image(UI.ICONBUTTON.DISABLE, 'ui/iconButtonDisable.png')
-
-        // Mascots
-        this.load.image(MASCOTS.MASCOTCAT.BASE, 'ui/mascotCat.png')
-        this.load.image(MASCOTS.MASCOTDOG.BASE, 'ui/mascotDog.png')
-
-        // Module One
-        this.load.image(MOODULEONE.MINCUTE, 'modules/one/mingcute.png')
-        this.load.image(MOODULEONE.BALOON, 'modules/one/instruction.png')
-        this.load.image(MOODULEONE.CHECKBOXOFF, 'modules/one/CheckboxOff.png')
-        this.load.image(MOODULEONE.CHECKBOXON, 'modules/one/CheckboxOn.png')
-        this.load.image(MOODULEONE.LISTFULL, 'modules/one/listFull.png')
-        this.load.image(MOODULEONE.LISTBLANK, 'modules/one/listBlank.png')
-
-        // Backgrounds
-        this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWONE, 'modules/one/roomone.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.ROOMVIEWTWO, 'modules/one/roomtwo.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.KITCHEN, 'modules/one/kitchen.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER1, 'modules/one/nearComputer1.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.COMPUTER2, 'modules/one/nearComputer2.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.HUB, 'modules/one/HUB.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.PHONEONE, 'modules/one/PhoneOne.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.ONSOFA, 'modules/one/onSofa.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.CALLONE, 'modules/one/callOne.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.CALLTWO, 'modules/one/callTwo.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.ROOMRIGHT, 'modules/one/roomRight.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.PHONETWO, 'modules/one/phoneScreen.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.BLURROOM, 'modules/one/blurRoom.png')
-        this.load.image(MOODULEONE.BACKGROUNDS.TOYSGAME, 'modules/one/bgLast.png')
-
-        // Audio
-        this.load.audio(MOODULEONE.AUDIO.KEYBOARD, 'audio/keyboard.mp3')
-        this.load.audio(MOODULEONE.AUDIO.MESSAGE, 'audio/notification_sound_2.mp3')
-        this.load.audio(MOODULEONE.AUDIO.KNOPKA, 'audio/knopka_sound.mp3')
-        this.load.audio(MOODULEONE.AUDIO.COMPLETE, 'audio/level_completed.mp3')
-        this.load.audio(MOODULEONE.AUDIO.CALL, 'audio/callNumber.mp3')
-
-        // Collect Room
-        this.load.image(MOODULEONE.COLLECTONE.title, 'modules/one/collectOne/title.png')
-        this.load.image(MOODULEONE.COLLECTONE.blank, 'modules/one/collectOne/blank.png')
-        this.load.image(MOODULEONE.COLLECTONE.neck, 'modules/one/collectOne/neck.png')
-        this.load.image(MOODULEONE.COLLECTONE.bone, 'modules/one/collectOne/bone.png')
-        this.load.image(MOODULEONE.COLLECTONE.milk, 'modules/one/collectOne/milk.png')
-        this.load.image(MOODULEONE.COLLECTONE.plain, 'modules/one/collectOne/plain.png')
-        this.load.image(MOODULEONE.COLLECTONE.hat, 'modules/one/collectOne/hat.png')
-        this.load.image(MOODULEONE.COLLECTONE.food, 'modules/one/collectOne/food.png')
-        this.load.image(MOODULEONE.COLLECTONE.misk, 'modules/one/collectOne/misk.png')
-        this.load.image(MOODULEONE.COLLECTONE.photo, 'modules/one/collectOne/photo.png')
-        this.load.image(MOODULEONE.COLLECTONE.bag, 'modules/one/collectOne/bag.png')
-        this.load.image(MOODULEONE.COLLECTONE.baloon1, 'modules/one/collectOne/between1.png')
-        this.load.image(MOODULEONE.COLLECTONE.baloon2, 'modules/one/collectOne/between2.png')
-        this.load.image(MOODULEONE.COLLECTONE.trash, 'modules/one/collectOne/trash.png')
-        this.load.image(MOODULEONE.COLLECTONE.scissors, 'modules/one/collectOne/scisors.png')
-        this.load.image(MOODULEONE.COLLECTONE.povodok, 'modules/one/collectOne/povodok.png')
-        this.load.image(MOODULEONE.COLLECTONE.shetka, 'modules/one/collectOne/shetka.png')
-        this.load.image(MOODULEONE.COLLECTONE.tabs, 'modules/one/collectOne/koleso.png')
-
-        // Toys game
-        this.load.image(MOODULEONE.TOYSGAME.title, 'modules/one/collectTwo/title.png')
-        this.load.image(MOODULEONE.TOYSGAME.frisbitext, 'modules/one/collectTwo/frisbiText.png')
-        this.load.image(MOODULEONE.TOYSGAME.frisbiicon, 'modules/one/collectTwo/frisbiIcon.png')
-        this.load.image(MOODULEONE.TOYSGAME.vorottext, 'modules/one/collectTwo/vorotText.png')
-        this.load.image(MOODULEONE.TOYSGAME.voroticon, 'modules/one/collectTwo/vorotIcon.png')
-        this.load.image(MOODULEONE.TOYSGAME.toytext, 'modules/one/collectTwo/toyText.png')
-        this.load.image(MOODULEONE.TOYSGAME.toyicon, 'modules/one/collectTwo/toyIcon.png')
-        this.load.image(MOODULEONE.TOYSGAME.cunttext, 'modules/one/collectTwo/cuntText.png')
-        this.load.image(MOODULEONE.TOYSGAME.cunticon, 'modules/one/collectTwo/cuntIcon.png')
-        this.load.image(MOODULEONE.TOYSGAME.kongtext, 'modules/one/collectTwo/kongText.png')
-        this.load.image(MOODULEONE.TOYSGAME.kongicon, 'modules/one/collectTwo/kongIcon.png')
-
-
-
+        loadAssets(this)
     }
 
     create() {
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        // this.scene.start('StartScreen')
-        this.scene.start('MainMenu')
-
+        this.scene.start('StartScreen')
     }
 }

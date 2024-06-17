@@ -2,7 +2,7 @@ import { setStuding } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import { UI } from '../../constants/assetConstants'
 import { CONFIG } from '../../constants/gameConfig'
-import customMiniButton from '../UI/customMiniButton'
+import customMiniButton from '../UI/miniButton'
 import cardButton from './cardButton'
 
 

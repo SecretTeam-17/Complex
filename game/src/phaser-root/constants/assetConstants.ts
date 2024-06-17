@@ -1,3 +1,7 @@
+export const AUDIO = {
+    BUTTONCLICK: 'button-click',
+}
+
 export const BACKGROUNDS = {
     STARTSCREEN: 'startscreen-bg',
 }

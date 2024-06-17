@@ -23,7 +23,6 @@ const ReactPlaceholder: React.FC = () => {
                 {!isAuth && currentScene === "MainMenu" && <AuthScreen />}
                 {isAuth && currentScene === "MainMenu" && <GreetingScreen />}
                 {isStuding && currentScene === "MainMenu" && <WikiScreen />}
-                {/* <ServiceButton /> */}
             </div>
         </div>
     );

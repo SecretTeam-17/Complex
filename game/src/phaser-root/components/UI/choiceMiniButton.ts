@@ -1,31 +1,30 @@
 import Phaser from 'phaser'
 import { AUDIO, UI } from '../../constants/assetConstants'
 
-export default class BigButton extends Phaser.GameObjects.Container {
+export default class choiceMiniButton extends Phaser.GameObjects.Container {
 
     // Определяем объекты контейнера
-    private normalImage: Phaser.GameObjects.Image
-    private hoverImage: Phaser.GameObjects.Image
+    normalImage: Phaser.GameObjects.Image
+    hoverImage: Phaser.GameObjects.Image
+    private soundClick: Phaser.Sound.BaseSound
     private text: Phaser.GameObjects.Text
-    private clickSound: Phaser.Sound.BaseSound
 
     constructor(scene: Phaser.Scene, x: number, y: number, text: string) {
         super(scene, x, y)
 
         // Инициализация звука нажатия кнопки
-        this.clickSound = scene.sound.add(AUDIO.BUTTONCLICK)
+        this.soundClick = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Создание и добавление элементов UI в контейнер
-        this.normalImage = scene.add.image(0, 0, UI.BUTTON.NORMAL)
-        this.hoverImage = scene.add.image(0, -15, UI.BUTTON.HOVER)
+        this.normalImage = scene.add.image(0, 0, UI.ICONBUTTON.NORMAL).setScale(1)
+        this.hoverImage = scene.add.image(0, 0, UI.ICONBUTTON.HOVER).setScale(1)
         this.text = scene.add.text(0, 0, text, {
             fontFamily: 'Manrope',
-            fontSize: '48px',
+            fontSize: '24px',
             fontStyle: 'Bold',
             color: '#FDF8F8',
-
         })
-            .setOrigin(0.5, 0.9)
+            .setOrigin(0.5, 0.5)
 
         // Добавление элементов в контейнер
         this.add(this.normalImage)
@@ -62,6 +61,6 @@ export default class BigButton extends Phaser.GameObjects.Container {
 
     // Обработчик события нажатия на кнопку
     private handlePointerUp() {
-        this.clickSound.play()
+        this.soundClick.play()
     }
 }

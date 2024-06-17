@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import { setBag, setPhone, setSavePoint } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
-import choiceMiniButton from '../../components/choiceMiniButton'
+import choiceMiniButton from '../../components/UI/choiceMiniButton'
 import { CONFIG } from '../../constants/gameConfig'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
 

@@ -1,30 +1,24 @@
 import { setCurrentScene } from '../../redux/GameConfig/config.slice'
 import { store } from '../../redux/store'
-import { UI } from '../constants/assetConstants'
-import { AUDIO } from '../constants/audioConstant'
+import { AUDIO, UI } from '../constants/assetConstants'
 import iconButton from './UI/iconButton'
 
 export default class inGameSettingsMenu {
 
     // Определяем объекты класса
-    private settingsMenu!: Phaser.GameObjects.Container
-    private Click!: Phaser.Sound.BaseSound
-
-    private voiceONButton!: iconButton
-    private voiceOffButton!: iconButton
-
+    private settingsMenu: Phaser.GameObjects.Container
+    private voiceONButton: iconButton
+    private voiceOffButton: iconButton
     private scene: Phaser.Scene
-
+    private soundClick: Phaser.Sound.BaseSound
     openSettings = false
 
     constructor(scene: Phaser.Scene) {
-
         const { width } = scene.scale
-
         this.scene = scene
 
-        // Sound
-        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
+        // Инициализация звука нажатия кнопки
+        this.soundClick = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Container
         this.settingsMenu = scene.add.container(width - 116, 90).setScale(0).setDepth(10)
@@ -43,7 +37,7 @@ export default class inGameSettingsMenu {
 
         exitButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
+                this.soundClick.play()
                 this.scene.cameras.main.fadeOut(500, 0, 0, 0, (_camera: any, progress: number) => {
                     if (progress === 1) {
                         store.dispatch(setCurrentScene('MainMenu'))
@@ -55,13 +49,13 @@ export default class inGameSettingsMenu {
 
         this.voiceONButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
+                this.soundClick.play()
                 this.onMusicOff()
             })
 
         this.voiceOffButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
+                this.soundClick.play()
                 this.onMusicOn()
             })
 

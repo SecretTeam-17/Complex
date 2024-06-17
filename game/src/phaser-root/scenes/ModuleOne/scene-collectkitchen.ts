@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import { setSavePoint, setScore } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
-import choiceMiniButton from '../../components/choiceMiniButton'
+import choiceMiniButton from '../../components/UI/choiceMiniButton'
 import inGameBox from '../../components/inGameBox'
 import { CONFIG } from '../../constants/gameConfig'
 import { MOODULEONE } from '../../constants/moduleOneConstants'
@@ -54,7 +54,7 @@ export default class sceneCollectKitchen extends Phaser.GameObjects.Container {
         this.food = this.createDraggableObject(scene, 168, 622, MOODULEONE.COLLECTONE.food)
         this.scissors = this.createDraggableObject(scene, 801, 600, MOODULEONE.COLLECTONE.scissors)
         this.trash = this.createDraggableObject(scene, 1179, 747, MOODULEONE.COLLECTONE.trash)
-        this.misk = this.createDraggableObject(scene, 1356, 981, MOODULEONE.COLLECTONE.misk)
+        this.misk = this.createDraggableObject(scene, 1346, 970, MOODULEONE.COLLECTONE.misk)
         this.tabs = this.createDraggableObject(scene, 1492, 682, MOODULEONE.COLLECTONE.tabs)
         this.shetka = this.createDraggableObject(scene, 1377, 765, MOODULEONE.COLLECTONE.shetka)
         this.povodok = this.createDraggableObject(scene, 1531, 840, MOODULEONE.COLLECTONE.povodok)
