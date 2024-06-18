@@ -8,7 +8,6 @@ export default class cardButton extends Phaser.GameObjects.Container {
     private Icon: Phaser.GameObjects.Image
 
     constructor(scene: Phaser.Scene, x: number, y: number, icon: string) {
-        // Создаем контейнер в сцене по координатам x, y
         super(scene, x, y)
 
         // Добавляем изображения и текст в контейнер

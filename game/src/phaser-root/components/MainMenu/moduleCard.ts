@@ -1,6 +1,4 @@
-import { UI } from '../../constants/assetConstants'
-import { AUDIO } from '../../constants/audioConstant'
-import { MOODULEONE } from '../../constants/moduleOneConstants'
+import { AUDIO, UI } from '../../constants/assetConstants'
 
 
 export default class ModuleCard extends Phaser.GameObjects.Container {
@@ -11,6 +9,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
     private preImage: Phaser.GameObjects.Image
     private normalImage: Phaser.GameObjects.Image
+    private disableImage: Phaser.GameObjects.Image
     hoverImage: Phaser.GameObjects.Image
     private buttonText: Phaser.GameObjects.Text
 
@@ -22,7 +21,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
     openSettings = false
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, title: string, totalcounts: number, preimage: string, score: number, isAvailable: boolean) {
 
         super(scene, x, y)
 
@@ -38,7 +37,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         this.panel.strokeRoundedRect(0, 0, 410, 505, 32)
 
         // Title
-        this.title = scene.add.text(410 / 2, 30, 'Модуль 1. Прогулка', {
+        this.title = scene.add.text(410 / 2, 30, title, {
             fontFamily: 'Manrope',
             fontSize: '30px',
             fontStyle: 'Bold',
@@ -55,9 +54,14 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
         this.bar = scene.add.graphics()
         this.bar.fillStyle(0x49891A, 1)
-        this.bar.fillRoundedRect(60, 80, (290) * (80 / 100), 30, 16)
+        if (score / totalcounts < 0.1) {
+            this.bar.fillRoundedRect(60, 80, (290) * 0.1, 30, 16)
+        } else {
+            this.bar.fillRoundedRect(60, 80, (290) * (score / totalcounts), 30, 16)
+        }
 
-        this.barText = scene.add.text(205, 95, '80/100 завершено', {
+
+        this.barText = scene.add.text(205, 95, score + '/' + totalcounts + ' завершено', {
             fontFamily: 'Manrope',
             fontSize: '16px',
             fontStyle: 'Normal',
@@ -66,11 +70,12 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
             .setOrigin(0.5, 0.5)
 
         // preImage
-        this.preImage = scene.add.image(205, 370, MOODULEONE.PREIMAGE).setOrigin(0.5, 1)
+        this.preImage = scene.add.image(205, 370, preimage).setOrigin(0.5, 1).setScale(0.5)
 
         // Button
         this.normalImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.NORMAL).setOrigin(0.5, 1)
         this.hoverImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.HOVER).setOrigin(0.5, 1)
+        this.disableImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.DISABLE).setOrigin(0.5, 1)
 
         this.buttonText = scene.add.text(205, 505 - 50, 'НАЧАТЬ', {
             fontFamily: 'Manrope',
@@ -90,7 +95,16 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         this.container.add(this.preImage)
         this.container.add(this.hoverImage)
         this.container.add(this.normalImage)
+        this.container.add(this.disableImage)
         this.container.add(this.buttonText)
+
+        // Проверка доступности модуля
+        if (!isAvailable) {
+            this.normalImage.setAlpha(0)
+            this.hoverImage.setAlpha(0)
+        } else {
+            this.disableImage.setAlpha(0)
+        }
 
         // Определяем действия для кнопки по навыедению и нажатию
         this.normalImage.setInteractive()

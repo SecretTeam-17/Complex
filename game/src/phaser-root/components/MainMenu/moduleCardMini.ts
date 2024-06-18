@@ -1,5 +1,4 @@
-import { UI } from '../../constants/assetConstants'
-import { AUDIO } from '../../constants/audioConstant'
+import { AUDIO, UI } from '../../constants/assetConstants'
 
 
 export default class ModuleCardMini extends Phaser.GameObjects.Container {

@@ -11,7 +11,6 @@ export class Boot extends Scene {
         //  Подгружаем фон для сцены загрузки
         this.load.image('loading-bg', 'boot/loading-bg.png')
         this.load.image('big-logo', 'boot/big-logo.png')
-
     }
 
     create() {

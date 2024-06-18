@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
-import { INGAMEUI } from '../constants/assetConstants'
-import { AUDIO } from '../constants/audioConstant'
+import { AUDIO, INGAMEUI } from '../constants/assetConstants'
 
 export default class inGamePhone extends Phaser.GameObjects.Container {
 

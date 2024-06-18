@@ -1,7 +1,6 @@
 .react-root-hide {
     position: absolute;
     visibility: hidden;
-    /* z-index: -1; */
 }
 
 .react-root-show {

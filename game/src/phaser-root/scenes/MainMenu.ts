@@ -1,100 +1,147 @@
 import { Scene } from 'phaser'
+import { store } from '../../redux/store'
 import { EventBus } from '../EventBus'
-import { BACKGROUNDS, UI } from '../constants/assetConstants'
-import { CONFIG } from '../constants/gameConfig'
-
 import GameModeSelector from '../components/MainMenu/GameModeSelector'
 import ModuleCardSelector from '../components/MainMenu/moduleCardSelector'
 import inMenuBurger from '../components/UI/inMenuBurger'
 import inMenuSettings from '../components/UI/inMenuSettings'
-import mascotDog from '../components/mascotDog'
-import { AUDIO } from '../constants/audioConstant'
-
+import mascotDog from '../components/UI/mascotDog'
+import { AUDIO, BACKGROUNDS, UI } from '../constants/assetConstants'
+import { CONFIG } from '../constants/gameConfig'
 
 export class MainMenu extends Scene {
 
-    // UI
+    // Определяем объекты класса
     private SettingsMenu: inMenuSettings
     private BurgerMenu: inMenuBurger
+    private Dog: mascotDog
+    private gameModeSelector: GameModeSelector
+    private selector: ModuleCardSelector
 
     constructor() {
         super('MainMenu')
     }
 
     create() {
+        const clickSound = this.sound.add(AUDIO.BUTTONCLICK)
 
-        // Sound
-        const Click = this.sound.add(AUDIO.BUTTONCLICK)
-
-        // Добавляем задний фон
-        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)
-
-        //Добавляем лого
-        const logo = this.add.image(75, 45, UI.MAINLOGO).setOrigin(0, 0)
-        this.add.existing(logo)
-
-        //Кнопка настроек
-        const SettingsButton = this.add.image(CONFIG.SCREENWIDTH - 210, 75, UI.SETTINGS).setDepth(1)
-        this.SettingsMenu = new inMenuSettings(this, SettingsButton.x, SettingsButton.y)
-
-        // Кнопка настроек поведение при наведении
-        SettingsButton.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                SettingsButton.setScale(1.1)
-            })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                SettingsButton.setScale(1)
-            })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                if (this.SettingsMenu.openSettings) {
-                    Click.play()
-                    this.SettingsMenu.settingsHide()
-                    if (this.SettingsMenu.openSettings) { this.BurgerMenu.settingsHide() }
-                }
-                else {
-                    Click.play()
-                    this.SettingsMenu.settingsShow()
-                    if (this.SettingsMenu.openSettings) { this.BurgerMenu.settingsHide() }
-                }
-            })
-
-        //Кнопка бургера
-        const BurgerButton = this.add.image(CONFIG.SCREENWIDTH - 105, 72, UI.BURGER).setDepth(1)
-        this.BurgerMenu = new inMenuBurger(this, BurgerButton.x, BurgerButton.y)
-
-        // Кнопка настроек поведение при наведении
-        BurgerButton.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                BurgerButton.setScale(1.1)
-            })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                BurgerButton.setScale(1)
-            })
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                if (this.BurgerMenu.openSettings) {
-                    Click.play()
-                    this.BurgerMenu.settingsHide()
-                    if (this.BurgerMenu.openSettings) { this.SettingsMenu.settingsHide() }
-                }
-                else {
-                    Click.play()
-                    this.BurgerMenu.settingsShow()
-                    if (this.BurgerMenu.openSettings) { this.SettingsMenu.settingsHide() }
-                }
-            })
-
-        // Добавляем маскотов
-        const Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 306, CONFIG.SCREENHIGHT - 256).setScale(1.5)
-        this.add.existing(Dog)
-
-
-        // Панели выбора режима игры
-        const gameModeSelector = new GameModeSelector(this)
-
-        // Панель выбора модулей
-        const selector = new ModuleCardSelector(this, 340, 237)
+        this.setupBackground()
+        this.setupLogo()
+        this.setupSettingsButton(clickSound)
+        this.setupBurgerButton(clickSound)
+        this.setupMascotDog()
+        this.setupSelectors()
+        this.handleStoreSubscription()
 
         EventBus.emit('current-scene-ready', this)
     }
 
+    // Настройка фона
+    private setupBackground() {
+        this.add.image(0, 0, BACKGROUNDS.STARTSCREEN).setOrigin(0, 0).setScale(1)
+    }
+
+    // Настройка логотипа
+    private setupLogo() {
+        const logo = this.add.image(75, 45, UI.MAINLOGO).setOrigin(0, 0)
+        this.add.existing(logo)
+    }
+
+    // Настройка кнопки настроек
+    private setupSettingsButton(clickSound: Phaser.Sound.BaseSound) {
+        const settingsButton = this.add.image(CONFIG.SCREENWIDTH - 210, 75, UI.SETTINGS).setDepth(1)
+        this.SettingsMenu = new inMenuSettings(this, settingsButton.x, settingsButton.y)
+        this.setupInteractive(settingsButton, clickSound, () => {
+            if (this.SettingsMenu.openSettings) {
+                this.SettingsMenu.settingsHide()
+                this.BurgerMenu.settingsHide()
+            } else {
+                this.SettingsMenu.settingsShow()
+                this.BurgerMenu.settingsHide()
+            }
+        })
+    }
+
+    // Настройка кнопки бургера
+    private setupBurgerButton(clickSound: Phaser.Sound.BaseSound) {
+        const burgerButton = this.add.image(CONFIG.SCREENWIDTH - 105, 72, UI.BURGER).setDepth(1)
+        this.BurgerMenu = new inMenuBurger(this, burgerButton.x, burgerButton.y)
+        this.setupInteractive(burgerButton, clickSound, () => {
+            if (this.BurgerMenu.openSettings) {
+                this.BurgerMenu.settingsHide()
+                this.SettingsMenu.settingsHide()
+            } else {
+                this.BurgerMenu.settingsShow()
+                this.SettingsMenu.settingsHide()
+            }
+        })
+    }
+
+    // Настройка интерактивного поведения кнопки
+    private setupInteractive(button: Phaser.GameObjects.Image, clickSound: Phaser.Sound.BaseSound, onClick: () => void) {
+        button.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => button.setScale(1.1))
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => button.setScale(1))
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                clickSound.play()
+                onClick()
+            })
+    }
+
+    // Настройка маскота собаки
+    private setupMascotDog() {
+        this.Dog = new mascotDog(this, CONFIG.SCREENWIDTH / 2 + 306, CONFIG.SCREENHIGHT - 256).setScale(1.5).setAlpha(0)
+        this.add.existing(this.Dog)
+    }
+
+    // Настройка панелей выбора режимов и модулей
+    private setupSelectors() {
+        this.gameModeSelector = new GameModeSelector(this)
+        this.selector = new ModuleCardSelector(this, 340, 237)
+        this.selector.cardSelector.setAlpha(0)
+        this.gameModeSelector.gamesChoiseButton.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.selector.cardSelector.setAlpha(0)
+            })
+        this.gameModeSelector.modulesChoiseButton.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                this.selector.cardSelector.setAlpha(1)
+            })
+    }
+
+    // Обработка подписки на изменения в store
+    private handleStoreSubscription() {
+        const onStoreChange = this.onStoreChange.bind(this)
+        store.subscribe(onStoreChange)
+        onStoreChange() // Инструкция для обновления начального состояния
+    }
+
+
+    // Обработчик изменений в store
+    private onStoreChange() {
+        const state = store.getState()
+        const isAuth = state.config.isAuth
+        const isReact = state.config.ReactVisible
+
+        if (isAuth) {
+            this.tweens.add({
+                targets: this.Dog,
+                alpha: 1,
+                duration: 100
+            })
+            if (!isReact) {
+                this.tweens.add({
+                    targets: this.gameModeSelector.container,
+                    x: CONFIG.SCREENWIDTH - 234,
+                    duration: 300,
+                    ease: Phaser.Math.Easing.Sine.InOut,
+                })
+                this.tweens.add({
+                    targets: this.selector.cardSelector,
+                    alpha: 1,
+                    duration: 500
+                })
+            }
+        }
+    }
 }

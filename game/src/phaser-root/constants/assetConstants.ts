@@ -1,3 +1,7 @@
+export const AUDIO = {
+    BUTTONCLICK: 'button-click',
+}
+
 export const BACKGROUNDS = {
     STARTSCREEN: 'startscreen-bg',
 }
@@ -19,9 +23,6 @@ export const UI = {
     MODULE: 'module',
     MINIMODULE: 'miniModule',
 
-    ARROWLEFT: 'arrow-left',
-    ARROWRIGHT: 'arrow-right',
-
     BUTTON: {
         NORMAL: 'button-normal',
         HOVER: 'button-hover',
@@ -30,6 +31,7 @@ export const UI = {
     ICONBUTTON: {
         NORMAL: 'icon-button-normal',
         HOVER: 'icon-button-hover',
+        DISABLE: 'icon-button-disable'
     },
 }
 
@@ -48,4 +50,5 @@ export const INGAMEUI = {
     PHONE: 'icon-phone',
     BAG: 'icon-bag',
     BOX: 'icon-box',
+    STAR: 'star',
 }
