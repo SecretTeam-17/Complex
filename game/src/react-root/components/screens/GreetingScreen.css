@@ -48,7 +48,14 @@
 .button--instruction-continue {
     width: 16vw;
 }
-
+@media (min-width: 1280px) {
+    .instruction__wrapper {
+        gap: 1vw;
+    }
+    .button--instruction-continue {
+        height: 6vh;
+    }
+}
 @media (max-width: 950px) {
     .instruction__wrapper {
         gap: 1.5vw;

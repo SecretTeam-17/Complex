@@ -1,4 +1,22 @@
 .wiki-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.wiki__inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 60px;
+    width: 100%;
+    max-height: 200vh;
+    background-color: var(--color-primary-white);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+}
+
+/* .wiki-container {
     position: absolute;
     right: 50px;
     font-family: "Manrope";
@@ -44,4 +62,4 @@
         height: 18vh;
         border-radius: var(--border-radius-small);
     }
-}
+} */

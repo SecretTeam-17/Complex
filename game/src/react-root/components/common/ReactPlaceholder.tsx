@@ -22,7 +22,7 @@ const ReactPlaceholder: React.FC = () => {
         <div className="react-parent">
             <div className="react-content">
                 {!isAuth && currentScene === "MainMenu" && <AuthScreen />}
-                {isAuth && currentScene === "MainMenu" && <GreetingScreen />}
+                {!isAuth && currentScene === "MainMenu" && <GreetingScreen />}
                 {isStuding && currentScene === "MainMenu" && <WikiScreen />}
 
                 <ServiceButton />
@@ -32,4 +32,3 @@ const ReactPlaceholder: React.FC = () => {
 };
 
 export default ReactPlaceholder;
-
