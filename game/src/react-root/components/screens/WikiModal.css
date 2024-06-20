@@ -1,5 +1,5 @@
 ::backdrop {
-    background-color: var(--color-primary-purple);
+    background-color: var(--color-secondary-gray);
     opacity: 0.8;
 }
 dialog {

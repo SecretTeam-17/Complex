@@ -34,3 +34,13 @@
 .wiki__header-button:hover {
     opacity: 0.8;
 }
+
+@media (max-width: 550px) {
+    .wiki__header-title {
+        font-size: 25px;
+        margin-left: 50px;
+    }
+    .wiki__header-control {
+        margin-right: 50px;
+    }
+}
