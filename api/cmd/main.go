@@ -17,6 +17,7 @@ import (
 	"petsittersGameServer/internal/server/gshandlers/updategs"
 	"petsittersGameServer/internal/server/index/indexpage"
 	"petsittersGameServer/internal/server/middleware/cors"
+	"petsittersGameServer/internal/server/middleware/redirect"
 	"petsittersGameServer/internal/storage/mongodb"
 	"petsittersGameServer/internal/tools/stopsignal"
 	"time"
@@ -36,7 +37,7 @@ func main() {
 
 	// Инициализируем пул подключений к базе данных
 	//storage, err := sqlite.New(cfg.StoragePath, cfg.ModulesPath)
-	storage, err := mongodb.New(cfg.StoragePath)
+	storage, err := mongodb.New(cfg.StoragePath, cfg.StorageUser, cfg.StoragePasswd)
 	if err != nil {
 		log.Error("failed to init storage", logger.Err(err))
 		os.Exit(1)
@@ -69,7 +70,7 @@ func main() {
 
 	// Конфигурируем сервер из данных конфиг файла
 	srv := &http.Server{
-		Addr:         cfg.Address,
+		Addr:         cfg.AddressTLS,
 		Handler:      router,
 		ReadTimeout:  cfg.ReadTimeout,
 		WriteTimeout: cfg.WriteTimeout,
@@ -77,13 +78,21 @@ func main() {
 	}
 	log.Info("starting server", slog.String("env", cfg.Env), slog.String("address", cfg.Address))
 
-	// Запускаем сервер в отдельной горутине
+	// Запускаем сервер TLS в отдельной горутине
 	go func() {
-		if err := srv.ListenAndServe(); err != nil {
-			log.Error("failed to start server")
+		if err := srv.ListenAndServeTLS(cfg.CertPath, cfg.CertKeyPath); err != nil {
+			log.Error("failed to start server with TLS")
 		}
 	}()
-	log.Info("server started")
+	log.Info("server with TLS started")
+
+	// Запускаем сервер с редиректом в отдельной горутине
+	go func() {
+		if err := http.ListenAndServe(cfg.Address, http.HandlerFunc(redirect.ToTLS)); err != nil {
+			log.Error("failed to start redirect server")
+		}
+	}()
+	log.Info("redirect server started")
 
 	// Блокируем выполнение основной горутины
 	log.Info("server awaits INT signal to stop")

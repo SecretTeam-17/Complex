@@ -12,6 +12,7 @@ services:
     networks:
       - primary-network
     ports:
-      - "8083:8083"
+      - "8083:443"
+      - "8090:80"
     volumes:
     - ./api:/go/src/sitterserver

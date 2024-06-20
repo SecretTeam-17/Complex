@@ -1,16 +1,11 @@
 FROM golang:1.22.3-alpine as builder
-# FROM huecker.io/library/golang:1.22.3-alpine as builder
 
 ENV CGO_ENABLED=1
 
 ENV CONFIG_PATH=./configs/dev.yaml
 
-# ENV DB_PATH=mongodb://95.164.3.230:10515/
-
 RUN apk add --no-cache \
-    # Important: required for go-sqlite3
     gcc \
-    # Required for Alpine
     musl-dev
 
 WORKDIR /go/src/sitterserver
@@ -26,13 +21,10 @@ RUN go install -ldflags='-s -w -extldflags "-static"' ./cmd/main.go
 RUN mv /go/bin/main /go/bin/server
 
 FROM alpine:latest as runner
-# FROM huecker.io/library/alpine:latest as runner
 
 ENV CGO_ENABLED=1
 
 ENV CONFIG_PATH=/root/configs/dev.yaml
-
-# ENV DB_PATH=mongodb://95.164.3.230:10515/
 
 RUN apk add --no-cache \
     ca-certificates \
@@ -53,6 +45,6 @@ COPY --from=builder /go/bin/server .
 
 ENTRYPOINT /root/server
 
-LABEL Name=petsittersgameserver Version=1.9.0
+LABEL Name=PetsittersAPIgameserver Version=1.10.1
 
-EXPOSE 8083
+EXPOSE 80 443
