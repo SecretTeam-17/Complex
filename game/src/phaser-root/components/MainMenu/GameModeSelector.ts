@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { setStuding } from '../../../redux/GameConfig/config.slice'
+import { setReactVisible, setStuding } from '../../../redux/GameConfig/config.slice'
 import { store } from '../../../redux/store'
 import { UI } from '../../constants/assetConstants'
 import { CONFIG } from '../../constants/gameConfig'
@@ -70,7 +70,10 @@ export default class GameModeSelector {
 
         // Запуск обучения
         this.bookChoiseButton.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => store.dispatch(setStuding(true)))
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+                store.dispatch(setStuding(true))
+                store.dispatch(setReactVisible(true))
+            })
     }
 
     // Переключение на выбор модуля

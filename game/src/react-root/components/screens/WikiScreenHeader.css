@@ -1,4 +1,4 @@
-.wiki__header {
+/* .wiki__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -10,6 +10,19 @@
     margin-inline: auto;
     height: 58px;
     z-index: 10;
+} */
+
+.wiki__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-primary-white);
+    height: 58px;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .wiki__header-title {
@@ -44,3 +57,4 @@
         margin-right: 50px;
     }
 }
+
