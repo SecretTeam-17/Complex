@@ -3,7 +3,7 @@ import { GameState } from './GameSession/session.slice'
 
 
 // const API_URL = 'http://95.164.3.230/api'
-const API_URL = 'https://gameapi.esoraine.online/api'
+const API_URL = 'https://sf-hackathon.xyz/api'
 
 export const apiSlice = createApi({
     reducerPath: 'apiSlice',

@@ -2,6 +2,7 @@ import { Scene } from 'phaser'
 import { store } from '../../redux/store'
 import { EventBus } from '../EventBus'
 import GameModeSelector from '../components/MainMenu/GameModeSelector'
+import GameCardSelector from '../components/MainMenu/gameCardSelector'
 import ModuleCardSelector from '../components/MainMenu/moduleCardSelector'
 import inMenuBurger from '../components/UI/inMenuBurger'
 import inMenuSettings from '../components/UI/inMenuSettings'
@@ -17,6 +18,7 @@ export class MainMenu extends Scene {
     private Dog: mascotDog
     private gameModeSelector: GameModeSelector
     private selector: ModuleCardSelector
+    selector2: GameCardSelector
 
     constructor() {
         super('MainMenu')
@@ -52,12 +54,16 @@ export class MainMenu extends Scene {
         const settingsButton = this.add.image(CONFIG.SCREENWIDTH - 210, 75, UI.SETTINGS).setDepth(1)
         this.SettingsMenu = new inMenuSettings(this, settingsButton.x, settingsButton.y)
         this.setupInteractive(settingsButton, clickSound, () => {
-            if (this.SettingsMenu.openSettings) {
-                this.SettingsMenu.settingsHide()
-                this.BurgerMenu.settingsHide()
-            } else {
-                this.SettingsMenu.settingsShow()
-                this.BurgerMenu.settingsHide()
+            const state = store.getState()
+            const isReact = state.config.ReactVisible
+            if (!isReact) {
+                if (this.SettingsMenu.openSettings) {
+                    this.SettingsMenu.settingsHide()
+                    this.BurgerMenu.settingsHide()
+                } else {
+                    this.SettingsMenu.settingsShow()
+                    this.BurgerMenu.settingsHide()
+                }
             }
         })
     }
@@ -67,12 +73,16 @@ export class MainMenu extends Scene {
         const burgerButton = this.add.image(CONFIG.SCREENWIDTH - 105, 72, UI.BURGER).setDepth(1)
         this.BurgerMenu = new inMenuBurger(this, burgerButton.x, burgerButton.y)
         this.setupInteractive(burgerButton, clickSound, () => {
-            if (this.BurgerMenu.openSettings) {
-                this.BurgerMenu.settingsHide()
-                this.SettingsMenu.settingsHide()
-            } else {
-                this.BurgerMenu.settingsShow()
-                this.SettingsMenu.settingsHide()
+            const state = store.getState()
+            const isReact = state.config.ReactVisible
+            if (!isReact) {
+                if (this.BurgerMenu.openSettings) {
+                    this.BurgerMenu.settingsHide()
+                    this.SettingsMenu.settingsHide()
+                } else {
+                    this.BurgerMenu.settingsShow()
+                    this.SettingsMenu.settingsHide()
+                }
             }
         })
     }
@@ -98,14 +108,18 @@ export class MainMenu extends Scene {
     private setupSelectors() {
         this.gameModeSelector = new GameModeSelector(this)
         this.selector = new ModuleCardSelector(this, 340, 237)
+        this.selector2 = new GameCardSelector(this, 340, 237)
         this.selector.cardSelector.setAlpha(0)
+        this.selector2.cardSelector.setAlpha(0)
         this.gameModeSelector.gamesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.selector.cardSelector.setAlpha(0)
+                this.selector2.cardSelector.setAlpha(1)
             })
         this.gameModeSelector.modulesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.selector.cardSelector.setAlpha(1)
+                this.selector2.cardSelector.setAlpha(0)
             })
     }
 

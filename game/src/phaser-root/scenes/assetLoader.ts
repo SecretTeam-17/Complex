@@ -1,5 +1,6 @@
 import { Scene } from 'phaser'
 import { AUDIO, BACKGROUNDS, INGAMEUI, MASCOTS, UI } from '../constants/assetConstants'
+import { GAMEONE, GAMETHREE, GAMETWO } from '../constants/miniGamesConstants'
 import { MOODULEFOUR } from '../constants/moduleFourConstants'
 import { MOODULEONE } from '../constants/moduleOneConstants'
 import { MOODULETHREE } from '../constants/moduleThreeConstants'
@@ -16,6 +17,10 @@ export function loadAssets(scene: Scene) {
     scene.load.image(MOODULETWO.PREIMAGE, 'modules/pre-module-two.png')
     scene.load.image(MOODULETHREE.PREIMAGE, 'modules/pre-module-three.png')
     scene.load.image(MOODULEFOUR.PREIMAGE, 'modules/pre-module-four.png')
+
+    scene.load.image(GAMEONE.PREIMAGE, 'games/pre-game-one.png')
+    scene.load.image(GAMETWO.PREIMAGE, 'games/pre-game-two.png')
+    scene.load.image(GAMETHREE.PREIMAGE, 'games/pre-game-three.png')
 
     // Backgrounds
     scene.load.image(BACKGROUNDS.STARTSCREEN, 'ui/startScreen-bg.png')

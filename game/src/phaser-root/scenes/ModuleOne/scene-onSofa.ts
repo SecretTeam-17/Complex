@@ -91,7 +91,7 @@ export default class SceneOnSofa extends Phaser.GameObjects.Container {
 
     // Запуск анимации и звука с задержкой
     private startAnimationWithDelay() {
-        this.scene.time.delayedCall(1000, () => {
+        this.scene.time.delayedCall(500, () => {
             this.cycleNotesAnimation()
             this.playSoundThreeTimes()
         }, [], this)
