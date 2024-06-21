@@ -19,6 +19,7 @@ export class MainMenu extends Scene {
     private gameModeSelector: GameModeSelector
     private selector: ModuleCardSelector
     selector2: GameCardSelector
+    private isMenuOpen: boolean = false;
 
     constructor() {
         super('MainMenu')
@@ -34,6 +35,15 @@ export class MainMenu extends Scene {
         this.setupMascotDog()
         this.setupSelectors()
         this.handleStoreSubscription()
+
+        // Устанавливаем глобальный обработчик кликов по сцене
+        this.input.on('pointerup', (_pointer: Phaser.Input.Pointer) => {
+            if (this.isMenuOpen) {
+                this.SettingsMenu.settingsHide()
+                this.BurgerMenu.settingsHide()
+                this.isMenuOpen = false
+            }
+        })
 
         EventBus.emit('current-scene-ready', this)
     }
@@ -59,10 +69,11 @@ export class MainMenu extends Scene {
             if (!isReact) {
                 if (this.SettingsMenu.openSettings) {
                     this.SettingsMenu.settingsHide()
-                    this.BurgerMenu.settingsHide()
+                    this.isMenuOpen = false
                 } else {
                     this.SettingsMenu.settingsShow()
                     this.BurgerMenu.settingsHide()
+                    this.isMenuOpen = true
                 }
             }
         })
@@ -78,10 +89,11 @@ export class MainMenu extends Scene {
             if (!isReact) {
                 if (this.BurgerMenu.openSettings) {
                     this.BurgerMenu.settingsHide()
-                    this.SettingsMenu.settingsHide()
+                    this.isMenuOpen = false
                 } else {
                     this.BurgerMenu.settingsShow()
                     this.SettingsMenu.settingsHide()
+                    this.isMenuOpen = true
                 }
             }
         })
@@ -92,7 +104,8 @@ export class MainMenu extends Scene {
         button.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => button.setScale(1.1))
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => button.setScale(1))
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (_pointer: Phaser.Input.Pointer, _localX: number, _localY: number, event: Phaser.Types.Input.EventData) => {
+                event.stopPropagation() // Останавливает всплытие события
                 clickSound.play()
                 onClick()
             })
@@ -130,7 +143,6 @@ export class MainMenu extends Scene {
         onStoreChange() // Инструкция для обновления начального состояния
     }
 
-
     // Обработчик изменений в store
     private onStoreChange() {
         const state = store.getState()
@@ -144,6 +156,12 @@ export class MainMenu extends Scene {
                 duration: 100
             })
             if (!isReact) {
+                let alpha: number
+                if (this.selector2.cardSelector.alpha) {
+                    alpha = 0
+                } else {
+                    alpha = 1
+                }
                 this.tweens.add({
                     targets: this.gameModeSelector.container,
                     x: CONFIG.SCREENWIDTH - 234,
@@ -152,10 +170,12 @@ export class MainMenu extends Scene {
                 })
                 this.tweens.add({
                     targets: this.selector.cardSelector,
-                    alpha: 1,
+                    alpha: alpha,
                     duration: 500
                 })
             }
         }
     }
 }
+
+export default MainMenu

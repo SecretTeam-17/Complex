@@ -13,6 +13,7 @@ export class StartScreen extends Scene {
     // Определяем объекты класса
     private SettingsMenu: inMenuSettings
     private BurgerMenu: inMenuBurger
+    private isMenuOpen: boolean = false;
 
     constructor() {
         super('StartScreen')
@@ -24,6 +25,19 @@ export class StartScreen extends Scene {
         this.setupSettingsButton()
         this.setupBurgerButton()
         this.setupStartButton()
+
+        // Устанавливаем глобальный обработчик кликов по сцене
+        this.input.on('pointerup', (_pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[]) => {
+            // Проверяем, если клик был по элементам
+            if (gameObjects.length === 0) {
+                // Если меню открыты, закрываем их
+                if (this.isMenuOpen) {
+                    this.SettingsMenu.settingsHide()
+                    this.BurgerMenu.settingsHide()
+                    this.isMenuOpen = false
+                }
+            }
+        })
 
         EventBus.emit('current-scene-ready', this)
     }
@@ -47,7 +61,10 @@ export class StartScreen extends Scene {
         SettingsButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => SettingsButton.setScale(1.1))
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => SettingsButton.setScale(1))
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, this.toggleSettingsMenu.bind(this))
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (pointer: Phaser.Input.Pointer) => {
+                pointer.event.stopPropagation()
+                this.toggleSettingsMenu()
+            })
     }
 
     // Настройка кнопки меню-бургер
@@ -58,7 +75,10 @@ export class StartScreen extends Scene {
         BurgerButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => BurgerButton.setScale(1.1))
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => BurgerButton.setScale(1))
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, this.toggleBurgerMenu.bind(this))
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (pointer: Phaser.Input.Pointer) => {
+                pointer.event.stopPropagation()
+                this.toggleBurgerMenu()
+            })
     }
 
     // Настройка кнопки "СТАРТ"
@@ -81,6 +101,9 @@ export class StartScreen extends Scene {
             this.SettingsMenu.settingsShow()
             this.BurgerMenu.settingsHide()
         }
+
+        // Обновляем флаг состояния меню
+        this.isMenuOpen = this.SettingsMenu.openSettings
     }
 
     // Переключение отображения меню-бургер
@@ -94,6 +117,9 @@ export class StartScreen extends Scene {
             this.BurgerMenu.settingsShow()
             this.SettingsMenu.settingsHide()
         }
+
+        // Обновляем флаг состояния меню
+        this.isMenuOpen = this.BurgerMenu.openSettings
     }
 
     // Обработка нажатия кнопки "СТАРТ"
