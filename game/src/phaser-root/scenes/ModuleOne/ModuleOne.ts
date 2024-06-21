@@ -7,7 +7,6 @@ import inGamePhone from '../../components/inGamePhone'
 import inGameSettingsMenu from '../../components/inGameSettingsMenu'
 import { AUDIO, UI } from '../../constants/assetConstants'
 import { CONFIG } from '../../constants/gameConfig'
-import scenePhoneTwo from './scene-phoneTwo'
 import sceneHUB from './scene-HUB'
 import sceneAltEnd from './scene-altend'
 import sceneCollectKitchen from './scene-collectkitchen'
@@ -16,7 +15,8 @@ import sceneComputer from './scene-computer'
 import sceneEnd from './scene-end'
 import sceneIntro from './scene-intro'
 import sceneOnSofa from './scene-onSofa'
-import scenePhoneOne from './scene-phoneone'
+import scenePhoneOne from './scene-phoneOne'
+import scenePhoneTwo from './scene-phoneTwo'
 import sceneToysGame from './scene-toysgame'
 
 export class ModuleOne extends Scene {
@@ -42,9 +42,6 @@ export class ModuleOne extends Scene {
         this.bgMusic = this.sound.add('bgMusic', { volume: 0.1, loop: true }) as Phaser.Sound.WebAudioSound
         this.bgMusic.play()
 
-        // Добавляем кнопку настроек
-        this.SettingsMenu = new inGameSettingsMenu(this)
-
         const SettingsButton = this.add.image(CONFIG.SCREENWIDTH - 105, 60, UI.SETTINGS).setDepth(10)
 
         // Кнопка настроек поведение при наведении
@@ -65,6 +62,9 @@ export class ModuleOne extends Scene {
                     this.SettingsMenu.settingsShow()
                 }
             })
+
+        // Добавляем кнопку настроек
+        this.SettingsMenu = new inGameSettingsMenu(this, SettingsButton.x, SettingsButton.y)
 
         // Добавляем интерфейсные кнопки
         this.Phone = new inGamePhone(this, CONFIG.SCREENWIDTH - 135, CONFIG.SCREENHIGHT - 135)

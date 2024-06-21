@@ -2,6 +2,7 @@ import { Scene } from 'phaser'
 import { store } from '../../redux/store'
 import { EventBus } from '../EventBus'
 import GameModeSelector from '../components/MainMenu/GameModeSelector'
+import GameCardSelector from '../components/MainMenu/gameCardSelector'
 import ModuleCardSelector from '../components/MainMenu/moduleCardSelector'
 import inMenuBurger from '../components/UI/inMenuBurger'
 import inMenuSettings from '../components/UI/inMenuSettings'
@@ -17,6 +18,8 @@ export class MainMenu extends Scene {
     private Dog: mascotDog
     private gameModeSelector: GameModeSelector
     private selector: ModuleCardSelector
+    selector2: GameCardSelector
+    private isMenuOpen: boolean = false;
 
     constructor() {
         super('MainMenu')
@@ -32,6 +35,15 @@ export class MainMenu extends Scene {
         this.setupMascotDog()
         this.setupSelectors()
         this.handleStoreSubscription()
+
+        // Устанавливаем глобальный обработчик кликов по сцене
+        this.input.on('pointerup', (_pointer: Phaser.Input.Pointer) => {
+            if (this.isMenuOpen) {
+                this.SettingsMenu.settingsHide()
+                this.BurgerMenu.settingsHide()
+                this.isMenuOpen = false
+            }
+        })
 
         EventBus.emit('current-scene-ready', this)
     }
@@ -52,12 +64,17 @@ export class MainMenu extends Scene {
         const settingsButton = this.add.image(CONFIG.SCREENWIDTH - 210, 75, UI.SETTINGS).setDepth(1)
         this.SettingsMenu = new inMenuSettings(this, settingsButton.x, settingsButton.y)
         this.setupInteractive(settingsButton, clickSound, () => {
-            if (this.SettingsMenu.openSettings) {
-                this.SettingsMenu.settingsHide()
-                this.BurgerMenu.settingsHide()
-            } else {
-                this.SettingsMenu.settingsShow()
-                this.BurgerMenu.settingsHide()
+            const state = store.getState()
+            const isReact = state.config.ReactVisible
+            if (!isReact) {
+                if (this.SettingsMenu.openSettings) {
+                    this.SettingsMenu.settingsHide()
+                    this.isMenuOpen = false
+                } else {
+                    this.SettingsMenu.settingsShow()
+                    this.BurgerMenu.settingsHide()
+                    this.isMenuOpen = true
+                }
             }
         })
     }
@@ -67,12 +84,17 @@ export class MainMenu extends Scene {
         const burgerButton = this.add.image(CONFIG.SCREENWIDTH - 105, 72, UI.BURGER).setDepth(1)
         this.BurgerMenu = new inMenuBurger(this, burgerButton.x, burgerButton.y)
         this.setupInteractive(burgerButton, clickSound, () => {
-            if (this.BurgerMenu.openSettings) {
-                this.BurgerMenu.settingsHide()
-                this.SettingsMenu.settingsHide()
-            } else {
-                this.BurgerMenu.settingsShow()
-                this.SettingsMenu.settingsHide()
+            const state = store.getState()
+            const isReact = state.config.ReactVisible
+            if (!isReact) {
+                if (this.BurgerMenu.openSettings) {
+                    this.BurgerMenu.settingsHide()
+                    this.isMenuOpen = false
+                } else {
+                    this.BurgerMenu.settingsShow()
+                    this.SettingsMenu.settingsHide()
+                    this.isMenuOpen = true
+                }
             }
         })
     }
@@ -82,7 +104,8 @@ export class MainMenu extends Scene {
         button.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => button.setScale(1.1))
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => button.setScale(1))
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, (_pointer: Phaser.Input.Pointer, _localX: number, _localY: number, event: Phaser.Types.Input.EventData) => {
+                event.stopPropagation() // Останавливает всплытие события
                 clickSound.play()
                 onClick()
             })
@@ -98,14 +121,18 @@ export class MainMenu extends Scene {
     private setupSelectors() {
         this.gameModeSelector = new GameModeSelector(this)
         this.selector = new ModuleCardSelector(this, 340, 237)
+        this.selector2 = new GameCardSelector(this, 340, 237)
         this.selector.cardSelector.setAlpha(0)
+        this.selector2.cardSelector.setAlpha(0)
         this.gameModeSelector.gamesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.selector.cardSelector.setAlpha(0)
+                this.selector2.cardSelector.setAlpha(1)
             })
         this.gameModeSelector.modulesChoiseButton.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.selector.cardSelector.setAlpha(1)
+                this.selector2.cardSelector.setAlpha(0)
             })
     }
 
@@ -115,7 +142,6 @@ export class MainMenu extends Scene {
         store.subscribe(onStoreChange)
         onStoreChange() // Инструкция для обновления начального состояния
     }
-
 
     // Обработчик изменений в store
     private onStoreChange() {
@@ -130,6 +156,12 @@ export class MainMenu extends Scene {
                 duration: 100
             })
             if (!isReact) {
+                let alpha: number
+                if (this.selector2.cardSelector.alpha) {
+                    alpha = 0
+                } else {
+                    alpha = 1
+                }
                 this.tweens.add({
                     targets: this.gameModeSelector.container,
                     x: CONFIG.SCREENWIDTH - 234,
@@ -138,10 +170,12 @@ export class MainMenu extends Scene {
                 })
                 this.tweens.add({
                     targets: this.selector.cardSelector,
-                    alpha: 1,
+                    alpha: alpha,
                     duration: 500
                 })
             }
         }
     }
 }
+
+export default MainMenu

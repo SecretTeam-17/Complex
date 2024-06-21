@@ -1,7 +1,7 @@
 import { AUDIO, UI } from '../../constants/assetConstants'
 
 
-export default class ModuleCard extends Phaser.GameObjects.Container {
+export default class GameCard extends Phaser.GameObjects.Container {
 
     // Определяем объекты класса
     container!: Phaser.GameObjects.Container
@@ -12,18 +12,14 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
     hoverImage: Phaser.GameObjects.Image
     private buttonText: Phaser.GameObjects.Text
     private title: Phaser.GameObjects.Text
-    private progress: Phaser.GameObjects.Graphics
-    private bar: Phaser.GameObjects.Graphics
-    private barText: Phaser.GameObjects.Text
+    private clickSound!: Phaser.Sound.BaseSound
 
-    openSettings = false
-
-    constructor(scene: Phaser.Scene, x: number, y: number, title: string, totalcounts: number, preimage: string, score: number, isAvailable: boolean) {
+    constructor(scene: Phaser.Scene, x: number, y: number, title: string, preimage: string, isAvailable: boolean) {
 
         super(scene, x, y)
 
-        // Sound
-        const Click = scene.sound.add(AUDIO.BUTTONCLICK)
+        // Инициализация звука клика
+        this.clickSound = scene.sound.add(AUDIO.BUTTONCLICK)
 
         // Container
         this.container = scene.add.container(x, y).setScale(1).setDepth(2)
@@ -44,30 +40,8 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         })
             .setOrigin(0.5, 0)
 
-        // ProgressBar
-        this.progress = scene.add.graphics()
-        this.progress.fillStyle(0x63AC2E, 1)
-        this.progress.fillRoundedRect(60, 80, 290, 30, 16)
-
-        this.bar = scene.add.graphics()
-        this.bar.fillStyle(0x49891A, 1)
-        if (score / totalcounts < 0.1) {
-            this.bar.fillRoundedRect(60, 80, (290) * 0.1, 30, 16)
-        } else {
-            this.bar.fillRoundedRect(60, 80, (290) * (score / totalcounts), 30, 16)
-        }
-
-
-        this.barText = scene.add.text(205, 95, score + '/' + totalcounts + ' завершено', {
-            fontFamily: 'Manrope',
-            fontSize: '16px',
-            fontStyle: 'Normal',
-            color: '#FDF8F8',
-        })
-            .setOrigin(0.5, 0.5)
-
         // preImage
-        this.preImage = scene.add.image(205, 370, preimage).setOrigin(0.5, 1).setScale(0.5)
+        this.preImage = scene.add.image(205, 380, preimage).setOrigin(0.5, 1).setScale(0.5)
 
         // Button
         this.normalImage = scene.add.image(205, 505 - 30, UI.ICONBUTTON.NORMAL).setOrigin(0.5, 1)
@@ -86,9 +60,6 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         // Добавляем элементы на экран
         this.container.add(this.panel)
         this.container.add(this.title)
-        this.container.add(this.progress)
-        this.container.add(this.bar)
-        this.container.add(this.barText)
         this.container.add(this.preImage)
         this.container.add(this.hoverImage)
         this.container.add(this.normalImage)
@@ -121,7 +92,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
 
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                Click.play()
+                this.clickSound.play()
 
             })
     }

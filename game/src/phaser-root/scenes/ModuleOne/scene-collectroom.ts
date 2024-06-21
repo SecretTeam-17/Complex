@@ -164,7 +164,7 @@ export default class SceneCollectRoom extends Phaser.GameObjects.Container {
         if (this.barText) {
             this.barText.setText(this.score + '/10')
         } else {
-            console.error('barText is not defined')
+            console.log('barText is not defined')
         }
 
         if (this.score === 10) {

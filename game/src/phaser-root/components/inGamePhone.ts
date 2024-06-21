@@ -1,38 +1,51 @@
 import Phaser from 'phaser'
 import { AUDIO, INGAMEUI } from '../constants/assetConstants'
 
-export default class inGamePhone extends Phaser.GameObjects.Container {
-
+export default class InGamePhone extends Phaser.GameObjects.Container {
     // Определяем объекты контейнера
-    private Click!: Phaser.Sound.BaseSound
-
-    private Phone!: Phaser.GameObjects.Image
+    private clickSound!: Phaser.Sound.BaseSound
+    private phone!: Phaser.GameObjects.Image
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        // Создаем контейнер в сцене по координатам x, y
-
         super(scene, x, y)
 
-        // Sound
-        this.Click = scene.sound.add(AUDIO.BUTTONCLICK)
+        // Инициализация звука клика
+        this.clickSound = this.initializeClickSound(scene)
 
-        // Добавляем изображение значка настроек
-        this.Phone = scene.add.image(0, 0, INGAMEUI.PHONE)
-        this.add(this.Phone)
+        // Добавление изображения телефона
+        this.phone = this.createPhoneImage(scene)
 
-        this.setSize(this.Phone.width, this.Phone.height)
+        // Установка размера контейнера по размеру телефона
+        this.setSize(this.phone.width, this.phone.height)
 
-        // Кнопка настроек поведение при наведении
+        // Добавление изображения телефона в контейнер
+        this.add(this.phone)
+
+        // Настройка интерактивного поведения телефона
+        this.setupPhoneInteractions()
+    }
+
+    // Инициализация звука клика
+    private initializeClickSound(scene: Phaser.Scene): Phaser.Sound.BaseSound {
+        return scene.sound.add(AUDIO.BUTTONCLICK)
+    }
+
+    // Создание изображения телефона
+    private createPhoneImage(scene: Phaser.Scene): Phaser.GameObjects.Image {
+        return scene.add.image(0, 0, INGAMEUI.PHONE)
+    }
+
+    // Настройка интерактивного поведения телефона
+    private setupPhoneInteractions() {
         this.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                this.Phone.setScale(1.1)
+                this.phone.setScale(1.1)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                this.Phone.setScale(1)
+                this.phone.setScale(1)
             })
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                this.Click.play()
+                this.clickSound.play()
             })
-
     }
 }
