@@ -16,6 +16,8 @@ type Config struct {
 	StoragePasswd string `yaml:"storage_passwd" env:"DB_PASSWD" env-required:"true"`
 	CertPath      string `yaml:"cert_path" env:"CERT_PATH" env-required:"true"`
 	CertKeyPath   string `yaml:"cert_key_path" env:"CERT_KEY_PATH" env-required:"true"`
+	AuthUser      string `yaml:"auth_user" env:"AUTH_USER" env-required:"true"`
+	AuthPasswd    string `yaml:"auth_passwd" env:"AUTH_PASSWD" env-required:"true"`
 	HTTPServer    `yaml:"http_server"`
 }
 type HTTPServer struct {
@@ -30,9 +32,6 @@ type HTTPServer struct {
 func MustLoad() *Config {
 	// Берем путь к файлу конфига из переменной окружения
 	configPath := os.Getenv("CONFIG_PATH")
-
-	// Вариант для локала
-	// configPath := "./configs/local.yaml"
 
 	if configPath == "" {
 		log.Fatal("CONFIG_PATH is not set")
