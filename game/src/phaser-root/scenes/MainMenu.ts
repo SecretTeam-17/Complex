@@ -155,6 +155,15 @@ export class MainMenu extends Scene {
                 alpha: 1,
                 duration: 100
             })
+            if (isReact) {
+                this.selector.cardSelector.setVisible(false)
+                this.selector2.cardSelector.setVisible(false)
+                this.gameModeSelector.container.setVisible(false)
+            } else {
+                this.selector.cardSelector.setVisible(true)
+                this.selector2.cardSelector.setVisible(true)
+                this.gameModeSelector.container.setVisible(true)
+            }
             if (!isReact) {
                 let alpha: number
                 if (this.selector2.cardSelector.alpha) {
