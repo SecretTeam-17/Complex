@@ -1,14 +1,32 @@
 .wiki__inner {
-    position: absolute;
-    left: 0;
-    top: 1vh;
-    padding-top: 8vh;
-    width: 100%;
-    max-height: 200vh;
-    background-color: var(--color-primary-white);
+    flex: 1;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 74px 16px 16px 16px;
+    overflow-y: auto;
+    align-items: start;
     justify-items: center;
+    background-color: var(--color-primary-white);
+}
+
+/* Стили для полосы прокрутки */
+.wiki__inner::-webkit-scrollbar {
+    width: 10px;
+}
+
+.wiki__inner::-webkit-scrollbar-track {
+    background: var(--color-primary-white);
+}
+
+.wiki__inner::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-purple);
+    border-radius: 10px;
+    border: 2px solid var(--color-primary-white);
+}
+
+.wiki__inner::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary-dark-purple); 
 }
 
 @media (max-width: 1100px) {
@@ -40,3 +58,4 @@
         top: -29vh;
     }
 }
+

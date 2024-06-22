@@ -40,5 +40,6 @@ export class Preloader extends Scene {
 
     create() {
         this.scene.start('StartScreen')
+        // this.scene.start('MainMenu')
     }
 }

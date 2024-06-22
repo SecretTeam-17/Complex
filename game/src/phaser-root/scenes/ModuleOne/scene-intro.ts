@@ -34,7 +34,7 @@ export default class SceneIntro extends Phaser.GameObjects.Container {
         })
 
         // Инициализация текстового поля
-        this.textBox = new InGameTextbox(scene, 'В уютной комнате, сидя за моим компьютером\nя с нетерпением заполняю анкету на сайте Petsitter,\nпредвкушая, как начну делать то, что люблю, и найду\nработу мечты.')
+        this.textBox = new InGameTextbox(scene, 'В уютной комнате, сидя за моим компьютером\nя заполняю анкету на сайте Petsitter, предвкушая, как\nначну делать то, что люблю, и найду работу мечты.')
 
         // Добавление объектов в контейнер
         this.add(this.roomTwo)

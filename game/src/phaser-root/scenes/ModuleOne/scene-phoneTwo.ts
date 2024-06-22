@@ -473,25 +473,25 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                 this.punkt4.setAlpha(0)
             })
 
-        const check1text = this.scene.add.text(x + 75, y + 30, 'Была ли ранее собака на передержке?', {
+        const check1text = this.scene.add.text(x + 75, y + 30, 'Собака была ранее на передержке?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
             color: '#320064',
         })
-        const check2text = this.scene.add.text(x + 75, y + 75, 'Есть ли любое место для сна?', {
+        const check4text = this.scene.add.text(x + 75, y + 75, 'У собаки есть страхи, тревожность, агрессия?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
             color: '#320064',
         })
-        const check3text = this.scene.add.text(x + 75, y + 120, 'Есть ли у Мальвины страхи, тревожность, агрессия?', {
+        const check2text = this.scene.add.text(x + 75, y + 120, 'У собаки есть проблемы со здоровьем, аллергии?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
             color: '#320064',
         })
-        const check4text = this.scene.add.text(x + 75, y + 165, 'Есть ли у проблемы со здоровьем, аллергии?', {
+        const check3text = this.scene.add.text(x + 75, y + 165, 'Любимое место для сна собаки?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
@@ -554,19 +554,19 @@ export default class scenePhoneTwo extends Phaser.GameObjects.Container {
                 this.punkt7.setAlpha(0)
             })
 
-        const check1text = this.scene.add.text(x + 75, y + 30, 'Привита собака в соответствии с возрастом?', {
+        const check1text = this.scene.add.text(x + 75, y + 30, 'Собака привита по возрасту?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
             color: '#320064',
         })
-        const check2text = this.scene.add.text(x + 75, y + 75, 'Есть ли любимый фильм у собаки?', {
+        const check2text = this.scene.add.text(x + 75, y + 75, 'Любимый фильм собаки?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',
             color: '#320064',
         })
-        const check3text = this.scene.add.text(x + 75, y + 120, 'Грызет собака вещи, разрушает ли имущество когда\nостается одна?', {
+        const check3text = this.scene.add.text(x + 75, y + 120, 'Собака грызет вещи, портит имущество, когда\nостается одна дома?', {
             fontFamily: 'Comfortaa',
             fontSize: '28px',
             fontStyle: 'normal',

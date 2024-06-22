@@ -7,6 +7,8 @@ import inGamePhone from '../../components/inGamePhone'
 import inGameSettingsMenu from '../../components/inGameSettingsMenu'
 import { AUDIO, UI } from '../../constants/assetConstants'
 import { CONFIG } from '../../constants/gameConfig'
+import sceneBagInner from './bagInner'
+import scenePhoneThree from './phoneThree'
 import sceneHUB from './scene-HUB'
 import sceneAltEnd from './scene-altend'
 import sceneCollectKitchen from './scene-collectkitchen'
@@ -28,6 +30,8 @@ export class ModuleOne extends Scene {
     Phone: any
     Bag: any
     prevSavePoint: string
+    PhoneInner: scenePhoneThree
+    BagInner: sceneBagInner
 
     constructor() {
         super('ModuleOne')
@@ -67,6 +71,9 @@ export class ModuleOne extends Scene {
         this.SettingsMenu = new inGameSettingsMenu(this, SettingsButton.x, SettingsButton.y)
 
         // Добавляем интерфейсные кнопки
+        this.PhoneInner = new scenePhoneThree(this, 0, 0)
+        this.add.existing(this.PhoneInner).setDepth(6).setAlpha(0)
+
         this.Phone = new inGamePhone(this, CONFIG.SCREENWIDTH - 135, CONFIG.SCREENHIGHT - 135)
         this.add.existing(this.Phone)
             .setDepth(10)
@@ -83,14 +90,32 @@ export class ModuleOne extends Scene {
                     store.dispatch(setPhone(0))
                     store.dispatch(setSavePoint('phoneTwo'))
                 }
+                if (phoneIndex === 3) {
+                    if (this.PhoneInner.openPhone) {
+                        this.PhoneInner.phoneHide()
+                    }
+                    else {
+                        this.PhoneInner.phoneShow()
+                    }
+                }
                 EventBus.emit('phone-clicked')
             })
+
+        this.BagInner = new sceneBagInner(this, 0, 0)
+        this.add.existing(this.BagInner).setDepth(6).setAlpha(0)
 
         this.Bag = new inGameBag(this, CONFIG.SCREENWIDTH - 285, CONFIG.SCREENHIGHT - 135)
         this.add.existing(this.Bag)
             .setDepth(10)
             .setAlpha(0)
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
+            .setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+                if (this.BagInner.openBag) {
+                    this.BagInner.bagHide()
+                }
+                else {
+                    this.BagInner.bagShow()
+                }
             })
 
         store.subscribe(this.onStoreChange.bind(this))
@@ -153,6 +178,8 @@ export class ModuleOne extends Scene {
                     this.activeSceneContainer.add(new sceneCollectKitchen(this, 0, 0))
                     break
                 case 'ToysGame':
+                    this.PhoneInner.setAlpha(0)
+                    this.BagInner.setAlpha(0)
                     this.Bag.setX(CONFIG.SCREENWIDTH + 285)
                     this.Phone.setX(CONFIG.SCREENWIDTH + 135)
                     this.activeSceneContainer.add(new sceneToysGame(this, 0, 0))
@@ -185,7 +212,7 @@ export class ModuleOne extends Scene {
             this.tweens.add({
                 targets: this.Phone,
                 alpha: 1,
-                duration: 1000,
+                duration: 1500,
             })
         }
 

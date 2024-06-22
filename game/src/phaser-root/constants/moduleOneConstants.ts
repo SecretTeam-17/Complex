@@ -8,6 +8,8 @@ export const MOODULEONE = {
     LISTFULL: 'listfull',
     CHECKBOXON: 'checkboxon',
     CHECKBOXOFF: 'checkboxoff',
+    LISTMEMORY: 'listmemmory',
+    INVENTARY: 'inventary',
     BACKGROUNDS: {
         ROOMVIEWONE: 'roomviewone',
         ROOMVIEWTWO: 'roomviewtwo',
@@ -23,6 +25,7 @@ export const MOODULEONE = {
         ROOMRIGHT: 'roomright',
         BLURROOM: 'blurroom',
         TOYSGAME: 'toysgame',
+        BAG: 'bagBG',
     },
     COLLECTONE: {
         title: 'title',

@@ -84,6 +84,7 @@ export function loadAssets(scene: Scene) {
     scene.load.image(MOODULEONE.BACKGROUNDS.PHONETWO, 'modules/one/phoneScreen.png')
     scene.load.image(MOODULEONE.BACKGROUNDS.BLURROOM, 'modules/one/blurRoom.png')
     scene.load.image(MOODULEONE.BACKGROUNDS.TOYSGAME, 'modules/one/bgLast.png')
+    scene.load.image(MOODULEONE.BACKGROUNDS.BAG, 'modules/one/bag.jpg')
     // UI Elements
     scene.load.image(MOODULEONE.MINCUTE, 'modules/one/mingcute.png')
     scene.load.image(MOODULEONE.BALOON, 'modules/one/instruction.png')
@@ -91,6 +92,8 @@ export function loadAssets(scene: Scene) {
     scene.load.image(MOODULEONE.CHECKBOXON, 'modules/one/CheckboxOn.png')
     scene.load.image(MOODULEONE.LISTFULL, 'modules/one/listFull.png')
     scene.load.image(MOODULEONE.LISTBLANK, 'modules/one/listBlank.png')
+    scene.load.image(MOODULEONE.LISTMEMORY, 'modules/one/blankMemory.png')
+    scene.load.image(MOODULEONE.INVENTARY, 'modules/one/inventary.png')
     // ------------- Collect Room
     scene.load.image(MOODULEONE.COLLECTONE.title, 'modules/one/collectOne/title.png')
     scene.load.image(MOODULEONE.COLLECTONE.blank, 'modules/one/collectOne/blank.png')

@@ -15,6 +15,9 @@ export default class InGameBag extends Phaser.GameObjects.Container {
         this.bag = this.createBagImage(scene)
         this.add(this.bag)
 
+        // Установка размера контейнера по размеру телефона
+        this.setSize(this.bag.width, this.bag.height)
+
         // Настройка интерактивного поведения сумки
         this.setupBagInteractions()
     }
@@ -31,7 +34,7 @@ export default class InGameBag extends Phaser.GameObjects.Container {
 
     // Настройка интерактивного поведения сумки
     private setupBagInteractions() {
-        this.bag.setInteractive()
+        this.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 this.bag.setScale(1.1)
             })

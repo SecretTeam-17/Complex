@@ -1,28 +1,59 @@
+import { ArrowLeftToLine } from "lucide-react";
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 import "./WikiCard.css";
-import { FunctionComponent, useState } from "react";
-import WikiModal from "./WikiModal";
 
 interface IWikiCard {
     number: string;
     src: string;
     title: string;
-    desc: string[];
+    desc: string;
+    isFullView?: boolean;
+    onClick?: () => void;
+    onBack?: () => void;
 }
 
-const WikiCard: FunctionComponent<IWikiCard> = ({
+const WikiCard: React.FC<IWikiCard> = ({
     number,
     src,
     title,
     desc,
+    isFullView = false,
+    onClick,
+    onBack,
 }) => {
-    const [modal, setModal] = useState(false);
-    const cardDescItems = desc.map((data, idx) => (
-        <li className="wiki__modal-item" key={`data${idx}`}>
-            {data}
-        </li>
-    ));
+    if (isFullView) {
+        return (
+            <div className="wiki__card-full-container">
+                <div className="back-icon" onClick={onBack}>
+                    <ArrowLeftToLine size={48} color="#320064" />
+                </div>
+                <div className="wiki__card wiki__card-full">
+                    <div className="wiki__card-inner">
+                        <h1 className="wiki__card-title">{title}</h1>
+                        <img
+                            className="wiki__card-image"
+                            src={src}
+                            alt={title}
+                        />
+                        <div className="wiki__card-desc">
+                            <ReactMarkdown
+                                rehypePlugins={[rehypeRaw]}
+                                remarkPlugins={[remarkGfm]}
+                            >
+                                {desc}
+                            </ReactMarkdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="wiki__card">
+        <div className="wiki__card" onClick={onClick}>
             <div className="wiki__card-inner">
                 <span className="wiki__card-number">{number}</span>
                 <img
@@ -34,29 +65,12 @@ const WikiCard: FunctionComponent<IWikiCard> = ({
                 />
                 <p className="wiki__card-title">{title}</p>
             </div>
-            <button
-                className="wiki__card-button"
-                type="button"
-                onClick={() => setModal(true)}
-            >
-                читать
+            <button className="wiki__card-button" type="button">
+                Читать
             </button>
-
-            <WikiModal open={modal}>
-                <h3 className="wiki__modal-title" key={title}>
-                    {title}
-                </h3>
-                <ul>{cardDescItems}</ul>
-                <button
-                    style={{ marginTop: "15px" }}
-                    className="wiki__card-button"
-                    onClick={() => setModal(false)}
-                >
-                    закрыть
-                </button>
-            </WikiModal>
         </div>
     );
 };
 
 export default WikiCard;
+
