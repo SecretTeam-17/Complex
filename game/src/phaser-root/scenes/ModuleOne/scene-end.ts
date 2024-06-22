@@ -69,10 +69,10 @@ export default class sceneEnd extends Phaser.GameObjects.Container {
 
         if (this.currentScore === 15) {
             this.typpingText = 'Поздравляю!'
-            this.typpingText2 = 'Вы отлично подготовились к новому\nсожителю!'
+            this.typpingText2 = 'Вы отлично подготовились к встрече\nс новым питомцем!'
         } else {
             this.typpingText = 'Интересно ...'
-            this.typpingText2 = 'Вы немного не подготовились к новому\nсожителю!'
+            this.typpingText2 = 'Вы недостаточно подготовились\nк встрече с новым питомцем!'
         }
 
         this.text1 = scene.add.text(60, 60, this.typpingText, {
