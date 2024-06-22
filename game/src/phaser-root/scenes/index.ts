@@ -1,8 +1,8 @@
-import { Boot } from "./Boot.js"
-import { MainMenu } from './MainMenu.js'
-import { ModuleOne } from './ModuleOne/ModuleOne.js'
-import { Preloader } from './Preloader.js'
-import { StartScreen } from './StartScreen.js'
+import { Boot } from "./Boot.ts"
+import { MainMenu } from './MainMenu.ts'
+import { ModuleOne } from './ModuleOne/ModuleOne.ts'
+import { Preloader } from './Preloader.ts'
+import { StartScreen } from './StartScreen.ts'
 
 export const scenes = [
     Boot,

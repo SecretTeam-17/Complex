@@ -1,74 +1,63 @@
+import Phaser from 'phaser'
 import { UI } from '../../constants/assetConstants'
-
 
 export default class inMenuBurger {
 
     // Определяем объекты класса
-    private burgerMenu!: Phaser.GameObjects.Container
-
+    private burgerMenu: Phaser.GameObjects.Container
     private scene: Phaser.Scene
-
     openSettings = false
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-
         this.scene = scene
 
-        // Container
-        this.burgerMenu = scene.add.container(x - 15, y + 15).setScale(0).setDepth(1)
-        const settingsPanel = scene.add.nineslice(0, 0, UI.PANEL, undefined, 410).setOrigin(1, 0).setScale(1, 0.83)
-        this.burgerMenu.add(settingsPanel)
+        // Создаем контейнер для меню
+        this.burgerMenu = this.createMenuContainer(x, y)
+        // Добавляем панель настроек в контейнер
+        this.addSettingsPanel()
 
-        const linkOne = scene.add.text(-settingsPanel.width + 48, 74, 'О Petsitters', {
-            fontFamily: 'Manrope',
-            fontSize: '24px',
-            color: '#320064',
+        // Добавляем ссылки в контейнер
+        const linkData = [
+            { text: 'О Petsitters', url: 'https://pet-sitter.ru/#BfKeO7G' },
+            { text: 'Условия использования', url: 'https://pet-sitter.ru/legal' },
+            { text: 'Конфиденциальность', url: 'https://pet-sitter.ru/' },
+        ]
 
-        }).setOrigin(0, 0)
-
-        const linkTwo = scene.add.text(-settingsPanel.width + 48, 128, 'Условия использования', {
-            fontFamily: 'Manrope',
-            fontSize: '24px',
-            color: '#320064',
-
-        }).setOrigin(0, 0)
-
-        const linkThree = scene.add.text(-settingsPanel.width + 48, 188, 'Конфиденциальность', {
-            fontFamily: 'Manrope',
-            fontSize: '24px',
-            color: '#320064',
-
-        }).setOrigin(0, 0)
-
-        this.burgerMenu.add(linkOne)
-        this.burgerMenu.add(linkTwo)
-        this.burgerMenu.add(linkThree)
-
-        linkOne.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                const siteUrl = 'https://www.example.com'
-                window.open(siteUrl, '_blank')
-            })
-
-        linkTwo.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                const siteUrl = 'https://www.example.com'
-                window.open(siteUrl, '_blank')
-            })
-
-        linkThree.setInteractive()
-            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-                const siteUrl = 'https://www.example.com'
-                window.open(siteUrl, '_blank')
-            })
-
-
-
+        linkData.forEach((link, index) => {
+            const yOffset = 74 + index * 54
+            const linkText = this.createLinkText(link.text, yOffset, link.url)
+            this.burgerMenu.add(linkText)
+        })
     }
+
+    // Создание контейнера меню
+    private createMenuContainer(x: number, y: number): Phaser.GameObjects.Container {
+        const container = this.scene.add.container(x - 15, y + 15).setScale(0).setDepth(1)
+        return container
+    }
+
+    // Добавление панели настроек в контейнер меню
+    private addSettingsPanel() {
+        const settingsPanel = this.scene.add.nineslice(0, 0, UI.PANEL, undefined, 410).setOrigin(1, 0).setScale(1, 0.83)
+        this.burgerMenu.add(settingsPanel)
+    }
+
+    // Создание ссылки с текстом и добавление интерактива
+    private createLinkText(text: string, y: number, url: string): Phaser.GameObjects.Text {
+        const linkText = this.scene.add.text(-362, y, text, {
+            fontFamily: 'Manrope',
+            fontSize: '24px',
+            color: '#320064',
+        }).setOrigin(0, 0)
+
+        linkText.setInteractive()
+            .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => window.open(url, '_blank'))
+
+        return linkText
+    }
+
     settingsShow() {
-        if (this.openSettings) {
-            return
-        }
+        if (this.openSettings) return
 
         this.scene.tweens.add({
             targets: this.burgerMenu,
@@ -82,9 +71,7 @@ export default class inMenuBurger {
     }
 
     settingsHide() {
-        if (!this.openSettings) {
-            return
-        }
+        if (!this.openSettings) return
 
         this.scene.tweens.add({
             targets: this.burgerMenu,
@@ -96,5 +83,4 @@ export default class inMenuBurger {
 
         this.openSettings = false
     }
-
 }

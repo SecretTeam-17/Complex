@@ -1,3 +1,7 @@
+export const AUDIO = {
+    BUTTONCLICK: 'button-click',
+}
+
 export const BACKGROUNDS = {
     STARTSCREEN: 'startscreen-bg',
 }
@@ -18,9 +22,6 @@ export const UI = {
     GAME: 'game',
     MODULE: 'module',
     MINIMODULE: 'miniModule',
-
-    ARROWLEFT: 'arrow-left',
-    ARROWRIGHT: 'arrow-right',
 
     BUTTON: {
         NORMAL: 'button-normal',
@@ -49,4 +50,5 @@ export const INGAMEUI = {
     PHONE: 'icon-phone',
     BAG: 'icon-bag',
     BOX: 'icon-box',
+    STAR: 'star',
 }

@@ -11,14 +11,12 @@ export default class ModuleCardSelector {
 
     // Определяем объекты класса
     cardSelector!: Phaser.GameObjects.Container
-
     private cardOne: ModuleCard
     private cardTwo: ModuleCard
     private cardThree: ModuleCard
     private cardFour: ModuleCard
-
     private cardOneMini: ModuleCardMini
-    private carTwoMiniLeft: ModuleCardMini
+    private cardTwoMiniLeft: ModuleCardMini
     private cardTwoMiniRight: ModuleCardMini
     private cardThreeMiniLeft: ModuleCardMini
     private cardThreeMiniRight: ModuleCardMini
@@ -41,7 +39,7 @@ export default class ModuleCardSelector {
         this.cardSelector = scene.add.container(x, y).setScale(1).setDepth(1)
 
         // Карточки модулей
-        this.cardOne = new ModuleCard(scene, 0, 0, MOODULEONE.TITLE, MOODULEONE.TOTALCOUNTS, MOODULEONE.PREIMAGE, state.game.modules.moduleOne.score, state.game.modules.moduleOne.isAvailable)
+        this.cardOne = new ModuleCard(scene, 0, 0, MOODULEONE.TITLE, MOODULEONE.TOTALCOUNTS, MOODULEONE.PREIMAGE, state.config.score, state.game.modules.moduleOne.isAvailable)
         this.cardTwo = new ModuleCard(scene, 70, 0, MOODULETWO.TITLE, MOODULETWO.TOTALCOUNTS, MOODULETWO.PREIMAGE, state.game.modules.moduleTwo.score, state.game.modules.moduleTwo.isAvailable)
         this.cardThree = new ModuleCard(scene, 140, 0, MOODULETHREE.TITLE, MOODULETHREE.TOTALCOUNTS, MOODULETHREE.PREIMAGE, state.game.modules.moduleThree.score, state.game.modules.moduleThree.isAvailable)
         this.cardFour = new ModuleCard(scene, 210, 0, MOODULEFOUR.TITLE, MOODULEFOUR.TOTALCOUNTS, MOODULEFOUR.PREIMAGE, state.game.modules.moduleFour.score, state.game.modules.moduleFour.isAvailable)
@@ -50,8 +48,8 @@ export default class ModuleCardSelector {
         this.cardOneMini = new ModuleCardMini(scene, 40, 470, MOODULEONE.TITLE)
         this.cardOneMini.container.setRotation(-1.5708)
 
-        this.carTwoMiniLeft = new ModuleCardMini(scene, 110, 470, MOODULETWO.TITLE)
-        this.carTwoMiniLeft.container.setRotation(-1.5708)
+        this.cardTwoMiniLeft = new ModuleCardMini(scene, 110, 470, MOODULETWO.TITLE)
+        this.cardTwoMiniLeft.container.setRotation(-1.5708)
 
         this.cardTwoMiniRight = new ModuleCardMini(scene, 440, 470, MOODULETWO.TITLE)
         this.cardTwoMiniRight.container.setRotation(-1.5708)
@@ -69,16 +67,12 @@ export default class ModuleCardSelector {
             .setRotation(-1.5708)
             .setScale(this.scaleThree)
 
-
-
-
-
         // Добавляем карточки в контейнер
         this.cardSelector.add(this.cardFourMini.container)
         this.cardSelector.add(this.cardThreeMiniRight.container)
         this.cardSelector.add(this.cardTwoMiniRight.container)
         this.cardSelector.add(this.cardOneMini.container.setAlpha(0))
-        this.cardSelector.add(this.carTwoMiniLeft.container.setAlpha(0))
+        this.cardSelector.add(this.cardTwoMiniLeft.container.setAlpha(0))
         this.cardSelector.add(this.cardThreeMiniLeft.container.setAlpha(0))
 
 
@@ -97,7 +91,7 @@ export default class ModuleCardSelector {
                 this.moduleTwoButton()
             })
 
-        this.carTwoMiniLeft.panel.setInteractive()
+        this.cardTwoMiniLeft.panel.setInteractive()
             .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
                 this.moduleTwoButton()
             })
@@ -141,7 +135,7 @@ export default class ModuleCardSelector {
         this.cardThreeMiniRight.container.setAlpha(0)
         this.cardTwoMiniRight.container.setAlpha(0)
         this.cardFourMini.container.setAlpha(0)
-        this.carTwoMiniLeft.container.setAlpha(0)
+        this.cardTwoMiniLeft.container.setAlpha(0)
         this.cardThreeMiniLeft.container.setAlpha(0)
     }
 
@@ -172,7 +166,7 @@ export default class ModuleCardSelector {
         this.cardThree.container.setAlpha(1)
         this.cardFourMini.container.setAlpha(1).setScale(this.scaleOne).setY(470)
         this.cardOneMini.container.setAlpha(1).setScale(this.scaleTwo).setY(460)
-        this.carTwoMiniLeft.container.setAlpha(1).setScale(this.scaleOne).setY(470)
+        this.cardTwoMiniLeft.container.setAlpha(1).setScale(this.scaleOne).setY(470)
     }
 
     moduleFourButton() {
@@ -181,7 +175,7 @@ export default class ModuleCardSelector {
 
         this.cardFour.container.setAlpha(1)
         this.cardOneMini.container.setAlpha(1).setScale(this.scaleThree).setY(450)
-        this.carTwoMiniLeft.container.setAlpha(1).setScale(this.scaleTwo).setY(460)
+        this.cardTwoMiniLeft.container.setAlpha(1).setScale(this.scaleTwo).setY(460)
         this.cardThreeMiniLeft.container.setAlpha(1).setScale(this.scaleOne).setY(470)
     }
 }

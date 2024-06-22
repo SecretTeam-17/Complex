@@ -20,6 +20,10 @@ const PhaserRoot = () => {
                 height: CONFIG.SCREENHIGHT,
             },
             scene: scenes,
+            audio: {
+                disableWebAudio: false,
+            },
+            autoFocus: true,
             // physics: {
             //     default: 'arcade',
             //     arcade: {

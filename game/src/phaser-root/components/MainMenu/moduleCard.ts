@@ -1,5 +1,4 @@
-import { UI } from '../../constants/assetConstants'
-import { AUDIO } from '../../constants/audioConstant'
+import { AUDIO, UI } from '../../constants/assetConstants'
 
 
 export default class ModuleCard extends Phaser.GameObjects.Container {
@@ -7,18 +6,15 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
     // Определяем объекты класса
     container!: Phaser.GameObjects.Container
     private panel!: Phaser.GameObjects.Graphics
-
     private preImage: Phaser.GameObjects.Image
     private normalImage: Phaser.GameObjects.Image
     private disableImage: Phaser.GameObjects.Image
     hoverImage: Phaser.GameObjects.Image
     private buttonText: Phaser.GameObjects.Text
-
     private title: Phaser.GameObjects.Text
     private progress: Phaser.GameObjects.Graphics
     private bar: Phaser.GameObjects.Graphics
     private barText: Phaser.GameObjects.Text
-
 
     openSettings = false
 
@@ -62,7 +58,7 @@ export default class ModuleCard extends Phaser.GameObjects.Container {
         }
 
 
-        this.barText = scene.add.text(205, 95, '0/' + totalcounts + ' завершено', {
+        this.barText = scene.add.text(205, 95, score + '/' + totalcounts + ' завершено', {
             fontFamily: 'Manrope',
             fontSize: '16px',
             fontStyle: 'Normal',

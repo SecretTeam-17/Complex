@@ -16,7 +16,6 @@ export interface IModule {
     ]
 }
 
-
 export interface IStats {
     isReturned: boolean
     isComplete: boolean
@@ -62,8 +61,8 @@ export const Modules: IModules = {
         isAvailable: false
     },
     moduleFour: {
-        savePoint: 'moduleFour',
-        lastPoint: 'moduleFour',
+        savePoint: 'intro',
+        lastPoint: 'intro',
         score: 0,
         isAvailable: false
     }
