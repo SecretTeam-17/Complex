@@ -1,11 +1,23 @@
 import "./WikiCard.css";
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import WikiModal from "./WikiModal";
 
-const WikiCard = ({ number, src, title, desc }) => {
+interface IWikiCard {
+    number: string;
+    src: string;
+    title: string;
+    desc: string[];
+}
+
+const WikiCard: FunctionComponent<IWikiCard> = ({
+    number,
+    src,
+    title,
+    desc,
+}) => {
     const [modal, setModal] = useState(false);
-    const cardDescItems = desc.map((data) => (
-        <li className="wiki__modal-item" key={data}>
+    const cardDescItems = desc.map((data, idx) => (
+        <li className="wiki__modal-item" key={`data${idx}`}>
             {data}
         </li>
     ));
