@@ -12,12 +12,12 @@ export const GAMETWO = {
 
 export const GAMETHREE = {
     TITLE: 'Прогулка с друзьями',
-    PREIMAGE: 'preimage -game-three',
+    PREIMAGE: 'preimage-game-three',
     isAvailable: false,
 }
 
 export const GAMEFOUR = {
     TITLE: 'Собери угощения',
-    PREIMAGE: 'preimage -game-three',
+    PREIMAGE: 'preimage-game-four',
     isAvailable: false,
 }
