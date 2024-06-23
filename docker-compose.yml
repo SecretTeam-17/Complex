@@ -17,7 +17,7 @@ include:
   - docker/socket-proxy.yml
   - docker/portainer.yml
   - docker/dozzle.yml
-  - docker/locust.yml
+  # - docker/locust.yml
   - docker/mongo.yml
 
   # APPS

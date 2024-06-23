@@ -2,7 +2,7 @@ services:
   # Docker Socket Proxy - Security Enchanced Proxy for Docker Socket
   socket-proxy:
     container_name: socket-proxy
-    image: huecker.io/tecnativa/docker-socket-proxy
+    image: tecnativa/docker-socket-proxy
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
@@ -11,9 +11,9 @@ services:
         ipv4_address: 192.168.91.254 # You can specify a static IP
     privileged: true
     ports:
-      - "127.0.0.1:2375:2375"
+      - '127.0.0.1:2375:2375'
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - '/var/run/docker.sock:/var/run/docker.sock'
     environment:
       - LOG_LEVEL=info
       - EVENTS=1

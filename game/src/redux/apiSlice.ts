@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { GameState } from './GameSession/session.slice'
 
 
-const API_URL = 'https://sf-hackathon.xyz/api'
-
+// const API_URL = 'https://sf-hackathon.xyz/api'
+const API_URL = 'https://dev01-api.esoraine.online/api'
 
 export const apiSlice = createApi({
     reducerPath: 'apiSlice',

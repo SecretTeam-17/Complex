@@ -1,14 +1,14 @@
-env: "dev" # окружение сервера. Варианты: local, dev, prod
-storage_path: "mongodb://mongo:27017/" # адрес для подключения к MongoDB
-storage_user: "DB_USER" # пользователь для аутентификации в MongoDB
-storage_passwd: "DB_PASSWD" # пароль для аутентификации в MongoDB
-cert_path: "/etc/letsencrypt/live/sf-hackathon.xyz/fullchain.pem" # путь к файлу ssl сертификата
-cert_key_path: "/etc/letsencrypt/live/sf-hackathon.xyz/privkey.pem" # путь к файлу ключа ssl сертификата
-auth_user: "admin"
-auth_passwd: "AUTH_PASSWD"
+env: 'dev' # окружение сервера. Варианты: local, dev, prod
+storage_path: 'mongodb://mongodb:27017/' # адрес для подключения к MongoDB
+storage_user: 'DB_USER' # пользователь для аутентификации в MongoDB
+storage_passwd: 'DB_PASSWD' # пароль для аутентификации в MongoDB
+cert_path: '/etc/letsencrypt/live/sf-hackathon.xyz/fullchain.pem' # путь к файлу ssl сертификата
+cert_key_path: '/etc/letsencrypt/live/sf-hackathon.xyz/privkey.pem' # путь к файлу ключа ssl сертификата
+auth_user: 'admin'
+auth_passwd: 'AUTH_PASSWD'
 http_server:
-  address: "0.0.0.0:80"
-  addressTLS: "0.0.0.0:443"
+  address: '0.0.0.0:80'
+  addressTLS: '0.0.0.0:443'
   read_timeout: 5s
   write_timeout: 10s
   idle_timeout: 60s
