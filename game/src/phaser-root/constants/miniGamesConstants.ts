@@ -5,13 +5,19 @@ export const GAMEONE = {
 }
 
 export const GAMETWO = {
-    TITLE: 'Догони кусочек',
+    TITLE: 'Поймай взгляд',
     PREIMAGE: 'preimage-game-two',
     isAvailable: false,
 }
 
 export const GAMETHREE = {
-    TITLE: 'ВЕРХ-ВНИЗ',
+    TITLE: 'Прогулка с друзьями',
+    PREIMAGE: 'preimage -game-three',
+    isAvailable: false,
+}
+
+export const GAMEFOUR = {
+    TITLE: 'Собери угощения',
     PREIMAGE: 'preimage -game-three',
     isAvailable: false,
 }
