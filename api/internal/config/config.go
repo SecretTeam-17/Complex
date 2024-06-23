@@ -14,8 +14,8 @@ type Config struct {
 	StoragePath   string `yaml:"storage_path" env-required:"true"`
 	StorageUser   string `yaml:"storage_user" env:"DB_USER" env-required:"true"`
 	StoragePasswd string `yaml:"storage_passwd" env:"DB_PASSWD" env-required:"true"`
-	CertPath      string `yaml:"cert_path" env:"CERT_PATH" env-required:"true"`
-	CertKeyPath   string `yaml:"cert_key_path" env:"CERT_KEY_PATH" env-required:"true"`
+	// CertPath      string `yaml:"cert_path" env:"CERT_PATH" env-required:"true"`
+	// CertKeyPath   string `yaml:"cert_key_path" env:"CERT_KEY_PATH" env-required:"true"`
 	AuthUser      string `yaml:"auth_user" env:"AUTH_USER" env-required:"true"`
 	AuthPasswd    string `yaml:"auth_passwd" env:"AUTH_PASSWD" env-required:"true"`
 	HTTPServer    `yaml:"http_server"`

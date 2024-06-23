@@ -12,36 +12,32 @@ import (
 )
 
 type Server struct {
-	srv  *http.Server
-	cert string
-	key  string
+	srv *http.Server
 }
 
-// New - создает новый HTTPS сервер.
+// New - создает новый HTTP сервер.
 func New(cfg *config.Config, router chi.Router) *Server {
 	server := &Server{
 		srv: &http.Server{
-			Addr:         cfg.AddressTLS,
+			Addr:         cfg.Address,
 			Handler:      router,
 			ReadTimeout:  cfg.ReadTimeout,
 			WriteTimeout: cfg.WriteTimeout,
 			IdleTimeout:  cfg.IdleTimeout,
 		},
-		cert: cfg.CertPath,
-		key:  cfg.CertKeyPath,
 	}
 	return server
 }
 
-// Start - запускает HTTPS сервер в отдельной горутине.
+// Start - запускает HTTP сервер в отдельной горутине.
 func (s *Server) Start() {
 	go func() {
-		if err := s.srv.ListenAndServeTLS(s.cert, s.key); err != nil {
+		if err := s.srv.ListenAndServe(); err != nil {
 			// Игнорируем ошибку при вызове Shutdown.
 			if errors.Is(err, http.ErrServerClosed) {
 				return
 			}
-			log.Printf("failed to start server with TLS: %s", err.Error())
+			log.Printf("failed to start server with: %s", err.Error())
 		}
 	}()
 }
