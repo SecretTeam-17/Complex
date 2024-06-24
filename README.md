@@ -70,5 +70,5 @@ docker compose up --build -d
 0.0.0.0:8081 - frontend<br>
 0.0.0.0:8082 - dozzle<br>
 0.0.0.0:8083 - backend<br>
-0.0.0.0:8083 - mongo express<br>
+0.0.0.0:8085 - mongo express<br>
 0.0.0.0:9000 - portainer<br>
